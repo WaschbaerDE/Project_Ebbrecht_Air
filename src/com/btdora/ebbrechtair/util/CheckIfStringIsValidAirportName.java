@@ -1,7 +1,6 @@
 package com.btdora.ebbrechtair.util;
 
 import java.sql.*;
-import java.sql.Connection;
 
 
 public class CheckIfStringIsValidAirportName {
@@ -10,11 +9,10 @@ public class CheckIfStringIsValidAirportName {
 
     public String METHODE2(String input) {
         this.input = "Frankfurt";//get input1
+        CreateSQLConnector createSQLConnector = new CreateSQLConnector();
 
 
-        Connection c = Connection_SQL.connector();
-
-        try (Statement stmt = c.createStatement();) {
+        try (Statement stmt = createSQLConnector.getSQLConnection().createStatement();) {
             String SQL = "SELECT * FROM db_Airport WHERE AirportName LIKE '%" + this.input + "%'";        // SELECT-ABFRAGE
             ResultSet rs = stmt.executeQuery(SQL);
             if (rs.next() == false) {
@@ -27,8 +25,6 @@ public class CheckIfStringIsValidAirportName {
         catch(SQLException e){
             e.printStackTrace();
         }
-
-
         return outputString;
     }
 }

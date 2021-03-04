@@ -1,10 +1,10 @@
-package sample.util;
+package com.btdora.ebbrechtair.util;
 
-import sample.secret.SQLLoginData;
+import com.btdora.ebbrechtair.secrets.SQLLoginData;
 
 import java.sql.*;
 
-public class SQLConnector {
+public class CreateSQLConnector {
     public static Connection getSQLConnection() throws SQLException{
         SQLLoginData sqlLoginData = new SQLLoginData();
         Connection connect = DriverManager.getConnection(sqlLoginData.getUrl(),sqlLoginData.getUserName(),sqlLoginData.getPassword());
