@@ -25,3 +25,8 @@ public class Main extends Application {
 //test2
 //test3
 //testmartinw2
+//testmartin123
+//testniklas1
+//testniklas2
+//test merging
+//test merge martin
