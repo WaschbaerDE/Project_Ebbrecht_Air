@@ -1,10 +1,5 @@
-package sample.secret;
+package com.btdora.ebbrechtair.secret;
 
-import sample.util.SQLConnector;
-
-import sample.util.SQLConnector;
-
-import java.sql.Connection;
 
 public class SQLLoginData{
     private String url = "jdbc:sqlserver://provadis-it-ausbildung.de:1433;databaseName=userdb_03";

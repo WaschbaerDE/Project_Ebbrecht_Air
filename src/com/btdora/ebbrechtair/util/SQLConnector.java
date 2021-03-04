@@ -1,6 +1,6 @@
-package sample.util;
+package com.btdora.ebbrechtair.util;
 
-import sample.secret.SQLLoginData;
+import com.btdora.ebbrechtair.secret.SQLLoginData;
 
 import java.sql.*;
 
