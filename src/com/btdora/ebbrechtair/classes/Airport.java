@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Airport extends AirObject {
+public class Airport extends GeoCoordinate {
     private String ICAOCode;
     private String AirportName;
     private int AltitudeAirportInFeet;
@@ -9,7 +9,8 @@ public class Airport extends AirObject {
     private int MaxRunwayLength;
     private String b01;
 
-    public Airport(String ICAOCode, String airportName, int altitudeAirportInFeet, String a01, String a02, int maxRunwayLength, String b01) {
+    public Airport(String ICAOCode, String airportName, double Lat,double Lon, int altitudeAirportInFeet, String a01, String a02, int maxRunwayLength, String b01) {
+        super(Lat,Lon);
         this.ICAOCode = ICAOCode;
         AirportName = airportName;
         AltitudeAirportInFeet = altitudeAirportInFeet;

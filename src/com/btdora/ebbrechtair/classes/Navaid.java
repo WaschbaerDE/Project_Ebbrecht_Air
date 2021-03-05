@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Navaid extends AirObject {
+public class Navaid extends GeoCoordinate {
     private String NavaidID;
     private String NavaidName;
     private Double Frequency;
@@ -11,7 +11,8 @@ public class Navaid extends AirObject {
     private String AreaCode;
     private String a02;
 
-    public Navaid(String navaidID, String navaidName, Double frequency, int radialCapability, int DMECapability, String a01, int altitude, String areaCode, String a02) {
+    public Navaid(String navaidID, double Lat, double Lon, String navaidName, Double frequency, int radialCapability, int DMECapability, String a01, int altitude, String areaCode, String a02) {
+        super(Lat,Lon);
         NavaidID = navaidID;
         NavaidName = navaidName;
         Frequency = frequency;
@@ -21,6 +22,7 @@ public class Navaid extends AirObject {
         Altitude = altitude;
         AreaCode = areaCode;
         this.a02 = a02;
+
     }
 
 

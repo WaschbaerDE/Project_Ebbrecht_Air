@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class GeoCoordinate {
+public abstract class GeoCoordinate {
     private Double Lat;
     private Double Lon;
 

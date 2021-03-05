@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Runway extends AirObject {
+public class Runway extends GeoCoordinate {
     private String Airportcode;
     private String RunwayIdentifier;
     private int Heading;
@@ -15,7 +15,8 @@ public class Runway extends AirObject {
     private String a02;
     private String a03;
 
-    public Runway(String airportcode, String runwayIdentifier, int heading, int maxTakeoffLength, int runwayWidthFeet, String LOC_ILS, Double ILSFrequency1, Double ILSFrequency2, int touchdownAltitude, Double approachGlideslope, String a01, String a02, String a03) {
+    public Runway(String airportcode, String runwayIdentifier, double Lat, double Lon, int heading, int maxTakeoffLength, int runwayWidthFeet, String LOC_ILS, Double ILSFrequency1, Double ILSFrequency2, int touchdownAltitude, Double approachGlideslope, String a01, String a02, String a03) {
+        super(Lat,Lon);
         Airportcode = airportcode;
         RunwayIdentifier = runwayIdentifier;
         Heading = heading;
@@ -29,6 +30,7 @@ public class Runway extends AirObject {
         this.a01 = a01;
         this.a02 = a02;
         this.a03 = a03;
+
     }
 
 
