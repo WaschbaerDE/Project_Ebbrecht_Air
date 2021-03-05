@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir;
+package com.btdora.ebbrechtair;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
