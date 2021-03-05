@@ -11,7 +11,7 @@ public class Navaid extends GeoCoordinate {
     private String AreaCode;
     private String a02;
 
-    public Navaid(String navaidID, double Lat, double Lon, String navaidName, Double frequency, int radialCapability, int DMECapability, String a01, int altitude, String areaCode, String a02) {
+    public Navaid(String navaidID, String navaidName, Double frequency, int radialCapability, int DMECapability, String a01, double Lat, double Lon, int altitude, String areaCode, String a02) {
         super(Lat,Lon);
         NavaidID = navaidID;
         NavaidName = navaidName;

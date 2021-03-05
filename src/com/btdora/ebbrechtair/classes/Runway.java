@@ -15,7 +15,7 @@ public class Runway extends GeoCoordinate {
     private String a02;
     private String a03;
 
-    public Runway(String airportcode, String runwayIdentifier, double Lat, double Lon, int heading, int maxTakeoffLength, int runwayWidthFeet, String LOC_ILS, Double ILSFrequency1, Double ILSFrequency2, int touchdownAltitude, Double approachGlideslope, String a01, String a02, String a03) {
+    public Runway(String airportcode, String runwayIdentifier, int heading, int maxTakeoffLength, int runwayWidthFeet, String LOC_ILS, Double ILSFrequency1, Double ILSFrequency2, double Lat, double Lon, int touchdownAltitude, Double approachGlideslope, String a01, String a02, String a03) {
         super(Lat,Lon);
         Airportcode = airportcode;
         RunwayIdentifier = runwayIdentifier;
