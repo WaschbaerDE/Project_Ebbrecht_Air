@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Airport {
+public class Airport extends AirObject {
     private String ICAOCode;
     private String AirportName;
     private int AltitudeAirportInFeet;

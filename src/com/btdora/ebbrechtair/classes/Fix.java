@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Fix {
+public class Fix extends AirObject {
     private String FixID;
     private String Areacode;
     private String Departure;

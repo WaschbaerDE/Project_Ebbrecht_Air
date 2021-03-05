@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Navaid {
+public class Navaid extends AirObject {
     private String NavaidID;
     private String NavaidName;
     private Double Frequency;

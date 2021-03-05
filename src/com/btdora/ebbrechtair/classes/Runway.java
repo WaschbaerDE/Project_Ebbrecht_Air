@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Runway {
+public class Runway extends AirObject {
     private String Airportcode;
     private String RunwayIdentifier;
     private int Heading;
