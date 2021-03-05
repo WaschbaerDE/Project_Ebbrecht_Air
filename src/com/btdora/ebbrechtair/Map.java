@@ -12,6 +12,12 @@ public class Map extends Canvas {
 
     String imagePath = "com/btdora/ebbrechtAir/images/";
 
+    private int canvasMidFactorX = 500;
+    private int canvasMidFactorY = 500;
+    private int zoomFactor = 3;
+    private int offsetFactorX = 0;
+    private int offsetFactorY = 0;
+
     public Map() {
         super(1000, 1000);
 
@@ -21,37 +27,43 @@ public class Map extends Canvas {
         Testdaten td1 = new Testdaten();
         td1.airportsTest();
         for (int i = 0; i < td1.airportsArray.size(); i++){
-            setAirportLocation(td1.airportsArray.get(i).latitude, td1.airportsArray.get(i).longitude);
+            double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetFactorY, canvasMidFactorY);
+            double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetFactorX, canvasMidFactorX);
+            setAirportLocation(lat, lon);
         }
         drawAirwayLines(td1.airportsArray.get(0).latitude,td1.airportsArray.get(0).longitude,td1.airportsArray.get(1).latitude,td1.airportsArray.get(1).longitude);
-
     }
 
     /**
      * Provides coordinates for grit and draws cross on canvas.
      */
     private void drawGrit(){
-        for(int i = 0; i < 10000; i = i+100) {
-            drawGritLines(i, 0, i, 9000);
-            drawGritLines(0, i, 9000, i);
-        }
+        int gritMax = 20000;
+        int gritMin = gritMax * -1;
+        int fieldMeasurements = 10;
+        fieldMeasurements = fieldMeasurements + zoomFactor;
+
+//        for(int i = 0; i < gritMax*10; i = i + fieldMeasurements) {
+//            drawGritLines(i + offsetFactorX + gritMin, gritMin, i + offsetFactorX + gritMin, gritMax);
+//            drawGritLines(gritMin, i + offsetFactorY + gritMin, gritMax, i + offsetFactorY + gritMin);
+//        }
         context.setLineWidth(1);
         context.setStroke(Color.LIGHTSALMON);
-        context.strokeLine(500,0, 500, 1000);
-        context.strokeLine(0,500, 1000, 500);
+        context.strokeLine(canvasMidFactorX+offsetFactorX,gritMin, canvasMidFactorX+offsetFactorX, gritMax);
+        context.strokeLine(gritMin,canvasMidFactorY+offsetFactorY, gritMax, canvasMidFactorY+offsetFactorY);
     }
 
     /**
      * Draws grit on canvas.
-     * @param lat1
-     * @param lon1
-     * @param lat2
-     * @param lon2
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
      */
-    private void drawGritLines(double lat1, double lon1, double lat2, double lon2) {
+    private void drawGritLines(double x1, double y1, double x2, double y2) {
         context.setLineWidth(0.2);
         context.setStroke(Color.BLACK);
-        context.strokeLine(lat1, lon1, lat2, lon2);
+        context.strokeLine(x1, y1, x2, y2);
     }
 
 //    /**
@@ -82,7 +94,7 @@ public class Map extends Canvas {
     public void drawAirwayLines(double lat1, double lon1, double lat2, double lon2) {
         context.setLineWidth(1);
         context.setStroke(Color.GREEN);
-        context.strokeLine(lat1, lon1, lat2, lon2);
+        context.strokeLine(lon1, lat1, lon2, lat2);
     }
 
     /**
@@ -95,7 +107,33 @@ public class Map extends Canvas {
     public void colorAirwayRoutes(double lat1, double lon1, double lat2, double lon2) {
         context.setLineWidth(2);
         context.setStroke(Color.MAGENTA);
-        context.strokeLine(lat1, lon1, lat2, lon2);
+        context.strokeLine(lon1, lat1, lon2, lat2);
+    }
+
+    /**
+     * Adds zoom- and drag-Factors to the latitude.
+     * @param lat
+     * @param zoomFactor
+     * @param offsetFactor
+     * @return
+     */
+    public double zoomdragFactorLat(double lat, int zoomFactor, int offsetFactor, int canvasMidFactor){
+        lat = lat * zoomFactor * -1;
+        lat = lat + offsetFactor + canvasMidFactor;
+        return lat;
+    }
+
+    /**
+     * Adds zoom- and drag-Factors to the longitude.
+     * @param lon
+     * @param zoomFactor
+     * @param offsetFactor
+     * @return
+     */
+    public double zoomdragFactorLon(double lon, int zoomFactor, int offsetFactor, int canvasMidFactor){
+        lon = lon * zoomFactor;
+        lon = lon + offsetFactor + canvasMidFactor;
+        return lon;
     }
 
     /**
@@ -108,7 +146,7 @@ public class Map extends Canvas {
         Image image = new Image(imagePath + "airport.png");
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
-        context.drawImage(image, lat, lon, measurements, measurements);
+        context.drawImage(image, lon, lat, measurements, measurements);
     }
 }
 

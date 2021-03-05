@@ -7,7 +7,7 @@ public class Airport {
 
     public Airport(String name, double lat, double lon){
         this.name = name;
-        this.latitude = (lat*5)+500;
-        this.longitude = (lon*5)+500;
+        this.latitude = lat;
+        this.longitude = lon;
     }
 }
