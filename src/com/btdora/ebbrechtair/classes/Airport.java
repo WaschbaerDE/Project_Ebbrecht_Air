@@ -4,6 +4,10 @@ public class Airport {
     private String ICAOCode;
     private String AirportName;
     private int AltitudeAirportInFeet;
+    private String a01;
+    private String a02;
+    private int MaxRunwayLength;
+    private String b01;
 
     public Airport(String ICAOCode, String airportName, int altitudeAirportInFeet, String a01, String a02, int maxRunwayLength, String b01) {
         this.ICAOCode = ICAOCode;
@@ -15,8 +19,5 @@ public class Airport {
         this.b01 = b01;
     }
 
-    private String a01;
-    private String a02;
-    private int MaxRunwayLength;
-    private String b01;
+
 }

@@ -7,6 +7,13 @@ public class Runway {
     private int MaxTakeoffLength;
     private int RunwayWidthFeet;
     private String LOC_ILS;
+    private Double ILSFrequency1;
+    private Double ILSFrequency2;
+    private int TouchdownAltitude;
+    private Double ApproachGlideslope;
+    private String a01;
+    private String a02;
+    private String a03;
 
     public Runway(String airportcode, String runwayIdentifier, int heading, int maxTakeoffLength, int runwayWidthFeet, String LOC_ILS, Double ILSFrequency1, Double ILSFrequency2, int touchdownAltitude, Double approachGlideslope, String a01, String a02, String a03) {
         Airportcode = airportcode;
@@ -24,11 +31,5 @@ public class Runway {
         this.a03 = a03;
     }
 
-    private Double ILSFrequency1;
-    private Double ILSFrequency2;
-    private int TouchdownAltitude;
-    private Double ApproachGlideslope;
-    private String a01;
-    private String a02;
-    private String a03;
+
 }
