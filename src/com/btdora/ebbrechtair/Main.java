@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir;
+package com.btdora.ebbrechtair;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
