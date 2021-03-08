@@ -1,7 +1,7 @@
 package com.btdora.ebbrechtair.classes;
 
 public class AirwayPart {
-    private String AtsID;
+    private String AirwayID;
     private int AtsPartition;
     private String FixID;
     private String IDOfNextFix;
@@ -11,8 +11,11 @@ public class AirwayPart {
     private int OutBoundCourse;
     private Double LegLength;
 
-    public AirwayPart(String atsID, int atsPartition, String fixID, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength) {
-        AtsID = atsID;
+
+
+
+    public AirwayPart(String airwayID, int atsPartition, String fixID, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength) {
+        AirwayID = airwayID;
         AtsPartition = atsPartition;
         FixID = fixID;
         this.IDOfNextFix = IDOfNextFix;

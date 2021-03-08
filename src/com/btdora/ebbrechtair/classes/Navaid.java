@@ -6,10 +6,10 @@ public class Navaid extends GeoCoordinate {
     private Double Frequency;
     private int RadialCapability;
     private int DMECapability;
-    private  String a01;
+    private  String a01; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
     private int Altitude;
     private String AreaCode;
-    private String a02;
+    private String a02; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
 
     public Navaid(String navaidID, String navaidName, Double frequency, int radialCapability, int DMECapability, String a01, double Lat, double Lon, int altitude, String areaCode, String a02) {
         super(Lat,Lon);
