@@ -20,5 +20,7 @@ public class Airport extends GeoCoordinate {
         this.b01 = b01;
     }
 
-
+    public String toString() {
+        return this.ICAOCode+" "+this.AirportName;
+    }
 }
