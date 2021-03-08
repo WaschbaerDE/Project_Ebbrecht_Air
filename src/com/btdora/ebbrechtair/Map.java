@@ -14,7 +14,6 @@ public class Map extends Canvas {
 
     String imagePath = "com/btdora/ebbrechtAir/images/";
     Image airport = new Image(imagePath + "airport.png");
-    Image
 
     static private double canvasMidFactorX = 500;
     static private double canvasMidFactorY = 500;
@@ -34,7 +33,6 @@ public class Map extends Canvas {
         super(1000, 1000);
 
         this.drawGrit();
-//        drawTestAirways();
 
         Testdaten td1 = new Testdaten();
         td1.airportsTest();
@@ -89,7 +87,6 @@ public class Map extends Canvas {
                 }
             }
         });
-
 
         setOnMousePressed( event -> {
             this.px1 = event.getX();
@@ -151,14 +148,14 @@ public class Map extends Canvas {
      * Provides coordinates for grit and draws cross on canvas.
      */
     private void drawGrit(){
-        int gritMax = 20000;
-        int gritMin = gritMax * -1;
-        int fieldMeasurements = 10;
+        double  gritMax = 20000;
+        double gritMin = gritMax * -1;
+//        double fieldMeasurements = 10;
 //        fieldMeasurements = fieldMeasurements + zoomFactor;
-
-//        for(int i = 0; i < gritMax*10; i = i + fieldMeasurements) {
-//            drawGritLines(i + offsetFactorX + gritMin, gritMin, i + offsetFactorX + gritMin, gritMax);
-//            drawGritLines(gritMin, i + offsetFactorY + gritMin, gritMax, i + offsetFactorY + gritMin);
+//
+//        for(double i = 0; i < gritMax*10; i = i + fieldMeasurements) {
+//            drawGritLines(i + offsetX + gritMin, gritMin, i + offsetX + gritMin, gritMax);
+//            drawGritLines(gritMin, i + offsetY + gritMin, gritMax, i + offsetY + gritMin);
 //        }
         context.setLineWidth(1);
         context.setStroke(Color.LIGHTSALMON);

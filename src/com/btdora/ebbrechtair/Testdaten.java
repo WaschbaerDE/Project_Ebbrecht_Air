@@ -32,6 +32,9 @@ public class Testdaten {
 
         Airport sao = new Airport("Sao Paulo", -23.426944, -47.165833);
         airportsArray.add(sao);
+
+        Airport test = new Airport("Test", 100, 100);
+        airportsArray.add(test);
     }
 
 }
