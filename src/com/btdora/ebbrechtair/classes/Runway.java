@@ -13,7 +13,7 @@ public class Runway extends GeoCoordinate {
     private Double ApproachGlideslope;
     private String a01; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
     private String a02; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
-    private String a03; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
+    private String a03; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung 
 
     public Runway(String airportcode, String runwayIdentifier, int heading, int maxTakeoffLength, int runwayWidthFeet, String LOC_ILS, Double ILSFrequency1, Double ILSFrequency2, double Lat, double Lon, int touchdownAltitude, Double approachGlideslope, String a01, String a02, String a03) {
         super(Lat,Lon);
