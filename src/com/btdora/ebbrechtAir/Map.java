@@ -45,13 +45,18 @@ public class Map extends Canvas {
         td1.airportsTest();
 
 
-        for (int i = 0; i < td1.objects.size() ; i++) {
+    if(td1.objects.size() > 0){
+        for (int i = 0; i < td1.objects.size() ; i++){
+
+        }
+    }
 
 
 
 
 
-                    }
+
+
 
 
 
