@@ -30,8 +30,6 @@ public class Runway extends GeoCoordinate {
         this.a01 = a01;
         this.a02 = a02;
         this.a03 = a03;
-
     }
-
 
 }

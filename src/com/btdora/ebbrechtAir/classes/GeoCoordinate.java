@@ -9,9 +9,7 @@ public abstract class GeoCoordinate {
         Lon = lon;
     }
 
-    public Double getLat() {
-        return Lat;
-    }
+    public Double getLat() {return Lat;}
 
     public Double getLon() {
         return Lon;

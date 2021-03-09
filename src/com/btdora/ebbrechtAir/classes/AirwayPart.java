@@ -11,9 +11,6 @@ public class AirwayPart {
     private int OutBoundCourse;
     private Double LegLength;
 
-
-
-
     public AirwayPart(String airwayID, int atsPartition, String fixID, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength) {
         AirwayID = airwayID;
         AtsPartition = atsPartition;
@@ -25,6 +22,4 @@ public class AirwayPart {
         OutBoundCourse = outBoundCourse;
         LegLength = legLength;
     }
-
-
 }

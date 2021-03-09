@@ -20,6 +20,11 @@ public class Airport extends GeoCoordinate {
         this.b01 = b01;
     }
 
+    public Airport(String ICAOCode, Double lat, Double lon) {
+        super(lat, lon);
+        this.ICAOCode = ICAOCode;
+    }
+
     public String toString() {
         return this.ICAOCode+" "+this.AirportName;
     }

@@ -6,53 +6,33 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
-import java.util.ArrayList;
-
 public class Map extends Canvas {
-    private GraphicsContext context = this.getGraphicsContext2D();
+    private final GraphicsContext context = this.getGraphicsContext2D();
 
     String imagePath = "com/btdora/ebbrechtAir/images/";
     Image airport = new Image(imagePath + "airport.png");
 
-
-    static private double canvasMidFactorX = 500;
-    static private double canvasMidFactorY = 500;
-    static private double zoomFactor = 3;
-    static private double offsetX = 0;
-    static private double offsetY = 0;
+    static private final double canvasMidFactorX = 500; // x-coordinate of middlepoint on canvas in pixel
+    static private final double canvasMidFactorY = 500; // y-coordinate of middlepoint on canvas in pixel
+    static private double zoomFactor = 3;         // faktor between pixel to Degree zoomFaktor * Pixel = Degree || 3Pixel = 1Degree
+    static private double offsetX = 0;            // x-coordinate of middlepoint in degree
+    static private double offsetY = 0;            // y-coordinate of middlepoint in degree
     static double px1;
     static double py1;
     static double px2;
     static double py2;
-    static double leftUpperCornerX;
-    static double leftUpperCornerY;
-    static double rightLowerCornerX;
-    static double rightLowerCornerY;
+    static double leftUpperCornerX;               // x-coordinate of leftuppercorner in degree
+    static double leftUpperCornerY;               // y-coordinate of leftuppercorner in degree
+    static double rightLowerCornerX;              // x-coordinate of rightlowercorner in degree
+    static double rightLowerCornerY;              // y-coordinate of rightlowercorner in degree
 
     public Map() {
         super(1000, 1000);
 
+        //initial management of map
         this.drawGrit();
-//        drawTestAirways();
-
         Testdaten td1 = new Testdaten();
         td1.airportsTest();
-        double lat2 = zoomdragFactorLat(td1.airportsArray.get(7).latitude, zoomFactor, offsetY, canvasMidFactorY);
-        double lon2 = zoomdragFactorLon(td1.airportsArray.get(7).longitude, zoomFactor, offsetX, canvasMidFactorX);
-        double lat3 = zoomdragFactorLat(td1.airportsArray.get(8).latitude, zoomFactor, offsetY, canvasMidFactorY);
-        double lon3 = zoomdragFactorLon(td1.airportsArray.get(8).longitude, zoomFactor, offsetX, canvasMidFactorX);
-        colorAirwayRoutes(lat2, lon2, lat3, lon3);
-        for (int i = 0; i < td1.airportsArray.size(); i++){
-            double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
-            double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-//            double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-//            double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
-            setAirportLocation(lat, lon);
-//            setAirportLocation(lat1, lon1);
-//            drawAirwayLines(lat,lon,lat1,lon1);
-        }
-
 
         setOnScroll (event -> {
             px1 = event.getX();
@@ -73,38 +53,37 @@ public class Map extends Canvas {
 
                 drawGrit();
                 td1.airportsTest();
-                double lat4 = zoomdragFactorLat(td1.airportsArray.get(7).latitude, zoomFactor, offsetY, canvasMidFactorY);
-                double lon4 = zoomdragFactorLon(td1.airportsArray.get(7).longitude, zoomFactor, offsetX, canvasMidFactorX);
-                double lat5 = zoomdragFactorLat(td1.airportsArray.get(8).latitude, zoomFactor, offsetY, canvasMidFactorY);
-                double lon5 = zoomdragFactorLon(td1.airportsArray.get(8).longitude, zoomFactor, offsetX, canvasMidFactorX);
+                double lat4 = zoomdragFactorLat(Testdaten.airportsArray.get(7).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                double lon4 = zoomdragFactorLon(Testdaten.airportsArray.get(7).getLon(), zoomFactor, offsetX, canvasMidFactorX);
+                double lat5 = zoomdragFactorLat(Testdaten.airportsArray.get(8).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                double lon5 = zoomdragFactorLon(Testdaten.airportsArray.get(8).getLon(), zoomFactor, offsetX, canvasMidFactorX);
                 colorAirwayRoutes(lat4, lon4, lat5, lon5);
-                for (int i = 0; i < td1.airportsArray.size(); i++){
-                    double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
-                    double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-//                    double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-//                    double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
-                    setAirportLocation(lat, lon);
-//                    setAirportLocation(lat1, lon1);
-//                    drawAirwayLines(lat,lon,lat1,lon1);
+                for (int i = 0; i < Testdaten.airportsArray.size(); i++){
+                    double lat = zoomdragFactorLat(Testdaten.airportsArray.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                    double lon = zoomdragFactorLon(Testdaten.airportsArray.get(i).getLon(), zoomFactor, offsetX, canvasMidFactorX);
+
+                    drawGeoCoordinate(lat, lon);
+
                 }
             }
         });
 
 
         setOnMousePressed( event -> {
-            this.px1 = event.getX();
-            this.py1 = event.getY();
+            px1 = event.getX();
+            py1 = event.getY();
             getLeftUpperCornerX();
             getLeftUpperCornerY();
             getRightLowerCornerX();
             getRightLowerCornerY();
         });
-        /**
-         * Drags the points on the map.
+
+        /*
+          Drags the points on the map.
          */
         setOnMouseDragged(event -> {
-            this.px2 = event.getX();
-            this.py2 = event.getY();
+            px2 = event.getX();
+            py2 = event.getY();
             offsetX = offsetX + (px2 - px1);
             offsetY = offsetY + (py2 - py1);
             px1 = px2;
@@ -113,38 +92,31 @@ public class Map extends Canvas {
             context.clearRect(0,0, 1000, 1000);
             drawGrit();
             td1.airportsTest();
-            double lat6 = zoomdragFactorLat(td1.airportsArray.get(7).latitude, zoomFactor, offsetY, canvasMidFactorY);
-            double lon6 = zoomdragFactorLon(td1.airportsArray.get(7).longitude, zoomFactor, offsetX, canvasMidFactorX);
-            double lat7 = zoomdragFactorLat(td1.airportsArray.get(8).latitude, zoomFactor, offsetY, canvasMidFactorY);
-            double lon7 = zoomdragFactorLon(td1.airportsArray.get(8).longitude, zoomFactor, offsetX, canvasMidFactorX);
+            double lat6 = zoomdragFactorLat(Testdaten.airportsArray.get(7).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+            double lon6 = zoomdragFactorLon(Testdaten.airportsArray.get(7).getLon(), zoomFactor, offsetX, canvasMidFactorX);
+            double lat7 = zoomdragFactorLat(Testdaten.airportsArray.get(8).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+            double lon7 = zoomdragFactorLon(Testdaten.airportsArray.get(8).getLon(), zoomFactor, offsetX, canvasMidFactorX);
             colorAirwayRoutes(lat6, lon6, lat7, lon7);
-            for (int i = 0; i < td1.airportsArray.size(); i++){
-                double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
-                double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-//                double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-//                double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
-                setAirportLocation(lat, lon);
-//                setAirportLocation(lat1, lon1);
-//                drawAirwayLines(lat,lon,lat1,lon1);
+            for (int i = 0; i < Testdaten.airportsArray.size(); i++){
+                double lat = zoomdragFactorLat(Testdaten.airportsArray.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                double lon = zoomdragFactorLon(Testdaten.airportsArray.get(i).getLon(), zoomFactor, offsetX, canvasMidFactorX);
+                drawGeoCoordinate(lat, lon);
+                }
             }
-        });
+        );
     }
 
     public void getLeftUpperCornerX(){
         leftUpperCornerX = offsetX - (500 * zoomFactor);
-        System.out.println(leftUpperCornerX);
     }
     public void getLeftUpperCornerY(){
         leftUpperCornerY = offsetY + (500 * zoomFactor);
-        System.out.println(leftUpperCornerY);
     }
     public void getRightLowerCornerX(){
         rightLowerCornerX = offsetX + (500 * zoomFactor);
-        System.out.println(rightLowerCornerX);
     }
     public void getRightLowerCornerY(){
         rightLowerCornerY = offsetY - (500 * zoomFactor);
-        System.out.println(rightLowerCornerY);
     }
 
     /**
@@ -153,13 +125,7 @@ public class Map extends Canvas {
     private void drawGrit(){
         int gritMax = 20000;
         int gritMin = gritMax * -1;
-        int fieldMeasurements = 10;
-//        fieldMeasurements = fieldMeasurements + zoomFactor;
 
-//        for(int i = 0; i < gritMax*10; i = i + fieldMeasurements) {
-//            drawGritLines(i + offsetFactorX + gritMin, gritMin, i + offsetFactorX + gritMin, gritMax);
-//            drawGritLines(gritMin, i + offsetFactorY + gritMin, gritMax, i + offsetFactorY + gritMin);
-//        }
         context.setLineWidth(1);
         context.setStroke(Color.LIGHTSALMON);
         context.strokeLine(canvasMidFactorX+offsetX,gritMin, canvasMidFactorX+offsetX, gritMax);
@@ -181,24 +147,6 @@ public class Map extends Canvas {
         context.setStroke(Color.BLACK);
         context.strokeLine(x1, y1, x2, y2);
     }
-
-//    /**
-//     * Processes and provides testcoordinates to draw on canvas.
-//     */
-//    public void drawTestAirways(){
-//        for (int i = 1; i < 30; i++) {
-//            lineCoordinates[0] = (i*10);
-//            lineCoordinates[1] = (i*20);
-//            lineCoordinates[2] = (i*30);
-//            lineCoordinates[3] = (i*40);
-//            drawAirwayLines(lineCoordinates[0],lineCoordinates[1],lineCoordinates[2],lineCoordinates[3]);
-//        }
-//        lineCoordinates[0] = (30*10);
-//        lineCoordinates[1] = (30*20);
-//        lineCoordinates[2] = (30*30);
-//        lineCoordinates[3] = (30*40);
-//        colorAirwayRoutes(lineCoordinates[0],lineCoordinates[1],lineCoordinates[2],lineCoordinates[3]);
-//    }
 
     /**
      * Draws all airway-lines on canvas.
@@ -259,7 +207,7 @@ public class Map extends Canvas {
      * @param lat
      * @param lon
      */
-    public void setAirportLocation(double lat, double lon) {
+    public void drawGeoCoordinate(double lat, double lon) {
         int measurements = 50;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;

@@ -1,5 +1,7 @@
 package com.btdora.ebbrechtAir;
 
+import com.btdora.ebbrechtAir.classes.Airport;
+
 import java.util.ArrayList;
 
 public class Testdaten {
