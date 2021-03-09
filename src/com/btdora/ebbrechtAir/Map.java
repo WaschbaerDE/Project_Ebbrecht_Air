@@ -21,6 +21,8 @@ public class Map extends Canvas {
     static private double zoomFactor = 3;
     static private double offsetX = 0;
     static private double offsetY = 0;
+    static private double adjustedOffsetX = offsetX * zoomFactor;
+    static private double adjustedOffsetY = offsetX * zoomFactor;
     static double px1;
     static double py1;
     static double px2;
@@ -46,11 +48,7 @@ public class Map extends Canvas {
         for (int i = 0; i < td1.airportsArray.size(); i++){
             double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
             double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-//            double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-//            double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
             setAirportLocation(lat, lon);
-//            setAirportLocation(lat1, lon1);
-//            drawAirwayLines(lat,lon,lat1,lon1);
         }
 
 
@@ -81,11 +79,7 @@ public class Map extends Canvas {
                 for (int i = 0; i < td1.airportsArray.size(); i++){
                     double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
                     double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-//                    double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-//                    double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
                     setAirportLocation(lat, lon);
-//                    setAirportLocation(lat1, lon1);
-//                    drawAirwayLines(lat,lon,lat1,lon1);
                 }
             }
         });
@@ -121,11 +115,7 @@ public class Map extends Canvas {
             for (int i = 0; i < td1.airportsArray.size(); i++){
                 double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
                 double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-//                double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-//                double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
                 setAirportLocation(lat, lon);
-//                setAirportLocation(lat1, lon1);
-//                drawAirwayLines(lat,lon,lat1,lon1);
             }
         });
     }
@@ -162,7 +152,7 @@ public class Map extends Canvas {
 //        }
         context.setLineWidth(1);
         context.setStroke(Color.LIGHTSALMON);
-        context.strokeLine(canvasMidFactorX+offsetX,gritMin, canvasMidFactorX+offsetX, gritMax);
+        context.strokeLine(canvasMidFactorX+offsetX,gritMin, canvasMidFactorX + offsetX, gritMax);
         context.strokeLine(gritMin,canvasMidFactorY+offsetY, gritMax, canvasMidFactorY+offsetY);
         context.setStroke(Color.BLACK);
         context.strokeLine(canvasMidFactorX,canvasMidFactorY-5, canvasMidFactorX, canvasMidFactorY+5);
