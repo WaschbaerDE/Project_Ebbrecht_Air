@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtair.classes;
+package com.btdora.ebbrechtAir.classes;
 
 public class Navaid extends GeoCoordinate {
     private String NavaidID;

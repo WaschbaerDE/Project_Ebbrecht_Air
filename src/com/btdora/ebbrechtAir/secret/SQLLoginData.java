@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtair.secret;
+package com.btdora.ebbrechtAir.secret;
 
 
 public class SQLLoginData{

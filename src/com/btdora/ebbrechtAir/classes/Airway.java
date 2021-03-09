@@ -1,7 +1,6 @@
-package com.btdora.ebbrechtair.classes;
+package com.btdora.ebbrechtAir.classes;
 
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Airway extends AirObject {

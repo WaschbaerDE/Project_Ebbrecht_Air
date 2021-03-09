@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtair.classes;
+package com.btdora.ebbrechtAir.classes;
 
 public class Fix extends GeoCoordinate {
     private String FixID;
@@ -12,8 +12,5 @@ public class Fix extends GeoCoordinate {
         Areacode = areacode;
         Departure = departure;
         Arrival = arrival;
-
     }
-
-
 }

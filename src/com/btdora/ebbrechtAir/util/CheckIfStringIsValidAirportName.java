@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtair.util;
+package com.btdora.ebbrechtAir.util;
 
 import java.sql.*;
 
@@ -8,7 +8,7 @@ public class CheckIfStringIsValidAirportName {
 
     public String CheckIfStringIsValidAirportName(String input) {
         this.input = "Frankfurt";//get input1
-        CreateSQLConnector createSQLConnector = new CreateSQLConnector();
+        SQLConnector createSQLConnector = new SQLConnector();
 
         try (Statement stmt = createSQLConnector.getSQLConnection().createStatement();) {
             String SQL = "SELECT * FROM db_Airport WHERE AirportName LIKE '%" + this.input + "%'";        // SELECT-ABFRAGE

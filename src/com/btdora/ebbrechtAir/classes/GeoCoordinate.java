@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtair.classes;
+package com.btdora.ebbrechtAir.classes;
 
 public abstract class GeoCoordinate {
     private Double Lat;

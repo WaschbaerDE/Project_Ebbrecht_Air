@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtair.util;
+package com.btdora.ebbrechtAir.util;
 
 import java.sql.*;
 
@@ -9,7 +9,7 @@ public class CheckIfStringIsValidICAO {
     public String checkIfStringIsValidICAO(String input) {
 
         this.input = "Frankfurt";//get input1//Platzhalterbewirtschaftung
-        CreateSQLConnector createSQLConnector = new CreateSQLConnector();
+        SQLConnector createSQLConnector = new SQLConnector();
 
         try (Statement stmt = createSQLConnector.getSQLConnection().createStatement();) {
             String SQL = "SELECT * FROM db_Airport WHERE ICAOCode LIKE '%" + this.input + "%'";        // SELECT-ABFRAGE
