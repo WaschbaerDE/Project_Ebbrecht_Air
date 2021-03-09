@@ -3,6 +3,7 @@ package com.btdora.ebbrechtAir;
 
 import com.btdora.ebbrechtAir.classes.Fix;
 import com.btdora.ebbrechtAir.classes.GeoCoordinate;
+import com.btdora.ebbrechtAir.classes.Navaid;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -21,6 +22,7 @@ public class Map extends Canvas {
     Image navaids_ndb = new Image(imagePath + "navaids_ndb.png");
     Image navaids_vor = new Image(imagePath + "navaids_vor.png");
     Image navaids_vordme = new Image(imagePath + "navaids_vordme.png");
+    Image fix = new Image(imagePath + "Fix.png");
     //Image fix = new Image(imagePath + "fix.png");
 
     static private double canvasMidFactorX = 500;
@@ -47,6 +49,24 @@ public class Map extends Canvas {
 
     if(td1.objects.size() > 0){
         for (int i = 0; i < td1.objects.size() ; i++){
+
+            if(td1.objects.get(i) instanceof Airport ){
+                double lat = td1.objects.get(i).getLat();
+                double lon = td1.objects.get(i).getLon();
+                drawairport(lat,lon);
+            }
+            else if(td1.objects.get(i) instanceof Fix ){
+                double lat = td1.objects.get(i).getLat();
+                double lon = td1.objects.get(i).getLon();
+                drawfix(lat,lon);
+            }
+            else if(td1.objects.get(i) instanceof Navaid){
+                double lat = td1.objects.get(i).getLat();
+                double lon = td1.objects.get(i).getLon();
+                drawNavaids_DME(lat,lon);
+            }
+            
+            
 
         }
     }
@@ -336,8 +356,12 @@ public class Map extends Canvas {
         context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
     }
 
-    public void drawImageObject(){
 
+    public void drawfix(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(fix, lon, lat, measurements, measurements);
     }
 
 }

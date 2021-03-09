@@ -39,10 +39,10 @@ public class Testdaten {
         Airport sao = new Airport("Sao Paulo", -23.426944, -47.165833);
         airportsArray.add(sao);
 
-        Airport rio = new Airport("Rio", -22.908333, -43.196388);
+        Airport rio = new Airport("Rio", -89.908333, -120.196388);
         airportsArray.add(rio);
 
-       
+
         objects.add(0,rio);
         objects.add(1,sao);
         objects.add(2,tok);
