@@ -15,6 +15,7 @@ public class Map extends Canvas {
     String imagePath = "com/btdora/ebbrechtAir/images/";
     Image airport = new Image(imagePath + "airport.png");
 
+
     static private double canvasMidFactorX = 500;
     static private double canvasMidFactorY = 500;
     static private double zoomFactor = 3;
@@ -33,6 +34,7 @@ public class Map extends Canvas {
         super(1000, 1000);
 
         this.drawGrit();
+//        drawTestAirways();
 
         Testdaten td1 = new Testdaten();
         td1.airportsTest();
@@ -41,14 +43,14 @@ public class Map extends Canvas {
         double lat3 = zoomdragFactorLat(td1.airportsArray.get(8).latitude, zoomFactor, offsetY, canvasMidFactorY);
         double lon3 = zoomdragFactorLon(td1.airportsArray.get(8).longitude, zoomFactor, offsetX, canvasMidFactorX);
         colorAirwayRoutes(lat2, lon2, lat3, lon3);
-        for (int i = 0; i < td1.airportsArray.size(); i = i+2){
+        for (int i = 0; i < td1.airportsArray.size(); i++){
             double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
             double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-            double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-            double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
+//            double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
+//            double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
             setAirportLocation(lat, lon);
-            setAirportLocation(lat1, lon1);
-            drawAirwayLines(lat,lon,lat1,lon1);
+//            setAirportLocation(lat1, lon1);
+//            drawAirwayLines(lat,lon,lat1,lon1);
         }
 
 
@@ -76,17 +78,18 @@ public class Map extends Canvas {
                 double lat5 = zoomdragFactorLat(td1.airportsArray.get(8).latitude, zoomFactor, offsetY, canvasMidFactorY);
                 double lon5 = zoomdragFactorLon(td1.airportsArray.get(8).longitude, zoomFactor, offsetX, canvasMidFactorX);
                 colorAirwayRoutes(lat4, lon4, lat5, lon5);
-                for (int i = 0; i < td1.airportsArray.size(); i = i+2){
+                for (int i = 0; i < td1.airportsArray.size(); i++){
                     double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
                     double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-                    double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-                    double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
+//                    double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
+//                    double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
                     setAirportLocation(lat, lon);
-                    setAirportLocation(lat1, lon1);
-                    drawAirwayLines(lat,lon,lat1,lon1);
+//                    setAirportLocation(lat1, lon1);
+//                    drawAirwayLines(lat,lon,lat1,lon1);
                 }
             }
         });
+
 
         setOnMousePressed( event -> {
             this.px1 = event.getX();
@@ -115,14 +118,14 @@ public class Map extends Canvas {
             double lat7 = zoomdragFactorLat(td1.airportsArray.get(8).latitude, zoomFactor, offsetY, canvasMidFactorY);
             double lon7 = zoomdragFactorLon(td1.airportsArray.get(8).longitude, zoomFactor, offsetX, canvasMidFactorX);
             colorAirwayRoutes(lat6, lon6, lat7, lon7);
-            for (int i = 0; i < td1.airportsArray.size(); i = i+2){
+            for (int i = 0; i < td1.airportsArray.size(); i++){
                 double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
                 double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
-                double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
-                double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
+//                double lat1 = zoomdragFactorLat(td1.airportsArray.get(i+1).latitude, zoomFactor, offsetY, canvasMidFactorY);
+//                double lon1 = zoomdragFactorLon(td1.airportsArray.get(i+1).longitude, zoomFactor, offsetX, canvasMidFactorX);
                 setAirportLocation(lat, lon);
-                setAirportLocation(lat1, lon1);
-                drawAirwayLines(lat,lon,lat1,lon1);
+//                setAirportLocation(lat1, lon1);
+//                drawAirwayLines(lat,lon,lat1,lon1);
             }
         });
     }
@@ -148,14 +151,14 @@ public class Map extends Canvas {
      * Provides coordinates for grit and draws cross on canvas.
      */
     private void drawGrit(){
-        double  gritMax = 20000;
-        double gritMin = gritMax * -1;
-//        double fieldMeasurements = 10;
+        int gritMax = 20000;
+        int gritMin = gritMax * -1;
+        int fieldMeasurements = 10;
 //        fieldMeasurements = fieldMeasurements + zoomFactor;
-//
-//        for(double i = 0; i < gritMax*10; i = i + fieldMeasurements) {
-//            drawGritLines(i + offsetX + gritMin, gritMin, i + offsetX + gritMin, gritMax);
-//            drawGritLines(gritMin, i + offsetY + gritMin, gritMax, i + offsetY + gritMin);
+
+//        for(int i = 0; i < gritMax*10; i = i + fieldMeasurements) {
+//            drawGritLines(i + offsetFactorX + gritMin, gritMin, i + offsetFactorX + gritMin, gritMax);
+//            drawGritLines(gritMin, i + offsetFactorY + gritMin, gritMax, i + offsetFactorY + gritMin);
 //        }
         context.setLineWidth(1);
         context.setStroke(Color.LIGHTSALMON);
