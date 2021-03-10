@@ -18,18 +18,15 @@ public class Utilities {
             String SQL = "SELECT * FROM db_Airport WHERE ICAOCode LIKE '" + input + "'";        // SELECT-ABFRAGE
             ResultSet rs = stmt.executeQuery(SQL);
             if (rs.next()) {
-                list.add(new Airport(rs.getString("ICAOCode"), rs.getDouble("Lat"), rs.getDouble("Lon")));
+                list.add(new Airport(rs.getString("ICAOCode"), rs.getString("AirportName"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("AltitudeAirportInFeet"), rs.getString("a01"), rs.getString("a02"), rs.getInt("MaxRunwayLength"),rs.getString("b01"), rs.getInt("IFR")));
             } else {
                 list = getAirportByName(input);
             }
         } catch(SQLException e) {
             e.printStackTrace();
         }
-
         return list;
     }
-
-
 
     public static List<Airport> getAirportByName(String input) {
         List<Airport> list = new ArrayList<Airport>();
@@ -40,12 +37,15 @@ public class Utilities {
             ResultSet rs = stmt.executeQuery(SQL);
 
             while(rs.next()) {
-                list.add(new Airport(rs.getString("ICAOCode"), rs.getDouble("Lat"), rs.getDouble("Lon")));
+                list.add(new Airport(rs.getString("ICAOCode"), rs.getString("AirportName"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("AltitudeAirportInFeet"), rs.getString("a01"), rs.getString("a02"), rs.getInt("MaxRunwayLength"),rs.getString("b01"), rs.getInt("IFR")));
             }
         } catch(SQLException e){
             e.printStackTrace();
         }
-
         return list;
+    }
+
+    public void stringCheck(String inputStart, String inputZiel){
+
     }
 }
