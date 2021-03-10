@@ -1,7 +1,5 @@
 package com.btdora.ebbrechtAir.classes;
 
-import com.btdora.ebbrechtAir.Airport;
-
 import java.util.ArrayList;
 
 public class Fix extends GeoCoordinate {
