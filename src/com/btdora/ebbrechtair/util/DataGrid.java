@@ -29,14 +29,24 @@ public class DataGrid {
             while (rs.next()) {
                 int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
                 int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
-
                 this.gridArray.get(lat).get(lon).add(new Airport(rs.getString("ICAOCode"), rs.getString("AirportName"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("AltitudeAirportInFeet"), rs.getString("a01"), rs.getString("a02"), rs.getInt("MaxRunwayLength"), rs.getString("b01")));
-                //this.gridArray.get(lat).get(lon).add(new Fix(rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getString("Areacode"), rs.getString("Departure"), rs.getString("Arrival")));
-                //this.gridArray.get(lat).get(lon).add(new Navaid(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getInt("RadialCapability"), rs.getInt("DMECapability"), rs.getString("a01"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode"), rs.getString("a02")));
-               // this.gridArray.get(lat).get(lon).add(new Runway(rs.getString("RunwayIdentifier"), rs.getInt("Heading"), rs.getInt("MaxTakeoffLength"), rs.getInt("RunwayWidthFeet"), rs.getString("LOC_ILS"), rs.getDouble("ILSFrequency1"), rs.getDouble("ILSFrequency2"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("TouchdownAltitude"), rs.getDouble("ApproachGlideslope"), rs.getString("a01"), rs.getString("a02"), rs.getString("a03")));
-                //  this.gridArray.get(lat).get(lon).add(new Airway(rs.getString("AirwayID"), rs.getInt("AirwayPartition"), rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getString("IDOfNextFix"), rs.getDouble("LatNext"), rs.getDouble("LnN"), rs.getInt("InBoundCourse"), rs.getInt("OutBoundCourse"), rs.getDouble("LegLength")));
 
             }
+            while (rs.next()) {
+                int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
+                int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
+                this.gridArray.get(lat).get(lon).add(new Fix(rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getString("Areacode"), rs.getString("Departure"), rs.getString("Arrival")));
+            }
+
+            while (rs.next()) {
+                int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
+                int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
+                this.gridArray.get(lat).get(lon).add(new Navaid(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getInt("RadialCapability"), rs.getInt("DMECapability"), rs.getString("a01"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode"), rs.getString("a02")));
+
+            }
+
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
