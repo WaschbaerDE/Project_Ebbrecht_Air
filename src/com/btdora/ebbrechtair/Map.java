@@ -164,14 +164,14 @@ public class Map extends Canvas {
         context.clearRect(0,0, 1000, 1000);
         drawGrit();
         td1.airportsTest();
-        double lat6 = zoomdragFactorLat(td1.airportsArray.get(7).latitude, zoomFactor, offsetY, canvasMidFactorY);
-        double lon6 = zoomdragFactorLon(td1.airportsArray.get(7).longitude, zoomFactor, offsetX, canvasMidFactorX);
-        double lat7 = zoomdragFactorLat(td1.airportsArray.get(8).latitude, zoomFactor, offsetY, canvasMidFactorY);
-        double lon7 = zoomdragFactorLon(td1.airportsArray.get(8).longitude, zoomFactor, offsetX, canvasMidFactorX);
+        double lat6 = zoomdragFactorLat(td1.airportsArray.get(7).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+        double lon6 = zoomdragFactorLon(td1.airportsArray.get(7).getLon(), zoomFactor, offsetX, canvasMidFactorX);
+        double lat7 = zoomdragFactorLat(td1.airportsArray.get(8).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+        double lon7 = zoomdragFactorLon(td1.airportsArray.get(8).getLon(), zoomFactor, offsetX, canvasMidFactorX);
         colorAirwayRoutes(lat6, lon6, lat7, lon7);
         for (int i = 0; i < td1.airportsArray.size(); i++){
-            double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
-            double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
+            double lat = zoomdragFactorLat(td1.airportsArray.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+            double lon = zoomdragFactorLon(td1.airportsArray.get(i).getLon(), zoomFactor, offsetX, canvasMidFactorX);
             setAirportLocation(lat, lon);
         }
     }
@@ -238,7 +238,7 @@ public class Map extends Canvas {
     }
 
     /**
-     * Adds zoom- and drag-Factors to the latitude.
+     * Adds zoom- and drag-Factors to the lat.
      * @param lat
      * @param zoomFactor
      * @param offsetY
@@ -251,7 +251,7 @@ public class Map extends Canvas {
     }
 
     /**
-     * Adds zoom- and drag-Factors to the longitude.
+     * Adds zoom- and drag-Factors to the lon.
      * @param lon
      * @param zoomFactor
      * @param offsetX

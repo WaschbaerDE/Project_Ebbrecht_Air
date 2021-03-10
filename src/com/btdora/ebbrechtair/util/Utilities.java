@@ -18,7 +18,7 @@ public class Utilities {
             String SQL = "SELECT * FROM db_Airport WHERE ICAOCode LIKE '" + input + "'";        // SELECT-ABFRAGE
             ResultSet rs = stmt.executeQuery(SQL);
             if (rs.next()) {
-                list.add(new Airport(rs.getString("ICAOCode"), rs.getString("AirportName"), rs.getInt("AltitudeAirportInFeet"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("MaxRunwayLength")));
+                list.add(new Airport(rs.getString("ICAOCode"), rs.getDouble("Lat"), rs.getDouble("Lon")));
             } else {
                 list = getAirportByName(input);
             }
@@ -40,7 +40,7 @@ public class Utilities {
             ResultSet rs = stmt.executeQuery(SQL);
 
             while(rs.next()) {
-                list.add(new Airport(rs.getString("ICAOCode"), rs.getString("AirportName"), rs.getInt("AltitudeAirportInFeet"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("MaxRunwayLength")));
+                list.add(new Airport(rs.getString("ICAOCode"), rs.getDouble("Lat"), rs.getDouble("Lon")));
             }
         } catch(SQLException e){
             e.printStackTrace();
