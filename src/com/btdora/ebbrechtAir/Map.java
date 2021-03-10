@@ -20,6 +20,8 @@ public class Map extends Canvas {
     Image airport = new Image(imagePath + "airport.png");
     Image navaids = new Image(imagePath + "NAVAIDS.png");
     Image fix = new Image(imagePath + "Fix.png");
+    Image airportifr = new Image(imagePath + "AIRPORT_IFR.png");
+    Image airportvfr = new Image(imagePath + "AIRPORT_VFR.png");
 //    Image navaids_ndb = new Image(imagePath + "NAVAIDS_NDB.png");
 //    Image navaids_vor = new Image(imagePath + "NAVAIDS_VOR.png");
 //    Image navaids_vordme = new Image(imagePath + "NAVAIDS_VORDME.png");
@@ -200,9 +202,19 @@ public class Map extends Canvas {
             for (int i = 0; i < td1.objects.size(); i++) {
 
                 if (td1.objects.get(i) instanceof Airport) {
-                    double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
-                    double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
-                    drawairport(lat, lon);
+                    if(((Airport) td1.objects.get(i)).getIFR() == 0) {
+                        double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                        double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+                        drawairportvfr(lat, lon);
+                    } if(((Airport) td1.objects.get(i)).getIFR() == 1) {
+                        double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                        double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+                        drawairportifr(lat, lon);
+                    } else {
+                        double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                        double lon = zoomdragFactorLon(td1.objects.get(i).getLon(), zoomFactor, offsetY, canvasMidFactorY);
+                        drawairport(lat, lon);
+                    }
 
                 } else if (td1.objects.get(i) instanceof Fix) {
                     double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
@@ -329,6 +341,20 @@ public class Map extends Canvas {
         context.drawImage(airport, lon, lat, measurements, measurements);
     }
 
+    public void drawairportifr(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airportifr, lon, lat, measurements, measurements);
+    }
+
+    public void drawairportvfr(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airportvfr, lon, lat, measurements, measurements);
+    }
+
     public void drawNavaids(double lat, double lon){
         int measurements = 50;
         lat = lat - measurements / 2;
@@ -361,7 +387,7 @@ public class Map extends Canvas {
 
 
     public void drawfix(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(fix, lon, lat, measurements, measurements);

@@ -8,8 +8,9 @@ public class Airport extends GeoCoordinate {
     private String a02;
     private int MaxRunwayLength;
     private String b01;
+    private int IFR;
 
-    public Airport(String ICAOCode, String airportName, double Lat,double Lon, int altitudeAirportInFeet, String a01, String a02, int maxRunwayLength, String b01) {
+    public Airport(String ICAOCode, String airportName, double Lat,double Lon, int altitudeAirportInFeet, String a01, String a02, int maxRunwayLength, String b01, int IFR) {
         super(Lat,Lon);
         this.ICAOCode = ICAOCode;
         AirportName = airportName;
@@ -18,7 +19,14 @@ public class Airport extends GeoCoordinate {
         this.a02 = a02;
         MaxRunwayLength = maxRunwayLength;
         this.b01 = b01;
+        this.IFR = IFR;
     }
 
+    public int getIFR() {
+        return IFR;
+    }
 
+    public void setIFR(int IFR) {
+        this.IFR = IFR;
+    }
 }
