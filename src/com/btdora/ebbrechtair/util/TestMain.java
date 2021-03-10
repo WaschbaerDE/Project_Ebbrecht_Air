@@ -12,7 +12,7 @@ public class TestMain {
         DataGrid a = new DataGrid();
 
         ArrayList<GeoCoordinate> result = a.get(50, 8);
-        //System.out.println(result);
+        System.out.println(result);
 
 
 
