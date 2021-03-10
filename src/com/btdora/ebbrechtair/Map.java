@@ -12,28 +12,29 @@ public class Map extends Canvas {
     String imagePath = "com/btdora/ebbrechtAir/images/";
     Image airport = new Image(imagePath + "airport.png");
 
-    static private double canvasMidX = 500;
-    static private double canvasMidY = 500;
-    static private double zoomFactor = 3;
-    static private double offsetX = 0;
-    static private double offsetY = 0;
-    static double px1;
-    static double py1;
-    static double px2;
-    static double py2;
-    static double leftUpperCornerX;
-    static double leftUpperCornerY;
-    static double rightLowerCornerX;
-    static double rightLowerCornerY;
+    private double canvasMidX = 500;
+    private double canvasMidY = 500;
+    private double zoomFactor = 3;
+    private double offsetX = 0;
+    private double offsetY = 0;
+    private double px1;
+    private double py1;
+    private double px2;
+    private double py2;
+    private double leftUpperCornerX;
+    private double leftUpperCornerY;
+    private double rightLowerCornerX;
+    private double rightLowerCornerY;
 
     public Map() {
         super(1000, 1000);
 
         this.jumpToMapSection(this.zoomOnSeamiles(108),50.033306,8.570456);
+        this.jumpToMapSection(5,50.033306,8.570456);
 //        jumpToMapSection(1000,8.570456,50.033306);
 //        jumpToMapSection(60000,8.570456,50.033306);
 
-        this.setZoomOnObjects(50.033306, 8.570456, 52.362247,13.500672);
+//        this.setZoomOnObjects(50.033306, 8.570456, 52.362247,13.500672);
 
         this.drawGrit();
 
@@ -43,43 +44,45 @@ public class Map extends Canvas {
          * Scrolls on map towards mouse-position.
          */
         this.setOnScroll (event -> {
-            px1 = event.getX();
-            py1 = event.getY();
+
+            this.px1 = event.getX();
+            this.py1 = event.getY();
             double factor = event.getDeltaY();
+
             // funktioniert, aber zu langsam
+            if (factor > 0){
+                factor = 1;
+            } else {
+                factor = -1;
+            }
+
+            if ((this.zoomFactor + factor) > 3.2 && (this.zoomFactor + factor) < 6000) {
+                this.zoomFactor = this.zoomFactor + factor;
+
+                this.offsetX = this.offsetX + (this.canvasMidX - this.px1);
+                this.offsetY = this.offsetY + (this.canvasMidY - this.py1);
+
+                this.context.clearRect(0, 0, 1000, 1000);
+                this.manageTestdrawing();
+            }
+
+            // funktioniert noch nicht gut!
 //            if (factor > 0){
-//                factor = 0.5;
+//                factor = 1.15;
 //            } else {
-//                factor = -0.5;
+//                factor = 0.85;
 //            }
-//            if (zoomFactor * factor > 3.2 || factor > 0) {
-//                if (zoomFactor * factor < 6000 || factor < 0) {
-//                    this.zoomFactor = this.zoomFactor + factor;
+//            if (zoomFactor* factor > 3.2 || factor > 1) {
+//                if (zoomFactor* factor < 6000 || factor < 1) {
+//                    this.zoomFactor = this.zoomFactor * factor;
 //                    System.out.println(this.zoomFactor);
-//                    this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) / 5);
-//                    this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) / 5);
-//                    this.context.clearRect(0, 0, 1000, 1000);
+//                    this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) / (factor+2.5));
+//                    this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) / (factor+2.5));
 //
+//                    this.context.clearRect(0, 0, 1000, 1000);
 //                    this.manageTestdrawing();
 //                }
 //            }
-            // funktioniert noch nicht gut!
-            if (factor > 0){
-                factor = 1.15;
-            } else {
-                factor = 0.85;
-            }
-            if (zoomFactor* factor > 3.2 || factor > 1) {
-                if (zoomFactor* factor < 6000 || factor < 1) {
-                    this.zoomFactor = this.zoomFactor * factor;
-                    System.out.println(this.zoomFactor);
-                    this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) / (factor+2.5));
-                    this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) / (factor+2.5));
-                    this.context.clearRect(0, 0, 1000, 1000);
-
-                    this.manageTestdrawing();
-                }
-            }
         });
 
         this.setOnMousePressed( event -> {
@@ -189,7 +192,7 @@ public class Map extends Canvas {
     }
 
     /**
-     * Ajusts x-coordinate to current map.
+     * Adjusts x-coordinate to current map.
      * @param x
      * @return double x
      */
@@ -199,7 +202,7 @@ public class Map extends Canvas {
     }
 
     /**
-     * Ajusts y-coordinate to current map.
+     * Adjusts y-coordinate to current map.
      * @param y
      * @return double y
      */
