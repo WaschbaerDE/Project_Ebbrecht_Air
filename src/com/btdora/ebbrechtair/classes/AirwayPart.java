@@ -1,17 +1,15 @@
 package com.btdora.ebbrechtair.classes;
 
 public class AirwayPart extends GeoCoordinate{
-    private String AirwayID;
-    private int AtsPartition;
-    private String FixID;
-    private String IDOfNextFix;
-    private Double LonNext;
-    private Double LatNext;
-    private int InBoundCourse;
-    private int OutBoundCourse;
-    private Double LegLength;
-
-
+    private final String AirwayID;
+    private final int AtsPartition;
+    private final String FixID;
+    private final String IDOfNextFix;
+    private final Double LonNext;
+    private final Double LatNext;
+    private final int InBoundCourse;
+    private final int OutBoundCourse;
+    private final Double LegLength;
 
     public AirwayPart(String airwayID, int atsPartition, String fixID, double Lat, double Lon, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength) {
         super(Lat,Lon);
@@ -25,6 +23,5 @@ public class AirwayPart extends GeoCoordinate{
         OutBoundCourse = outBoundCourse;
         LegLength = legLength;
     }
-
 
 }

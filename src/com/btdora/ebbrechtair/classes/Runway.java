@@ -1,19 +1,19 @@
 package com.btdora.ebbrechtair.classes;
 
 public class Runway extends GeoCoordinate {
-    private String Airportcode;
-    private String RunwayIdentifier;
-    private int Heading;
-    private int MaxTakeoffLength;
-    private int RunwayWidthFeet;
-    private String LOC_ILS;
-    private Double ILSFrequency1;
-    private Double ILSFrequency2;
-    private int TouchdownAltitude;
-    private Double ApproachGlideslope;
-    private String a01; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
-    private String a02; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
-    private String a03; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung 
+    private final String Airportcode;
+    private final String RunwayIdentifier;
+    private final int Heading;
+    private final int MaxTakeoffLength;
+    private final int RunwayWidthFeet;
+    private final String LOC_ILS;
+    private final Double ILSFrequency1;
+    private final Double ILSFrequency2;
+    private final int TouchdownAltitude;
+    private final Double ApproachGlideslope;
+    private final String a01; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
+    private final String a02; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
+    private final String a03; //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
 
     public Runway(String airportcode, String runwayIdentifier, int heading, int maxTakeoffLength, int runwayWidthFeet, String LOC_ILS, Double ILSFrequency1, Double ILSFrequency2, double Lat, double Lon, int touchdownAltitude, Double approachGlideslope, String a01, String a02, String a03) {
         super(Lat,Lon);
@@ -30,8 +30,6 @@ public class Runway extends GeoCoordinate {
         this.a01 = a01;
         this.a02 = a02;
         this.a03 = a03;
-
     }
-
 
 }

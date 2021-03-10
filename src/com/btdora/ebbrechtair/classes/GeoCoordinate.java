@@ -1,8 +1,8 @@
 package com.btdora.ebbrechtair.classes;
 
 public abstract class GeoCoordinate {
-    private Double Lat;
-    private Double Lon;
+    private final Double Lat;
+    private final Double Lon;
 
     public GeoCoordinate(Double lat, Double lon) {
         Lat = lat;
