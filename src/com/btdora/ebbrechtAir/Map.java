@@ -1,6 +1,8 @@
 package com.btdora.ebbrechtAir;
 
 
+import com.btdora.ebbrechtAir.classes.Fix;
+import com.btdora.ebbrechtAir.classes.Navaid;
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,6 +17,11 @@ public class Map extends Canvas {
 
     String imagePath = "com/btdora/ebbrechtAir/images/";
     Image airport = new Image(imagePath + "airport.png");
+    Image navaids_dme = new Image(imagePath + "NAVAIDS_DME.png");
+    Image navaids_ndb = new Image(imagePath + "navaids_ndb.png");
+    Image navaids_vor = new Image(imagePath + "navaids_vor.png");
+    Image navaids_vordme = new Image(imagePath + "navaids_vordme.png");
+    Image fix = new Image(imagePath + "Fix.png");
 
     static private double canvasMidFactorX = 500;
     static private double canvasMidFactorY = 500;
@@ -32,6 +39,35 @@ public class Map extends Canvas {
 
     public Map() {
         super(1000, 1000);
+
+        drawfix(51.033306, 10.570456);
+        drawairport(51.0,10.50);
+
+        Testdaten td1 = new Testdaten();
+        td1.airportsTest();
+
+      if(td1.objects.size() > 0) {
+          for (int i = 0; i < td1.objects.size(); i++) {
+
+            if (td1.objects.get(i) instanceof Airport) {
+             double lat = td1.objects.get(i).getLat();
+                double lon = td1.objects.get(i).getLon();
+                 drawairport(lat, lon);
+                } //else if (td1.objects.get(i) instanceof Fix) {
+//                    double lat = td1.objects.get(i).getLat();
+//                    double lon = td1.objects.get(i).getLon();
+//                    drawfix(lat, lon);
+//                } else if (td1.objects.get(i) instanceof Navaid) {
+//                    double lat = td1.objects.get(i).getLat();
+//                    double lon = td1.objects.get(i).getLon();
+//                    drawNavaids_DME(lat, lon);
+//                }
+//
+//
+            }
+    }
+
+
 
         jumpToMapSection(zoomOnSeamiles(108),8.570456,50.033306);
 //        jumpToMapSection(1000,8.570456,50.033306);
@@ -278,5 +314,58 @@ public class Map extends Canvas {
         lon = lon - measurements / 2;
         context.drawImage(airport, lon, lat, measurements, measurements);
     }
+
+    public void drawairport(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airport, lon, lat, measurements, measurements);
+    }
+
+    public void drawNavaids_DME(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_dme, lon, lat, measurements, measurements);
+    }
+
+    public void drawNavaids_ndb(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_ndb, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_vor(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_vor, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_vordme(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawfix(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(fix, lon, lat, measurements, measurements);
+    }
+
+
+
+
+
+
+
+
 }
 
