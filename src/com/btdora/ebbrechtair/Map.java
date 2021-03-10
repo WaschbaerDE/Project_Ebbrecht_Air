@@ -9,8 +9,8 @@ import javafx.scene.paint.Color;
 public class Map extends Canvas {
     private GraphicsContext context = this.getGraphicsContext2D();
 
-    String imagePath = "com/btdora/ebbrechtair/images/";
-    Image airport = new Image(imagePath + "airport.png");
+    String imagePath = "com/btdora/ebbrechtair/ressources/images/";
+    Image airport = new Image(imagePath + "AIRPORT.png");
 
     static private double canvasMidFactorX = 500;
     static private double canvasMidFactorY = 500;
