@@ -9,7 +9,7 @@ public class Airport extends GeoCoordinate {
     private int MaxRunwayLength;
     private String b01;//Unbekannte Varibale Platzhalter für den Fall einer Verwendung
 
-    public Airport(String ICAOCode, String airportName, double Lat,double Lon, int altitudeAirportInFeet, String a01, String a02, int maxRunwayLength, String b01) {
+    public Airport(String ICAOCode, String airportName, double Lat, double Lon, int altitudeAirportInFeet, String a01, String a02, int maxRunwayLength, String b01) {
         super(Lat,Lon);
         this.ICAOCode = ICAOCode;
         AirportName = airportName;
