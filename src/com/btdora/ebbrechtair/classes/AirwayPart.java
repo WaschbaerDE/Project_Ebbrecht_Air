@@ -1,7 +1,5 @@
 package com.btdora.ebbrechtair.classes;
 
-import java.util.ArrayList;
-
 public class AirwayPart extends GeoCoordinate{
     private String AirwayID;
     private int AtsPartition;
