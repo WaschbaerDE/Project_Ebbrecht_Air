@@ -33,9 +33,11 @@ public class Map extends Canvas {
     public Map() {
         super(1000, 1000);
 
-        jumpToMapSection(zoomOnSeamiles(108),8.570456,50.033306);
+        jumpToMapSection(zoomOnSeamiles(108),50.033306,8.570456);
 //        jumpToMapSection(1000,8.570456,50.033306);
 //        jumpToMapSection(60000,8.570456,50.033306);
+
+        setZoomOnObjects(50.033306, 8.570456, 52.362247,13.500672);
 
         this.drawGrit();
 
@@ -72,7 +74,7 @@ public class Map extends Canvas {
             System.out.println(getLeftUpperCornerY());
             System.out.println(getRightLowerCornerX());
             System.out.println(getRightLowerCornerY());
-            System.out.println(getSeamiles());
+            System.out.println(getSeamiles(getLeftUpperCornerX(), getRightLowerCornerX()));
         });
         /**
          * Drags the points on the map.
@@ -109,10 +111,10 @@ public class Map extends Canvas {
     /**
      * Jumps to a specific area on the map.
      * @param zoom
-     * @param xCoordinate
      * @param yCoordinate
+     * @param xCoordinate
      */
-    public void jumpToMapSection(double zoom, double xCoordinate, double yCoordinate){
+    public void jumpToMapSection(double zoom, double yCoordinate, double xCoordinate){
         this.zoomFactor = zoom;
         offsetX = manipulateX(xCoordinate);
         offsetY = manipulateY(yCoordinate);
@@ -122,9 +124,7 @@ public class Map extends Canvas {
      * This method measures the width and height of the currently shown mapsection in seamiles.
      * @return currentSeamiles
      */
-    public double getSeamiles (){
-        double x1 = getLeftUpperCornerX();
-        double x2 = getRightLowerCornerX();
+    public double getSeamiles (double x1, double x2){
         double currentDegreeRange = (x2-x1);
         double currentSeamiles = currentDegreeRange*60;
         return currentSeamiles;
@@ -151,29 +151,20 @@ public class Map extends Canvas {
         double midX = (x1 + x2)/2;
         double midY = (y1 + y2)/2;
 
-        if (x1 < 0){
-            x1 = x1 * -1;
-        }
-        if (x2 < 0){
-            x2 = x2 * -1;
-        }
-        if (y1 < 0){
-            y1 = y1 * -1;
-        }
-        if (y2 < 0){
-            y2 = y2 * -1;
-        }
-        double rangeX = x1-x2;
-        if (rangeX < 0){
-            rangeX = rangeX * -1;
-        }
-        double rangeY = y1-y2;
-        if (rangeY < 0){
-            rangeY = rangeY * -1;
-        }
+        double rangeX = getPositive(x1)-getPositive(x2);
+        rangeX = getPositive(rangeX);
+        double rangeY = getPositive(y1)-getPositive(y2);
+        rangeY = getPositive(rangeY);
+        double seamilesTarget = 1;
 
+        if (rangeX > rangeY){
+            seamilesTarget = getSeamiles(x1, x2);
 
-        jumpToMapSection(zoomOnSeamiles(108),midY,midX);
+        } else {
+            seamilesTarget = getSeamiles(y1, y2);
+        }
+        seamilesTarget = seamilesTarget + (seamilesTarget/100*25);
+        jumpToMapSection(zoomOnSeamiles(seamilesTarget),midX,midY);
     }
 
     public double getPositive(double value){
