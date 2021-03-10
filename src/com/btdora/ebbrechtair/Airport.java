@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir;
+package com.btdora.ebbrechtair;
 
 public class Airport {
     String name;

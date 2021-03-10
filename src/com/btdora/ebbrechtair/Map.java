@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir;
+package com.btdora.ebbrechtair;
 
 
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
@@ -138,6 +138,49 @@ public class Map extends Canvas {
     public double zoomOnSeamiles (double seamiles){
         double newZoomFactor = 60000 / seamiles;
         return newZoomFactor;
+    }
+
+    /**
+     * Gets the position of start and end airport and processes the coordinates of the needed mapsection and its range, to show both.
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     */
+    public void setZoomOnObjects(double x1, double y1, double x2, double y2){
+        double midX = (x1 + x2)/2;
+        double midY = (y1 + y2)/2;
+
+        if (x1 < 0){
+            x1 = x1 * -1;
+        }
+        if (x2 < 0){
+            x2 = x2 * -1;
+        }
+        if (y1 < 0){
+            y1 = y1 * -1;
+        }
+        if (y2 < 0){
+            y2 = y2 * -1;
+        }
+        double rangeX = x1-x2;
+        if (rangeX < 0){
+            rangeX = rangeX * -1;
+        }
+        double rangeY = y1-y2;
+        if (rangeY < 0){
+            rangeY = rangeY * -1;
+        }
+
+
+        jumpToMapSection(zoomOnSeamiles(108),midY,midX);
+    }
+
+    public double getPositive(double value){
+        if (value < 0){
+            value = value * -1;
+        }
+        return value;
     }
 
     /**

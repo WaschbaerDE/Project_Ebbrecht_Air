@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir;
+package com.btdora.ebbrechtair;
 
 import java.util.ArrayList;
 
