@@ -33,7 +33,9 @@ public class Map extends Canvas {
     public Map() {
         super(1000, 1000);
 
-        jumpToMapSection(560,8.570456,50.033306);
+        jumpToMapSection(zoomOnSeamiles(108),8.570456,50.033306);
+//        jumpToMapSection(1000,8.570456,50.033306);
+//        jumpToMapSection(60000,8.570456,50.033306);
 
         this.drawGrit();
 
@@ -66,10 +68,11 @@ public class Map extends Canvas {
         setOnMousePressed( event -> {
             this.px1 = event.getX();
             this.py1 = event.getY();
-            getLeftUpperCornerX();
-            getLeftUpperCornerY();
-            getRightLowerCornerX();
-            getRightLowerCornerY();
+            System.out.println(getLeftUpperCornerX());
+            System.out.println(getLeftUpperCornerY());
+            System.out.println(getRightLowerCornerX());
+            System.out.println(getRightLowerCornerY());
+            System.out.println(getSeamiles());
         });
         /**
          * Drags the points on the map.
@@ -86,21 +89,21 @@ public class Map extends Canvas {
         });
     }
 
-    public void getLeftUpperCornerX(){
+    public double getLeftUpperCornerX(){
         leftUpperCornerX = ((offsetX + 500) / zoomFactor)*-1;
-        System.out.println(leftUpperCornerX);
+        return leftUpperCornerX;
     }
-    public void getLeftUpperCornerY(){
+    public double getLeftUpperCornerY(){
         leftUpperCornerY = (offsetY + 500) / zoomFactor;
-        System.out.println(leftUpperCornerY);
+        return leftUpperCornerY;
     }
-    public void getRightLowerCornerX(){
+    public double getRightLowerCornerX(){
         rightLowerCornerX = ((offsetX - 500) / zoomFactor)*-1;
-        System.out.println(rightLowerCornerX);
+        return rightLowerCornerX;
     }
-    public void getRightLowerCornerY(){
+    public double getRightLowerCornerY(){
         rightLowerCornerY = (offsetY - 500) / zoomFactor;
-        System.out.println(rightLowerCornerY);
+        return rightLowerCornerY;
     }
 
     /**
@@ -113,6 +116,28 @@ public class Map extends Canvas {
         this.zoomFactor = zoom;
         offsetX = manipulateX(xCoordinate);
         offsetY = manipulateY(yCoordinate);
+    }
+
+    /**
+     * This method measures the width and height of the currently shown mapsection in seamiles.
+     * @return currentSeamiles
+     */
+    public double getSeamiles (){
+        double x1 = getLeftUpperCornerX();
+        double x2 = getRightLowerCornerX();
+        double currentDegreeRange = (x2-x1);
+        double currentSeamiles = currentDegreeRange*60;
+        return currentSeamiles;
+    }
+
+    /**
+     * Takes the amount of seamiles and returns the zoomfactor needed to zoom into the map to the given range.
+     * @param seamiles
+     * @return newZoomFactor
+     */
+    public double zoomOnSeamiles (double seamiles){
+        double newZoomFactor = 60000 / seamiles;
+        return newZoomFactor;
     }
 
     /**
