@@ -3,6 +3,7 @@ package com.btdora.ebbrechtAir;
 
 import com.btdora.ebbrechtAir.classes.Airport;
 import com.btdora.ebbrechtAir.classes.Fix;
+import com.btdora.ebbrechtAir.classes.GeoCoordinate;
 import com.btdora.ebbrechtAir.classes.Navaid;
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import javafx.scene.canvas.Canvas;
@@ -47,6 +48,7 @@ public class Map extends Canvas {
 
         Testdaten td1 = new Testdaten();
         td1.airportsTest();
+
 
 
         jumpToMapSection(zoomOnSeamiles(108),8.570456,50.033306);
@@ -185,6 +187,7 @@ public class Map extends Canvas {
         context.clearRect(0,0, 1000, 1000);
         drawGrit();
         td1.airportsTest();
+        drawstuff(td1.objects);
         double lat6 = zoomdragFactorLat(td1.airportsArray.get(7).getLat(), zoomFactor, offsetY, canvasMidFactorY);
         double lon6 = zoomdragFactorLon(td1.airportsArray.get(7).getLon(), zoomFactor, offsetX, canvasMidFactorX);
         double lat7 = zoomdragFactorLat(td1.airportsArray.get(8).getLat(), zoomFactor, offsetY, canvasMidFactorY);
@@ -196,28 +199,28 @@ public class Map extends Canvas {
             setAirportLocation(lat, lon);
 
         }
-        if (td1.objects.size() > 0) {
-            for (int i = 0; i < td1.objects.size(); i++) {
-
-                if (td1.objects.get(i) instanceof Airport) {
-                    double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
-                    double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
-                    drawairport(lat, lon);
-
-                } else if (td1.objects.get(i) instanceof Fix) {
-                    double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
-                    double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
-                    drawfix(lat, lon);
-                }
-                else if (td1.objects.get(i) instanceof Navaid) {
-                    double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
-                    double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
-                    drawNavaids(lat, lon);
-                }
-
-
-            }
-        }
+//        if (td1.objects.size() > 0) {
+//            for (int i = 0; i < td1.objects.size(); i++) {
+//
+//                if (td1.objects.get(i) instanceof Airport) {
+//                    double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+//                    double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+//                    drawairport(lat, lon);
+//
+//                } else if (td1.objects.get(i) instanceof Fix) {
+//                    double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+//                    double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+//                    drawfix(lat, lon);
+//                }
+//                else if (td1.objects.get(i) instanceof Navaid) {
+//                    double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+//                    double lon = zoomdragFactorLon(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+//                    drawNavaids(lat, lon);
+//                }
+//
+//
+//            }
+//        }
 
 
 
@@ -226,6 +229,39 @@ public class Map extends Canvas {
     /**
      * Provides coordinates for grit and draws cross on canvas.
      */
+
+
+
+    public void drawstuff (ArrayList<GeoCoordinate>geos){
+        if (geos.size() > 0) {
+            for (int i = 0; i < geos.size(); i++) {
+
+                if (geos.get(i) instanceof Airport) {
+                    double lat = zoomdragFactorLat(geos.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                    double lon = zoomdragFactorLon(geos.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+                    drawairport(lat, lon);
+
+                } else if (geos.get(i) instanceof Fix) {
+                    double lat = zoomdragFactorLat(geos.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                    double lon = zoomdragFactorLon(geos.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+                    drawfix(lat, lon);
+                }
+                else if (geos.get(i) instanceof Navaid) {
+                    double lat = zoomdragFactorLat(geos.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                    double lon = zoomdragFactorLon(geos.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+                    drawNavaids(lat, lon);
+                }
+
+
+            }
+        }
+
+    }
+
+
+
+
+
     private void drawGrit(){
         int gritMax = 20000;
         int gritMin = gritMax * -1;
@@ -329,12 +365,15 @@ public class Map extends Canvas {
         context.drawImage(airport, lon, lat, measurements, measurements);
     }
 
+
+
     public void drawNavaids(double lat, double lon){
         int measurements = 50;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids, lon, lat, measurements, measurements);
     }
+
 
 //    public void drawNavaids_ndb(double lat, double lon){
 //        int measurements = 50;
