@@ -7,21 +7,13 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Map extends Canvas {
-    private final GraphicsContext context = this.getGraphicsContext2D();
+    private GraphicsContext context = this.getGraphicsContext2D();
 
     String imagePath = "com/btdora/ebbrechtAir/ressources/images/";
     Image airport = new Image(imagePath + "AIRPORT.png");
 
-    Image navaids = new Image(imagePath + "NAVAIDS_DME.png");
-    //Image fix = new Image(imagePath + "Fix.png");
-    Image airportifr = new Image(imagePath + "AIRPORT_IFR.png");
-    Image airportvfr = new Image(imagePath + "AIRPORT_VFR.png");
-//    Image navaids_ndb = new Image(imagePath + "NAVAIDS_NDB.png");
-//    Image navaids_vor = new Image(imagePath + "NAVAIDS_VOR.png");
-//    Image navaids_vordme = new Image(imagePath + "NAVAIDS_VORDME.png");
-
-    static private final double canvasMidX = 500;
-    static private final double canvasMidY = 500;
+    static private double canvasMidX = 500;
+    static private double canvasMidY = 500;
     static private double zoomFactor = 3;
     static private double offsetX = 0;
     static private double offsetY = 0;
@@ -55,44 +47,45 @@ public class Map extends Canvas {
             py1 = event.getY();
             double factor = event.getDeltaY();
             // funktioniert, aber zu langsam
+            if(event.getY()>0) {
+                this.zoomFactor = this.zoomFactor / 1.24;
+                System.out.println(this.zoomFactor);
+                this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) * this.zoomFactor);
+                this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) * this.zoomFactor);
+            }
+            if(event.getY()<0) {
+                this.zoomFactor = this.zoomFactor * 1.24;
+                System.out.println(this.zoomFactor);
+                this.offsetX = this.offsetX - ((this.canvasMidX - this.px1) * this.zoomFactor);
+                this.offsetY = this.offsetY - ((this.canvasMidY - this.py1) * this.zoomFactor);
+
+            }
+            this.drawGrit();
+
+            this.manageTestdrawing();
+
+            // funktioniert noch nicht gut!
 //            if (factor > 0){
-//                factor = 0.5;
+//                factor = 1.15;
 //            } else {
-//                factor = -0.5;
+//                factor = 0.85;
 //            }
-//            if (zoomFactor * factor > 3.2 || factor > 0) {
-//                if (zoomFactor * factor < 6000 || factor < 0) {
-//                    this.zoomFactor = this.zoomFactor + factor;
+//            if (zoomFactor* factor > 3.2 || factor > 1) {
+//                if (zoomFactor* factor < 6000 || factor < 1) {
+//                    this.zoomFactor = this.zoomFactor * factor;
 //                    System.out.println(this.zoomFactor);
-//                    this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) / 5);
-//                    this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) / 5);
+//                    this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) / (factor+2.5));
+//                    this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) / (factor+2.5));
 //                    this.context.clearRect(0, 0, 1000, 1000);
 //
 //                    this.manageTestdrawing();
 //                }
 //            }
-            // funktioniert noch nicht gut!
-            if (factor > 0){
-                factor = 1.15;
-            } else {
-                factor = 0.85;
-            }
-            if (zoomFactor* factor > 3.2 || factor > 1) {
-                if (zoomFactor* factor < 6000 || factor < 1) {
-                    zoomFactor = zoomFactor * factor;
-                    System.out.println(zoomFactor);
-                    offsetX = offsetX + ((canvasMidX - px1) / (factor+2.5));
-                    offsetY = offsetY + ((canvasMidY - py1) / (factor+2.5));
-                    this.context.clearRect(0, 0, 1000, 1000);
-
-                    this.manageTestdrawing();
-                }
-            }
         });
 
         this.setOnMousePressed( event -> {
-            px1 = event.getX();
-            py1 = event.getY();
+            this.px1 = event.getX();
+            this.py1 = event.getY();
             System.out.println(this.getLeftUpperCornerX());
             System.out.println(this.getLeftUpperCornerY());
             System.out.println(this.getRightLowerCornerX());
@@ -103,32 +96,32 @@ public class Map extends Canvas {
          * Drags the points on the map.
          */
         this.setOnMouseDragged(event -> {
-            px2 = event.getX();
-            py2 = event.getY();
-            offsetX = offsetX + (px2 - px1);
-            offsetY = offsetY + (py2 - py1);
-            px1 = px2;
-            py1 = py2;
+            this.px2 = event.getX();
+            this.py2 = event.getY();
+            this.offsetX = this.offsetX + (this.px2 - this.px1);
+            this.offsetY = this.offsetY + (this.py2 - this.py1);
+            this.px1 = this.px2;
+            this.py1 = this.py2;
 
             this.manageTestdrawing();
         });
     }
 
     public double getLeftUpperCornerX(){
-        leftUpperCornerX = ((offsetX + 500) / zoomFactor)*-1;
-        return leftUpperCornerX;
+        this.leftUpperCornerX = ((this.offsetX + 500) / this.zoomFactor)*-1;
+        return this.leftUpperCornerX;
     }
     public double getLeftUpperCornerY(){
-        leftUpperCornerY = (offsetY + 500) / zoomFactor;
-        return leftUpperCornerY;
+        this.leftUpperCornerY = (this.offsetY + 500) / this.zoomFactor;
+        return this.leftUpperCornerY;
     }
     public double getRightLowerCornerX(){
-        rightLowerCornerX = ((offsetX - 500) / zoomFactor)*-1;
-        return rightLowerCornerX;
+        this.rightLowerCornerX = ((this.offsetX - 500) / this.zoomFactor)*-1;
+        return this.rightLowerCornerX;
     }
     public double getRightLowerCornerY(){
-        rightLowerCornerY = (offsetY - 500) / zoomFactor;
-        return rightLowerCornerY;
+        this.rightLowerCornerY = (this.offsetY - 500) / this.zoomFactor;
+        return this.rightLowerCornerY;
     }
 
     /**
@@ -138,9 +131,9 @@ public class Map extends Canvas {
      * @param xCoordinate
      */
     public void jumpToMapSection(double zoom, double yCoordinate, double xCoordinate){
-        zoomFactor = zoom;
-        offsetX = this.manipulateX(xCoordinate);
-        offsetY = this.manipulateY(yCoordinate);
+        this.zoomFactor = zoom;
+        this.offsetX = this.manipulateX(xCoordinate);
+        this.offsetY = this.manipulateY(yCoordinate);
     }
 
     /**
@@ -202,7 +195,7 @@ public class Map extends Canvas {
      * @return double x
      */
     public double manipulateX (double x){
-        x = x * -1 * zoomFactor;
+        x = x * -1 * this.zoomFactor;
         return x;
     }
 
@@ -212,7 +205,7 @@ public class Map extends Canvas {
      * @return double y
      */
     public double manipulateY (double y){
-        y = y * zoomFactor;
+        y = y * this.zoomFactor;
         return y;
     }
 
@@ -224,19 +217,17 @@ public class Map extends Canvas {
         this.context.clearRect(0,0, 1000, 1000);
         this.drawGrit();
         td1.airportsTest();
-        double lat6 = this.zoomdragFactorLat(Testdaten.airportsArray.get(7).getLat(), zoomFactor, offsetY, canvasMidY);
-        double lon6 = this.zoomdragFactorLon(Testdaten.airportsArray.get(7).getLon(), zoomFactor, offsetX, canvasMidX);
-        double lat7 = this.zoomdragFactorLat(Testdaten.airportsArray.get(8).getLat(), zoomFactor, offsetY, canvasMidY);
-        double lon7 = this.zoomdragFactorLon(Testdaten.airportsArray.get(8).getLon(), zoomFactor, offsetX, canvasMidX);
+        double lat6 = this.zoomdragFactorLat(td1.airportsArray.get(7).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
+        double lon6 = this.zoomdragFactorLon(td1.airportsArray.get(7).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
+        double lat7 = this.zoomdragFactorLat(td1.airportsArray.get(8).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
+        double lon7 = this.zoomdragFactorLon(td1.airportsArray.get(8).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
         this.colorAirwayRoutes(lat6, lon6, lat7, lon7);
-        for (int i = 0; i < Testdaten.airportsArray.size(); i++){
-            double lat = zoomdragFactorLat(Testdaten.airportsArray.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
-            double lon = zoomdragFactorLon(Testdaten.airportsArray.get(i).getLon(), zoomFactor, offsetX, canvasMidX);
+        for (int i = 0; i < td1.airportsArray.size(); i++){
+            double lat = zoomdragFactorLat(td1.airportsArray.get(i).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
+            double lon = zoomdragFactorLon(td1.airportsArray.get(i).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
             this.setAirportLocation(lat, lon);
         }
     }
-
-
 
     /**
      * Provides coordinates for grit and draws cross on canvas.
@@ -253,11 +244,11 @@ public class Map extends Canvas {
 //        }
         this.context.setLineWidth(1);
         this.context.setStroke(Color.LIGHTSALMON);
-        this.context.strokeLine(canvasMidX + offsetX, gritMin, canvasMidX + offsetX, gritMax);
-        this.context.strokeLine(gritMin, canvasMidY + offsetY, gritMax, canvasMidY + offsetY);
+        this.context.strokeLine(this.canvasMidX + this.offsetX, gritMin, this.canvasMidX + this.offsetX, gritMax);
+        this.context.strokeLine(gritMin,this.canvasMidY + this.offsetY, gritMax, this.canvasMidY + this.offsetY);
         this.context.setStroke(Color.BLACK);
-        this.context.strokeLine(canvasMidX, canvasMidY -5, canvasMidX, canvasMidY +5);
-        this.context.strokeLine(canvasMidX -5, canvasMidY, canvasMidX +5, canvasMidY);
+        this.context.strokeLine(this.canvasMidX,this.canvasMidY -5, this.canvasMidX, this.canvasMidY +5);
+        this.context.strokeLine(this.canvasMidX -5, this.canvasMidY, this.canvasMidX +5, this.canvasMidY);
     }
 
     /**
@@ -308,7 +299,7 @@ public class Map extends Canvas {
      * @return double lat
      */
     public double zoomdragFactorLat(double lat, double zoomFactor, double offsetY, double canvasMidFactorY){
-        lat = this.manipulateX(lat) + Map.offsetY + canvasMidY;
+        lat = this.manipulateX(lat) + this.offsetY + this.canvasMidY;
         return lat;
     }
 
@@ -321,7 +312,7 @@ public class Map extends Canvas {
      * @return double lon
      */
     public double zoomdragFactorLon(double lon, double zoomFactor, double offsetX, double canvasMidFactorX){
-        lon = this.manipulateY(lon) + Map.offsetX + canvasMidX;
+        lon = this.manipulateY(lon) + this.offsetX + this.canvasMidX;
         return lon;
     }
 
@@ -336,39 +327,5 @@ public class Map extends Canvas {
         lon = lon - measurements / 2;
         this.context.drawImage(this.airport, lon, lat, measurements, measurements);
     }
-
-    public void drawairport(double lat, double lon){
-        int measurements = 50;
-        lat = lat - measurements / 2;
-        lon = lon - measurements / 2;
-        context.drawImage(airport, lon, lat, measurements, measurements);
-    }
-
-    public void drawairportifr(double lat, double lon){
-        int measurements = 50;
-        lat = lat - measurements / 2;
-        lon = lon - measurements / 2;
-        context.drawImage(airportifr, lon, lat, measurements, measurements);
-    }
-
-    public void drawairportvfr(double lat, double lon){
-        int measurements = 50;
-        lat = lat - measurements / 2;
-        lon = lon - measurements / 2;
-        context.drawImage(airportvfr, lon, lat, measurements, measurements);
-    }
-
-    public void drawNavaids(double lat, double lon){
-        int measurements = 50;
-        lat = lat - measurements / 2;
-        lon = lon - measurements / 2;
-        context.drawImage(navaids, lon, lat, measurements, measurements);
-    }
-//    public void drawfix(double lat, double lon){
-//        int measurements = 25;
-//        lat = lat - measurements / 2;
-//        lon = lon - measurements / 2;
-//        context.drawImage(fix, lon, lat, measurements, measurements);
-//    }
 }
 
