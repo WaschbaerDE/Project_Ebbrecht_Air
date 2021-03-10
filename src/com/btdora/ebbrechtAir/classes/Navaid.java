@@ -1,29 +1,47 @@
 package com.btdora.ebbrechtAir.classes;
 
-public class Navaid extends GeoCoordinate {
-    private String NavaidID;
-    private String NavaidName;
-    private Double Frequency;
-    private int RadialCapability;
-    private int DMECapability;
-    private  String a01;
-    private int Altitude;
-    private String AreaCode;
-    private String a02;
+public abstract class Navaid extends GeoCoordinate {
+    private String navaidID;
+    private String navaidName;
+    private Double frequency;
+    private boolean radialCapability;
+    private boolean dmeCapability;
+    private int altitude;
+    private String areaCode;
+    
 
-    public Navaid(String navaidID, String navaidName, Double frequency, int radialCapability, int DMECapability, String a01, double Lat, double Lon, int altitude, String areaCode, String a02) {
-        super(Lat,Lon);
-        NavaidID = navaidID;
-        NavaidName = navaidName;
-        Frequency = frequency;
-        RadialCapability = radialCapability;
-        this.DMECapability = DMECapability;
-        this.a01 = a01;
-        Altitude = altitude;
-        AreaCode = areaCode;
-        this.a02 = a02;
-
+    public Navaid(String navaidID, String navaidName, Double frequency, boolean radialCapability, boolean dmeCapability, double lat, double lan, int altitude, String areaCode) {
+        super(lat, lan);
+        this.navaidID = navaidID;
+        this.navaidName = navaidName;
+        this.frequency = frequency;
+        this.altitude = altitude;
+        this.areaCode = areaCode;
+        this.radialCapability = radialCapability;
+        this.dmeCapability = dmeCapability;
     }
 
+    public String getNavaidID() {
+        return this.navaidID;
+    }
 
+    public String getNavaidName() {
+        return this.navaidName;
+    }
+
+    public Double getFrequency() {
+        return this.frequency;
+    }
+
+    public int getAltitude() {
+        return this.altitude;
+    }
+
+    public boolean hasRadialCapability() {
+        return this.radialCapability;
+    }
+
+    public boolean hasDMECapability() {
+        return this.dmeCapability;
+    }
 }

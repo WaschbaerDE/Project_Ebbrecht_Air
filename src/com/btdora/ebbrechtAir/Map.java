@@ -1,10 +1,7 @@
 package com.btdora.ebbrechtAir;
 
 
-import com.btdora.ebbrechtAir.classes.Airport;
-import com.btdora.ebbrechtAir.classes.Fix;
-import com.btdora.ebbrechtAir.classes.GeoCoordinate;
-import com.btdora.ebbrechtAir.classes.Navaid;
+import com.btdora.ebbrechtAir.classes.*;
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,12 +16,13 @@ public class Map extends Canvas {
 
     String imagePath = "com/btdora/ebbrechtAir/images/";
     Image airport = new Image(imagePath + "airport.png");
-    Image navaids = new Image(imagePath + "NAVAIDS.png");
+    Image navaids_dme = new Image(imagePath + "NAVAIDS_dme.png");
     Image fix = new Image(imagePath + "Fix.png");
-//    Image navaids_ndb = new Image(imagePath + "NAVAIDS_NDB.png");
-//    Image navaids_vor = new Image(imagePath + "NAVAIDS_VOR.png");
-//    Image navaids_vordme = new Image(imagePath + "NAVAIDS_VORDME.png");
-
+    Image navaids_ndb = new Image(imagePath + "NAVAIDS_NDB.png");
+    Image navaids_vor = new Image(imagePath + "NAVAIDS_VOR.png");
+    Image navaids_vordme = new Image(imagePath + "NAVAIDS_VORDME.png");
+    Image airportifr = new Image(imagePath + "AIRPORT_IFR.png");
+    Image airportvfr = new Image(imagePath + "AIRPORT_VFR.png");
 
     static private double canvasMidFactorX = 500;
     static private double canvasMidFactorY = 500;
@@ -164,7 +162,7 @@ public class Map extends Canvas {
      * @param x
      * @return double x
      */
-    public double manipulateX (double x){
+    public double manipulateX(double x){
         x = x * -1 * this.zoomFactor;
         return x;
     }
@@ -174,7 +172,7 @@ public class Map extends Canvas {
      * @param y
      * @return double y
      */
-    public double manipulateY (double y){
+    public double manipulateY(double y) {
         y = y * this.zoomFactor;
         return y;
     }
@@ -232,30 +230,32 @@ public class Map extends Canvas {
 
 
 
-    public void drawstuff (ArrayList<GeoCoordinate>geos){
-        if (geos.size() > 0) {
-            for (int i = 0; i < geos.size(); i++) {
+    public void drawstuff(ArrayList<GeoCoordinate> geoCoordinates) {
+        if (geoCoordinates.size() > 0) {
+            for (int i = 0; i < geoCoordinates.size(); i++) {
+                double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidFactorY);
 
-                if (geos.get(i) instanceof Airport) {
-                    double lat = zoomdragFactorLat(geos.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
-                    double lon = zoomdragFactorLon(geos.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
-                    drawairport(lat, lon);
-
-                } else if (geos.get(i) instanceof Fix) {
-                    double lat = zoomdragFactorLat(geos.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
-                    double lon = zoomdragFactorLon(geos.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
-                    drawfix(lat, lon);
+                if (geoCoordinates.get(i) instanceof Airport) {
+                    this.drawairport(lat, lon);
+                } else if (geoCoordinates.get(i) instanceof Fix) {
+                    this.drawfix(lat, lon);
+                } else if (geoCoordinates.get(i) instanceof Ndb) {
+                    drawNavaids_ndb(lat,lon);
+                } else if (geoCoordinates.get(i) instanceof Dme){
+                    drawNavaids_dme(lat,lon);
+                } else if (geoCoordinates.get(i) instanceof Vor){
+                    drawNavaids_vor(lat,lon);
+                } else if (geoCoordinates.get(i) instanceof VorDme){
+                    drawNavaids_vordme(lat,lon);
+                } else if (geoCoordinates.get(i) instanceof Airport_Ifr){
+                    drawairportifr(lat,lon);
+                } else if (geoCoordinates.get(i) instanceof Airport_Vfr){
+                    drawairportifr(lat,lon);
                 }
-                else if (geos.get(i) instanceof Navaid) {
-                    double lat = zoomdragFactorLat(geos.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
-                    double lon = zoomdragFactorLon(geos.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
-                    drawNavaids(lat, lon);
-                }
-
 
             }
         }
-
     }
 
 
@@ -365,38 +365,51 @@ public class Map extends Canvas {
         context.drawImage(airport, lon, lat, measurements, measurements);
     }
 
-
-
-    public void drawNavaids(double lat, double lon){
+    public void drawairportifr(double lat, double lon){
         int measurements = 50;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
-        context.drawImage(navaids, lon, lat, measurements, measurements);
+        context.drawImage(airportifr, lon, lat, measurements, measurements);
+    }
+
+    public void drawairportvfr(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airportvfr, lon, lat, measurements, measurements);
     }
 
 
-//    public void drawNavaids_ndb(double lat, double lon){
-//        int measurements = 50;
-//        lat = lat - measurements / 2;
-//        lon = lon - measurements / 2;
-//        context.drawImage(navaids_ndb, lon, lat, measurements, measurements);
-//    }
-//
-//
-//    public void drawNavaids_vor(double lat, double lon){
-//        int measurements = 50;
-//        lat = lat - measurements / 2;
-//        lon = lon - measurements / 2;
-//        context.drawImage(navaids_vor, lon, lat, measurements, measurements);
-//    }
-//
-//
-//    public void drawNavaids_vordme(double lat, double lon){
-//        int measurements = 50;
-//        lat = lat - measurements / 2;
-//        lon = lon - measurements / 2;
-//        context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
-//    }
+    public void drawNavaids_dme(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_dme, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_ndb(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_ndb, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_vor(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_vor, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_vordme(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
+    }
 
 
     public void drawfix(double lat, double lon){
