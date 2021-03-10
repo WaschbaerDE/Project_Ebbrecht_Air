@@ -29,8 +29,6 @@ public class Utilities {
         return list;
     }
 
-
-
     public static List<Airport> getAirportByName(String input) {
         List<Airport> list = new ArrayList<Airport>();
         SQLConnector createSQLConnector = new SQLConnector();
@@ -45,7 +43,18 @@ public class Utilities {
         } catch(SQLException e){
             e.printStackTrace();
         }
-
         return list;
     }
+
+    public void stringCheck(String inputStart, String inputZiel){
+
+        
+
+
+
+
+    }
+
+
+
 }
