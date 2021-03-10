@@ -1,6 +1,8 @@
 package com.btdora.ebbrechtair.classes;
 
-public class AirwayPart {
+import java.util.ArrayList;
+
+public class AirwayPart extends GeoCoordinate{
     private String AirwayID;
     private int AtsPartition;
     private String FixID;
@@ -10,11 +12,12 @@ public class AirwayPart {
     private int InBoundCourse;
     private int OutBoundCourse;
     private Double LegLength;
+    private ArrayList<AirwayPart> airway;
 
 
 
-
-    public AirwayPart(String airwayID, int atsPartition, String fixID, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength) {
+    public AirwayPart(String airwayID, int atsPartition, String fixID, double Lat, double Lon, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength,ArrayList<AirwayPart> airway) {
+        super(Lat,Lon);
         AirwayID = airwayID;
         AtsPartition = atsPartition;
         FixID = fixID;
@@ -24,6 +27,7 @@ public class AirwayPart {
         InBoundCourse = inBoundCourse;
         OutBoundCourse = outBoundCourse;
         LegLength = legLength;
+        this.airway = airway;
     }
 
 
