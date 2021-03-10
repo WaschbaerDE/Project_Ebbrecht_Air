@@ -41,32 +41,10 @@ public class Map extends Canvas {
         super(1000, 1000);
 
         drawfix(51.033306, 10.570456);
-        drawairport(51.0,10.50);
+        drawairport(51.0, 10.50);
 
         Testdaten td1 = new Testdaten();
         td1.airportsTest();
-
-      if(td1.objects.size() > 0) {
-          for (int i = 0; i < td1.objects.size(); i++) {
-
-            if (td1.objects.get(i) instanceof Airport) {
-             double lat = td1.objects.get(i).getLat();
-                double lon = td1.objects.get(i).getLon();
-                 drawairport(lat, lon);
-                } //else if (td1.objects.get(i) instanceof Fix) {
-//                    double lat = td1.objects.get(i).getLat();
-//                    double lon = td1.objects.get(i).getLon();
-//                    drawfix(lat, lon);
-//                } else if (td1.objects.get(i) instanceof Navaid) {
-//                    double lat = td1.objects.get(i).getLat();
-//                    double lon = td1.objects.get(i).getLon();
-//                    drawNavaids_DME(lat, lon);
-//                }
-//
-//
-            }
-    }
-
 
 
         jumpToMapSection(zoomOnSeamiles(108),8.570456,50.033306);
@@ -213,7 +191,33 @@ public class Map extends Canvas {
             double lat = zoomdragFactorLat(td1.airportsArray.get(i).latitude, zoomFactor, offsetY, canvasMidFactorY);
             double lon = zoomdragFactorLon(td1.airportsArray.get(i).longitude, zoomFactor, offsetX, canvasMidFactorX);
             setAirportLocation(lat, lon);
+
         }
+        if (td1.objects.size() > 0) {
+            for (int i = 0; i < td1.objects.size(); i++) {
+
+                if (td1.objects.get(i) instanceof Airport) {
+                    double lat = zoomdragFactorLat(td1.objects.get(i).getLat(), zoomFactor, offsetY, canvasMidFactorY);
+                    double lon = zoomdragFactorLat(td1.objects.get(i).getLon(),zoomFactor, offsetY, canvasMidFactorY);
+                    drawairport(lat, lon);
+                } else if (td1.objects.get(i) instanceof Fix) {
+                    double lat = td1.objects.get(i).getLat();
+                    double lon = td1.objects.get(i).getLon();
+                    drawfix(lat, lon);
+                }
+                if (td1.objects.get(i) instanceof Navaid) {
+                    double lat = td1.objects.get(i).getLat();
+                    double lon = td1.objects.get(i).getLon();
+                    drawNavaids_DME(lat, lon);
+                }
+
+
+            }
+        }
+
+        double lat = zoomdragFactorLat(50.036306, zoomFactor, offsetY, canvasMidFactorY);
+        double lon = zoomdragFactorLon(8.570456, zoomFactor, offsetX, canvasMidFactorX);
+        drawfix(lat, lon);
     }
 
     /**
