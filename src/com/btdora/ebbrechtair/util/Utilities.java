@@ -9,6 +9,7 @@ import java.util.List;
 public class Utilities {
 
 
+
     public static List<Airport> getIcaoByName(String input) {
         List<Airport> list = new ArrayList<Airport>();
 
@@ -22,6 +23,7 @@ public class Utilities {
             } else {
                 list = getAirportByName(input);
             }
+
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -46,16 +48,30 @@ public class Utilities {
         return list;
     }
 
-    public void stringCheck(String inputStart, String inputZiel){
-
-        
 
 
+    public String stringCheck(String inputStart, String inputZiel) {
+
+        List<Airport> inputstartliste = getIcaoByName(inputStart);
+        List<Airport> inputzielListe = getIcaoByName(inputZiel);
+
+        if (inputstartliste.size() == 1 && inputzielListe.size() == 1) {
+            
+            return"" ;//return der zwei flughäfen -> "EDDF EDDR"
+        }
+
+        else if (inputstartliste.size() == 0 && inputzielListe.size() == 0) {
+            return "";//return der Fehlermeldung
+        }
+
+        else if(inputstartliste.size() > 1 && inputzielListe.size()  > 1) {
+            return "";//return -> Wählen Sie einen der Fluhäfen aus
+        }
+        else{
+            System.out.println("Bitte erneut eingeben!");
+            return "";
+        }
 
 
     }
-
-
-
 }
-////

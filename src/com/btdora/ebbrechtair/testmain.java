@@ -12,5 +12,4 @@ public class testmain {
 
         System.out.println(a);
     }
-
 }
