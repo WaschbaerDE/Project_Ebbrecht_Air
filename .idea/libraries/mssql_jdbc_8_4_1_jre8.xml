@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mssql-jdbc-8.4.1.jre8">
+    <CLASSES>
+      <root url="jar://S:/IT-Ausbildung/Kurs07/sqljdbc_8.4.1.0_deu/sqljdbc_8.4/deu/mssql-jdbc-8.4.1.jre8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
