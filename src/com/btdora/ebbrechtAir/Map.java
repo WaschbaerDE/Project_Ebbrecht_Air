@@ -361,7 +361,7 @@ public class Map extends Canvas {
 
 
     public void drawfix(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(fix, lon, lat, measurements, measurements);

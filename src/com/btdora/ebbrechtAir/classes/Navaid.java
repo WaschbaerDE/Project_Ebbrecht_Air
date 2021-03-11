@@ -22,7 +22,6 @@ public class Navaid extends GeoCoordinate {
         Altitude = altitude;
         AreaCode = areaCode;
         this.a02 = a02;
-
     }
 
 
