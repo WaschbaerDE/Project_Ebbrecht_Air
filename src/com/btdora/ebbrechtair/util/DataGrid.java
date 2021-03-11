@@ -20,6 +20,7 @@ public class DataGrid {
         this.initializeAirports();
         this.initializeFixes();
         this.initializeNavaids();
+        this.initializeAirway();
     }
 
     private void initializeAirports() {

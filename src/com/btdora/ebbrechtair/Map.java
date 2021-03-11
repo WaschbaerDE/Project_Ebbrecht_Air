@@ -291,7 +291,7 @@ public class Map extends Canvas {
      */
     public void drawAirwayLines(double lat1, double lon1, double lat2, double lon2) {
         this.context.setLineWidth(1);
-        this.context.setStroke(Color.GREEN);
+        this.context.setStroke(Color.BLUE);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
     }
 
@@ -303,7 +303,7 @@ public class Map extends Canvas {
      * @param lon2
      */
     public void colorAirwayRoutes(double lat1, double lon1, double lat2, double lon2) {
-        this.context.setLineWidth(2);
+        this.context.setLineWidth(1);
         this.context.setStroke(Color.MAGENTA);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
     }
@@ -441,9 +441,11 @@ public class Map extends Canvas {
 
     public void drawstuff(ArrayList<GeoCoordinate> geoCoordinates) {
         if (geoCoordinates.size() > 0) {
+            int counter=0;
             for (int i = 0; i < geoCoordinates.size(); i++) {
                 double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
                 double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
+
 
                 if (geoCoordinates.get(i) instanceof Airport) {
                     this.drawairport(lat, lon);
@@ -465,6 +467,10 @@ public class Map extends Canvas {
                     drawNavaids_vor(lat,lon);
                 } else if (geoCoordinates.get(i) instanceof VorDme){
                     drawNavaids_vordme(lat,lon);
+                } else {
+                    double lat2= this.zoomdragFactorLat(((Airway)geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
+                    double lon2= this.zoomdragFactorLon(((Airway)geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
+                    drawAirwayLines(lat,lon,lat2,lon2);
                 }
 
             }

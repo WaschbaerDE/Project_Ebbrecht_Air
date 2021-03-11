@@ -23,4 +23,20 @@ public class Airway extends GeoCoordinate{
         OutBoundCourse = outBoundCourse;
         LegLength = legLength;
     }
+
+    public Double getLonNext() {
+        return LonNext;
+    }
+
+    public void setLonNext(Double lonNext) {
+        LonNext = lonNext;
+    }
+
+    public Double getLatNext() {
+        return LatNext;
+    }
+
+    public void setLatNext(Double latNext) {
+        LatNext = latNext;
+    }
 }
