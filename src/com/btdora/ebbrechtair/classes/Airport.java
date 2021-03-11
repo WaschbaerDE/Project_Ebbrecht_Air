@@ -1,35 +1,29 @@
 package com.btdora.ebbrechtair.classes;
 
 public class Airport extends GeoCoordinate {
-    private final String ICAOCode;
-    private String AirportName;
-    private int AltitudeAirportInFeet;
-    private String a01;                         //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
-    private String a02;                         //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
-    private int MaxRunwayLength;                //
-    private String b01;                         //Unbekannte Varibale Platzhalter für den Fall einer Verwendung
-    private int IFR;
+    private final String icaoCode;
+    private String airportName;
+    private int altitudeAirportInFeet;
+    private int maxRunwayLength;
+    private int ifr;
 
     //full constructor for the creation of an Airport
-    public Airport(String ICAOCode, String airportName, double Lat,double Lon, int altitudeAirportInFeet, String a01, String a02, int maxRunwayLength, String b01, int IFR) {
-        super(Lat,Lon);
-        this.ICAOCode = ICAOCode;
-        AirportName = airportName;
-        AltitudeAirportInFeet = altitudeAirportInFeet;
-        this.a01 = a01;
-        this.a02 = a02;
-        MaxRunwayLength = maxRunwayLength;
-        this.b01 = b01;
-        this.IFR = IFR;
-    }
-
-    //test-data constructor
-    public Airport(String ICAOCode, Double lat, Double lon) {
+    public Airport(String icaoCode, String airportName, double lat, double lon, int altitudeAirportInFeet, int maxRunwayLength, int ifr) {
         super(lat, lon);
-        this.ICAOCode = ICAOCode;
+        this.icaoCode = icaoCode;
+        this.airportName = airportName;
+        this.altitudeAirportInFeet = altitudeAirportInFeet;
+        this.maxRunwayLength = maxRunwayLength;
+        this.ifr = ifr;
+    }
+    
+    //test-data constructor
+    public Airport(String icaoCode, Double lat, Double lon) {
+        super(lat, lon);
+        this.icaoCode = icaoCode;
     }
 
     public String toString() {
-        return this.ICAOCode+" "+this.AirportName;
+        return this.icaoCode+" "+this.airportName;
     }
 }
