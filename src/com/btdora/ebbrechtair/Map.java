@@ -9,29 +9,29 @@ import javafx.scene.paint.Color;
 public class Map extends Canvas {
     private GraphicsContext context = this.getGraphicsContext2D();
 
-    String imagePath = "com/btdora/ebbrechtAir/ressources/images/";
+    String imagePath = "com/btdora/ebbrechtAir/resources/images/";
     Image airport = new Image(imagePath + "AIRPORT.png");
 
-    static private double canvasMidX = 500;
-    static private double canvasMidY = 500;
-    static private double zoomFactor = 3;
-    static private double offsetX = 0;
-    static private double offsetY = 0;
-    static double px1;
-    static double py1;
-    static double px2;
-    static double py2;
-    static double leftUpperCornerX;
-    static double leftUpperCornerY;
-    static double rightLowerCornerX;
-    static double rightLowerCornerY;
+    private double canvasMidX = 500;
+    private double canvasMidY = 500;
+    private double zoomFactor = 3;
+    private double offsetX = 0;
+    private double offsetY = 0;
+    private double px1;
+    private double py1;
+    private double px2;
+    private double py2;
+    private double leftUpperCornerX;
+    private double leftUpperCornerY;
+    private double rightLowerCornerX;
+    private double rightLowerCornerY;
 
     public Map() {
         super(1000, 1000);
 
         this.jumpToMapSection(this.zoomOnSeamiles(108),50.033306,8.570456);
-//        jumpToMapSection(1000,8.570456,50.033306);
-//        jumpToMapSection(60000,8.570456,50.033306);
+        jumpToMapSection(1000,50.033306,8.570456);
+//        jumpToMapSection(60000,50.033306,8.570456);
 
         this.setZoomOnObjects(50.033306, 8.570456, 52.362247,13.500672);
 
@@ -47,22 +47,23 @@ public class Map extends Canvas {
             py1 = event.getY();
             double factor = event.getDeltaY();
             // funktioniert, aber zu langsam
-            if(event.getY()>0) {
-                this.zoomFactor = this.zoomFactor / 1.24;
-                System.out.println(this.zoomFactor);
-                this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) * this.zoomFactor);
-                this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) * this.zoomFactor);
+            // funktioniert, aber zu langsam
+            if (factor > 0){
+                factor = 1;
+            } else {
+                factor = -1;
             }
-            if(event.getY()<0) {
-                this.zoomFactor = this.zoomFactor * 1.24;
-                System.out.println(this.zoomFactor);
-                this.offsetX = this.offsetX - ((this.canvasMidX - this.px1) * this.zoomFactor);
-                this.offsetY = this.offsetY - ((this.canvasMidY - this.py1) * this.zoomFactor);
 
+            if ((this.zoomFactor + factor) > 3.2 && (this.zoomFactor + factor) < 6000) {
+                this.zoomFactor = this.zoomFactor + factor;
+
+                this.offsetX = this.offsetX + (this.canvasMidX - this.px1)*2;
+                this.offsetY = this.offsetY + (this.canvasMidY - this.py1)*2;
+
+                this.context.clearRect(0, 0, 1000, 1000);
+                this.manageTestdrawing();
             }
-            this.drawGrit();
-
-            this.manageTestdrawing();
+//            this.drawGrit();
 
             // funktioniert noch nicht gut!
 //            if (factor > 0){
@@ -83,14 +84,17 @@ public class Map extends Canvas {
 //            }
         });
 
-        this.setOnMousePressed( event -> {
-            this.px1 = event.getX();
-            this.py1 = event.getY();
+        this.setOnMouseReleased( event -> {
             System.out.println(this.getLeftUpperCornerX());
             System.out.println(this.getLeftUpperCornerY());
             System.out.println(this.getRightLowerCornerX());
             System.out.println(this.getRightLowerCornerY());
             System.out.println(this.getSeamiles(this.getLeftUpperCornerX(), this.getRightLowerCornerX()));
+        });
+
+        this.setOnMousePressed( event -> {
+            this.px1 = event.getX();
+            this.py1 = event.getY();
         });
         /**
          * Drags the points on the map.
@@ -182,6 +186,11 @@ public class Map extends Canvas {
         this.jumpToMapSection(this.zoomOnSeamiles(seamilesTarget),midX,midY);
     }
 
+    /**
+     * Makes any value positive.
+     * @param value
+     * @return double value
+     */
     public double getPositive(double value){
         if (value < 0){
             value = value * -1;
