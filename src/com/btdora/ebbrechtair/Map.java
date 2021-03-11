@@ -239,6 +239,7 @@ public class Map extends Canvas {
         this.drawGrit();
         td1.airportsTest();
         drawstuff(td1.airportsArray);
+        drawdegreelines();
 //        for (int i = 0; i < td1.airportsArray.size(); i++){
 //            double lat = zoomdragFactorLat(td1.airportsArray.get(i).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
 //            double lon = zoomdragFactorLon(td1.airportsArray.get(i).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
@@ -371,6 +372,7 @@ public class Map extends Canvas {
             for (int j = rangeLeft; j < rangeRight; j++){
                 ArrayList<GeoCoordinate> ret = this.dataGrid.get(i, j);
                 drawstuff(ret);
+                drawdegreelines();
             }
         }
         System.out.println("Getting grids successfully finished.");
@@ -439,6 +441,7 @@ public class Map extends Canvas {
         context.drawImage(fix, lon, lat, measurements, measurements);
     }
 
+
     public void drawstuff(ArrayList<GeoCoordinate> geoCoordinates) {
         if (geoCoordinates.size() > 0) {
             int counter=0;
@@ -475,6 +478,33 @@ public class Map extends Canvas {
 
             }
         }
+    }
+
+    public void drawblacklines(double lat1, double lon1, double lat2, double lon2) {
+        this.context.setLineWidth(1);
+        this.context.setStroke(Color.BLACK);
+        this.context.strokeLine(lon1, lat1, lon2, lat2);
+    }
+
+    public void drawdegreelines(){
+
+        for(int i=-90; i<=90;i++){
+            int d = 180;
+            double lat= this.zoomdragFactorLat(i, zoomFactor, offsetX, canvasMidX);
+            double lon= this.zoomdragFactorLon(d, zoomFactor, offsetY, canvasMidY);
+            double lat2= this.zoomdragFactorLat(i, zoomFactor, offsetY, canvasMidY);
+            double lon2= this.zoomdragFactorLon(-d, zoomFactor, offsetY, canvasMidY);
+            drawblacklines(lat,lon,lat2,lon2);
+        }
+        for(int i=-180; i<=180;i++){
+            int d = 90;
+            double lat= this.zoomdragFactorLat(d, zoomFactor, offsetX, canvasMidX);
+            double lon= this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+            double lat2= this.zoomdragFactorLat(-d, zoomFactor, offsetY, canvasMidY);
+            double lon2= this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+            drawblacklines(lat,lon,lat2,lon2);
+        }
+
     }
 }
 
