@@ -1,6 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Airway {
+public class Airway extends GeoCoordinate{
     private String AtsID;
     private int AtsPartition;
     private String FixID;
@@ -11,7 +11,8 @@ public class Airway {
     private int OutBoundCourse;
     private Double LegLength;
 
-    public Airway(String atsID, int atsPartition, String fixID, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength) {
+    public Airway( String atsID, int atsPartition, String fixID, Double lat, Double lon, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength) {
+        super(lat, lon);
         AtsID = atsID;
         AtsPartition = atsPartition;
         FixID = fixID;
@@ -22,6 +23,4 @@ public class Airway {
         OutBoundCourse = outBoundCourse;
         LegLength = legLength;
     }
-
-
 }

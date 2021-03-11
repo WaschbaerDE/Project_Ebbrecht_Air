@@ -74,6 +74,26 @@ public class DataGrid {
         }
     }
 
+    private void initializeAirway() {
+        SQLConnector sqlConnector = new SQLConnector();
+
+        try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
+            String SQL = "Select * from db_Airway";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
+            ResultSet rs = stmt.executeQuery(SQL);
+            while (rs.next()) {
+                int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
+                int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
+                int LatNext = (int) Math.floor(rs.getDouble("LatNext")) + 90;
+                int LonNext = (int) Math.floor(rs.getDouble("LonNext")) + 180;
+                this.gridArray.get(lat).get(lon).add(new Airway(rs.getString("AirwayID"), rs.getInt("AirwayPartition"), rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getString("IDOfNextFix"), rs.getDouble("LatNext"), rs.getDouble("LonNext"), rs.getInt("InBoundCourse"),rs.getInt("OutBoundCourse"),rs.getDouble("LegLength")));
+                this.gridArray.get(LatNext).get(LonNext).add(new Airway(rs.getString("AirwayID"), rs.getInt("AirwayPartition"), rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getString("IDOfNextFix"), rs.getDouble("LatNext"), rs.getDouble("LonNext"), rs.getInt("InBoundCourse"),rs.getInt("OutBoundCourse"),rs.getDouble("LegLength")));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public ArrayList<GeoCoordinate> get(int lat, int lon) {
         return this.gridArray.get(lat+90).get(lon+180);
     }
