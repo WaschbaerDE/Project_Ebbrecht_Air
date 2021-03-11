@@ -24,4 +24,11 @@ public class AirwayPart extends GeoCoordinate{
         LegLength = legLength;
     }
 
+    public Double getLatNext() {
+        return this.LatNext;
+    }
+
+    public Double getLonNext() {
+        return this.LonNext;
+    }
 }

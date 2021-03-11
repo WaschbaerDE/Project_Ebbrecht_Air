@@ -74,6 +74,10 @@ public class DataGrid {
         }
     }
 
+    public ArrayList<ArrayList<ArrayList<GeoCoordinate>>> getGridArray(){
+        return gridArray;
+    }
+
     public ArrayList<GeoCoordinate> get(int lat, int lon) {
         return this.gridArray.get(lat+90).get(lon+180);
     }
