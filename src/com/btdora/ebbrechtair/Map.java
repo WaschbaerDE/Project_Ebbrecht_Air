@@ -1,8 +1,7 @@
 package com.btdora.ebbrechtair;
 
 
-import com.btdora.ebbrechtair.classes.AirwayPart;
-import com.btdora.ebbrechtair.classes.GeoCoordinate;
+import com.btdora.ebbrechtair.classes.*;
 import com.btdora.ebbrechtair.util.DataGrid;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
