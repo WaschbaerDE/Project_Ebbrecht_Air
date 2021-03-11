@@ -238,7 +238,17 @@ public class Map extends Canvas {
 
                 if (geoCoordinates.get(i) instanceof Airport) {
                     this.drawairport(lat, lon);
-                } else if (geoCoordinates.get(i) instanceof Fix) {
+                    if (((Airport) geoCoordinates.get(i)).getifr() == 1) {
+                        drawairportifr(lat, lon);
+                    }
+                    else if((((Airport) geoCoordinates.get(i)).getifr() == 0)){
+                        drawairportvfr(lat, lon);
+                    }
+                    else{
+                        drawairport(lat, lon);
+                    }
+                }
+                else if (geoCoordinates.get(i) instanceof Fix) {
                     this.drawfix(lat, lon);
                 } else if (geoCoordinates.get(i) instanceof Ndb) {
                     drawNavaids_ndb(lat,lon);
@@ -248,10 +258,11 @@ public class Map extends Canvas {
                     drawNavaids_vor(lat,lon);
                 } else if (geoCoordinates.get(i) instanceof VorDme){
                     drawNavaids_vordme(lat,lon);
-                } else if (geoCoordinates.get(i) instanceof Airport_Ifr){
-                    drawairportifr(lat,lon);
-                } else if (geoCoordinates.get(i) instanceof Airport_Vfr){
-                    drawairportifr(lat,lon);
+                    if (geoCoordinates.get(i) instanceof Airport){
+
+                }
+
+
                 }
 
             }

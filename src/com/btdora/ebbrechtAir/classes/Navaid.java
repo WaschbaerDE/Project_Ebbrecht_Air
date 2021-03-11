@@ -10,15 +10,28 @@ public abstract class Navaid extends GeoCoordinate {
     private String areaCode;
     
 
-    public Navaid(String navaidID, String navaidName, Double frequency, boolean radialCapability, boolean dmeCapability, double lat, double lan, int altitude, String areaCode) {
+    public Navaid(String navaidID, String navaidName, Double frequency, int radialCapability, int dmeCapability, double lat, double lan, int altitude, String areaCode) {
         super(lat, lan);
         this.navaidID = navaidID;
         this.navaidName = navaidName;
         this.frequency = frequency;
         this.altitude = altitude;
         this.areaCode = areaCode;
-        this.radialCapability = radialCapability;
-        this.dmeCapability = dmeCapability;
+        if (radialCapability== 1) {
+            this.radialCapability =true;
+        }
+        else {
+            this.radialCapability =false;
+        }
+
+        if (dmeCapability== 1) {
+            this.dmeCapability =true;
+        }
+        else {
+            this.dmeCapability =false;
+        }
+
+
     }
 
     public String getNavaidID() {
