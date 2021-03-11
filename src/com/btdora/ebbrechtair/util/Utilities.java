@@ -23,7 +23,6 @@ public class Utilities {
         } catch(SQLException e) {
             e.printStackTrace();
         }
-
         return list;
     }
 

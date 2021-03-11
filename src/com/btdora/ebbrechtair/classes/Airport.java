@@ -26,4 +26,12 @@ public class Airport extends GeoCoordinate {
     public String toString() {
         return this.icaoCode+" "+this.airportName;
     }
+
+    public int getifr() {
+        return ifr;
+    }
+
+    public void setifr(int ifr) {
+        this.ifr = ifr;
+    }
 }

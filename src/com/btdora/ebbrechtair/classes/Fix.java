@@ -1,19 +1,26 @@
 package com.btdora.ebbrechtair.classes;
 
-public class Fix extends GeoCoordinate {
-    private final String FixID;
-    private final String Areacode;
-    private final String Departure;
-    private final String Arrival;
+import java.util.ArrayList;
 
-    public Fix(String fixID, double Lat, double Lon, String areacode, String departure, String arrival) {
-        super(Lat,Lon);
-        FixID = fixID;
-        Areacode = areacode;
-        Departure = departure;
-        Arrival = arrival;
+public class Fix extends GeoCoordinate {
+    private String fixID;
+    private String areacode;
+    private String departure;
+    private String arrival;
+
+    public Fix(String fixID, double lat, double lon, String areacode, String departure, String arrival) {
+        super(lat, lon);
+        this.fixID = fixID;
+        this.areacode = areacode;
+        this.departure = departure;
+        this.arrival = arrival;
 
     }
 
 
-}
+} 
+
+
+
+    
+
