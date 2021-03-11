@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class DataGrid {
     private final ArrayList<ArrayList<ArrayList<GeoCoordinate>>> gridArray = new ArrayList<ArrayList<ArrayList<GeoCoordinate>>>();
 
+    // DataGrid = Funktion die das Karten-Raster befüllt
     public DataGrid() {
         for (int i = 0; i < 181; i++) {
             this.gridArray.add(new ArrayList<ArrayList<GeoCoordinate>>());
@@ -22,6 +23,7 @@ public class DataGrid {
         this.initializeNavaids();
     }
 
+    //Befüllung des Rasters mit Flughafen-Objekten
     private void initializeAirports() {
 
         SQLConnector sqlConnector = new SQLConnector();
@@ -40,6 +42,7 @@ public class DataGrid {
         }
     }
 
+    // Beffüllung des Rasters mit Fixes-Objekten
     private void initializeFixes() {
         SQLConnector sqlConnector = new SQLConnector();
 
@@ -58,6 +61,7 @@ public class DataGrid {
 
     }
 
+    //Befüllung des Rasters mit Navaids-Objekten
     private void initializeNavaids() {
         SQLConnector sqlConnector = new SQLConnector();
 
@@ -74,6 +78,7 @@ public class DataGrid {
         }
     }
 
+    //Befüllung des Rasters mit Airway-Objekten
     private void initializeAirway() {
         SQLConnector sqlConnector = new SQLConnector();
 
