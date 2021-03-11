@@ -1,7 +1,7 @@
-package com.btdora.ebbrechtAir;
+package com.btdora.ebbrechtair;
 
 
-import com.btdora.ebbrechtAir.classes.*;
+import com.btdora.ebbrechtair.classes.*;
 import com.sun.xml.internal.bind.v2.runtime.Coordinator;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Map extends Canvas {
     private GraphicsContext context = this.getGraphicsContext2D();
 
-    String imagePath = "com/btdora/ebbrechtAir/images/";
+    String imagePath = "com/btdora/ebbrechtair/images/";
     Image airport = new Image(imagePath + "airport.png");
     Image navaids_dme = new Image(imagePath + "NAVAIDS_dme.png");
     Image fix = new Image(imagePath + "Fix.png");
@@ -258,11 +258,6 @@ public class Map extends Canvas {
                     drawNavaids_vor(lat,lon);
                 } else if (geoCoordinates.get(i) instanceof VorDme){
                     drawNavaids_vordme(lat,lon);
-                    if (geoCoordinates.get(i) instanceof Airport){
-
-                }
-
-
                 }
 
             }

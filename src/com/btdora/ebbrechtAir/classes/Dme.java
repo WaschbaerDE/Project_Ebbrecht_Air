@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir.classes;
+package com.btdora.ebbrechtair.classes;
 
 public class Dme extends Navaid {
     public Dme(String navaidID, String navaidName, Double frequency, double lat, double lon, int altitude, String areaCode) {

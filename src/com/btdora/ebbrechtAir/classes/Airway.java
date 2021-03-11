@@ -1,12 +1,27 @@
-package com.btdora.ebbrechtAir.classes;
-
-
-import java.util.ArrayList;
+package com.btdora.ebbrechtair.classes;
 
 public class Airway {
-    private ArrayList<AirwayPart> airway;
+    private String AtsID;
+    private int AtsPartition;
+    private String FixID;
+    private String IDOfNextFix;
+    private Double LonNext;
+    private Double LatNext;
+    private int InBoundCourse;
+    private int OutBoundCourse;
+    private Double LegLength;
 
-    public Airway(ArrayList<AirwayPart> airway) {
-        this.airway = airway;
+    public Airway(String atsID, int atsPartition, String fixID, String IDOfNextFix, Double lonNext, Double latNext, int inBoundCourse, int outBoundCourse, Double legLength) {
+        AtsID = atsID;
+        AtsPartition = atsPartition;
+        FixID = fixID;
+        this.IDOfNextFix = IDOfNextFix;
+        LonNext = lonNext;
+        LatNext = latNext;
+        InBoundCourse = inBoundCourse;
+        OutBoundCourse = outBoundCourse;
+        LegLength = legLength;
     }
+
+
 }

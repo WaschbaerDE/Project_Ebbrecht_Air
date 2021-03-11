@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir.classes;
+package com.btdora.ebbrechtair.classes;
 
 public abstract class Navaid extends GeoCoordinate {
     private String navaidID;
@@ -17,6 +17,7 @@ public abstract class Navaid extends GeoCoordinate {
         this.frequency = frequency;
         this.altitude = altitude;
         this.areaCode = areaCode;
+
         if (radialCapability== 1) {
             this.radialCapability =true;
         }

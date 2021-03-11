@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir.classes;
+package com.btdora.ebbrechtair.classes;
 
 public class Ndb extends Navaid {
     public Ndb(String navaidID, String navaidName, Double frequency, double lat ,double lon, int altitude, String areaCode) {

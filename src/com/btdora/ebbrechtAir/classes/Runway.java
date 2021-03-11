@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir.classes;
+package com.btdora.ebbrechtair.classes;
 
 public class Runway extends GeoCoordinate {
     private String Airportcode;

@@ -1,6 +1,6 @@
-package com.btdora.ebbrechtAir;
+package com.btdora.ebbrechtair;
 
-import com.btdora.ebbrechtAir.classes.*;
+import com.btdora.ebbrechtair.classes.*;
 
 
 import java.util.ArrayList;

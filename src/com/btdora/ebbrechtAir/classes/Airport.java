@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir.classes;
+package com.btdora.ebbrechtair.classes;
 
 public class Airport extends GeoCoordinate {
     private String ICAOCode;

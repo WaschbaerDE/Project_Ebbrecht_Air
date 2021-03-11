@@ -1,4 +1,4 @@
-package com.btdora.ebbrechtAir.classes;
+package com.btdora.ebbrechtair.classes;
 
 import java.util.ArrayList;
 
@@ -14,10 +14,6 @@ public class Fix extends GeoCoordinate {
         this.areacode = areacode;
         this.departure = departure;
         this.arrival = arrival;
-
-
-        ArrayList<Fix> fixArrayList = new ArrayList<Fix>();
-
 
     }
 
