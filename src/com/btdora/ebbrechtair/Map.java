@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 public class Map extends Canvas {
     private GraphicsContext context = this.getGraphicsContext2D();
 
-    String imagePath = "com/btdora/ebbrechtAir/resources/images/";
+    String imagePath = "com/btdora/ebbrechtair/resources/images/";
     Image airport = new Image(imagePath + "AIRPORT.png");
 
     private double canvasMidX = 500;
@@ -336,5 +336,69 @@ public class Map extends Canvas {
         lon = lon - measurements / 2;
         this.context.drawImage(this.airport, lon, lat, measurements, measurements);
     }
+    public void drawairport(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airport, lon, lat, measurements, measurements);
+    }
+
+    public void drawairportifr(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airportifr, lon, lat, measurements, measurements);
+    }
+
+    public void drawairportvfr(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airportvfr, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_dme(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_dme, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_ndb(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_ndb, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_vor(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_vor, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_vordme(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawfix(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(fix, lon, lat, measurements, measurements);
+    }
+
+
+
+
 }
 
