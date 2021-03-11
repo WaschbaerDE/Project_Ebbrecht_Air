@@ -24,7 +24,9 @@ public class Controller {
     @FXML
     private TextArea routeTextArea;
     @FXML
-    private ListView listView;
+    private ListView destlistView;
+    @FXML
+    private ListView depalistView;
     @FXML
     private Button editRouteButton;
     @FXML
@@ -32,22 +34,37 @@ public class Controller {
 
     public void initializeProcess(javafx.event.ActionEvent actionEvent) throws InterruptedException {
         ObservableList<Airport> data = FXCollections.observableArrayList();
-
+        ObservableList<Airport> data2 = FXCollections.observableArrayList();
         List<Airport> departureAirports = Utilities.getIcaoByName(this.depaTextfield.getText());
         List<Airport> destinationAirports = Utilities.getIcaoByName(this.destTextfield.getText());
         if(departureAirports.size() > 0) {
             System.out.println(departureAirports.get(0));
+            data2.addAll(departureAirports);
+            this.depalistView.onMouseClickedProperty().set((event) -> {
+                System.out.println(this.depalistView.getSelectionModel().getSelectedItem());
+            });
+
+            this.depalistView.setItems(data2);
+        }   else{
+            System.out.println("Fehlermeldung: Kein Flughafen gefunden!");
         }
+
         if(destinationAirports.size() > 0) {
             data.addAll(destinationAirports);
             System.out.println(destinationAirports.get(0));
+        }   else{
+            System.out.println("Fehlermeldung");
         }
 
-        this.listView.onMouseClickedProperty().set((event) -> {
-            System.out.println(this.listView.getSelectionModel().getSelectedItem());
+
+
+        this.destlistView.onMouseClickedProperty().set((event) -> {
+            System.out.println(this.destlistView.getSelectionModel().getSelectedItem());
         });
 
-        this.listView.setItems(data);
+        this.destlistView.setItems(data);
+
+
     }
 
     public void editRoute(javafx.event.ActionEvent actionEvent) throws InterruptedException {
