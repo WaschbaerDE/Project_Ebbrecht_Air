@@ -1,16 +1,26 @@
 package com.btdora.ebbrechtair;
 
 
+import com.btdora.ebbrechtair.classes.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public class Map extends Canvas {
     private GraphicsContext context = this.getGraphicsContext2D();
 
-    String imagePath = "com/btdora/ebbrechtAir/resources/images/";
+    String imagePath = "com/btdora/ebbrechtAir/resources/symbolsblack/";
     Image airport = new Image(imagePath + "AIRPORT.png");
+    Image navaids_dme = new Image(imagePath + "NAVAIDS_dme.png");
+    Image fix = new Image(imagePath + "Fix.png");
+    Image navaids_ndb = new Image(imagePath + "NAVAIDS_NDB.png");
+    Image navaids_vor = new Image(imagePath + "NAVAIDS_VOR.png");
+    Image navaids_vordme = new Image(imagePath + "NAVAIDS_VORDME.png");
+    Image airportifr = new Image(imagePath + "AIRPORT_IFR.png");
+    Image airportvfr = new Image(imagePath + "AIRPORT_VFR.png");
 
     private double canvasMidX = 500;
     private double canvasMidY = 500;
@@ -37,7 +47,15 @@ public class Map extends Canvas {
 
         this.drawGrit();
 
-        this.manageTestdrawing();
+
+        Testdaten td1 = new Testdaten();
+
+        this.context.clearRect(0,0, 1000, 1000);
+        this.drawGrit();
+        td1.airportsTest();
+        drawstuff(td1.airportsArray);
+
+        //this.manageTestdrawing();
 
         /**
          * Scrolls on map towards mouse-position.
@@ -226,16 +244,13 @@ public class Map extends Canvas {
         this.context.clearRect(0,0, 1000, 1000);
         this.drawGrit();
         td1.airportsTest();
-        double lat6 = this.zoomdragFactorLat(td1.airportsArray.get(7).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
-        double lon6 = this.zoomdragFactorLon(td1.airportsArray.get(7).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
-        double lat7 = this.zoomdragFactorLat(td1.airportsArray.get(8).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
-        double lon7 = this.zoomdragFactorLon(td1.airportsArray.get(8).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
-        this.colorAirwayRoutes(lat6, lon6, lat7, lon7);
-        for (int i = 0; i < td1.airportsArray.size(); i++){
-            double lat = zoomdragFactorLat(td1.airportsArray.get(i).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
-            double lon = zoomdragFactorLon(td1.airportsArray.get(i).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
-            this.setAirportLocation(lat, lon);
-        }
+        drawstuff(td1.airportsArray);
+//        for (int i = 0; i < td1.airportsArray.size(); i++){
+//            double lat = zoomdragFactorLat(td1.airportsArray.get(i).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
+//            double lon = zoomdragFactorLon(td1.airportsArray.get(i).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
+//            this.setAirportLocation(lat, lon);
+//        }
+
     }
 
     /**
@@ -335,6 +350,101 @@ public class Map extends Canvas {
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         this.context.drawImage(this.airport, lon, lat, measurements, measurements);
+    }
+
+
+
+    public void drawairport(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airport, lon, lat, measurements, measurements);
+    }
+
+    public void drawairportifr(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airportifr, lon, lat, measurements, measurements);
+    }
+
+    public void drawairportvfr(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(airportvfr, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_dme(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_dme, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_ndb(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_ndb, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_vor(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_vor, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawNavaids_vordme(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
+    }
+
+
+    public void drawfix(double lat, double lon){
+        int measurements = 50;
+        lat = lat - measurements / 2;
+        lon = lon - measurements / 2;
+        context.drawImage(fix, lon, lat, measurements, measurements);
+    }
+
+    public void drawstuff(ArrayList<GeoCoordinate> geoCoordinates) {
+        if (geoCoordinates.size() > 0) {
+            for (int i = 0; i < geoCoordinates.size(); i++) {
+                double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
+                double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
+
+                if (geoCoordinates.get(i) instanceof Airport) {
+                    this.drawairport(lat, lon);
+                    if (((Airport) geoCoordinates.get(i)).getifr() == 1) {
+                        drawairportifr(lat, lon);
+                    } else if((((Airport) geoCoordinates.get(i)).getifr() == 0)){
+                        drawairportvfr(lat, lon);
+                    } else{
+                        drawairport(lat, lon);
+                    }
+                }
+                else if (geoCoordinates.get(i) instanceof Fix) {
+                    this.drawfix(lat, lon);
+                } else if (geoCoordinates.get(i) instanceof Ndb) {
+                    drawNavaids_ndb(lat,lon);
+                } else if (geoCoordinates.get(i) instanceof Dme){
+                    drawNavaids_dme(lat,lon);
+                } else if (geoCoordinates.get(i) instanceof Vor){
+                    drawNavaids_vor(lat,lon);
+                } else if (geoCoordinates.get(i) instanceof VorDme){
+                    drawNavaids_vordme(lat,lon);
+                }
+
+            }
+        }
     }
 }
 
