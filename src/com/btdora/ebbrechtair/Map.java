@@ -1,12 +1,15 @@
 package com.btdora.ebbrechtair;
 
 
-import com.btdora.ebbrechtair.classes.*;
+import com.btdora.ebbrechtair.classes.AirwayPart;
+import com.btdora.ebbrechtair.classes.GeoCoordinate;
+import com.btdora.ebbrechtair.util.DataGrid;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Map extends Canvas {
@@ -35,15 +38,18 @@ public class Map extends Canvas {
     private double leftUpperCornerY;
     private double rightLowerCornerX;
     private double rightLowerCornerY;
+    private DataGrid dataGrid;
 
     public Map() {
         super(1000, 1000);
 
-        this.jumpToMapSection(this.zoomOnSeamiles(108),50.033306,8.570456);
-        jumpToMapSection(1000,50.033306,8.570456);
-//        jumpToMapSection(60000,50.033306,8.570456);
+        this.dataGrid = new DataGrid();
 
-        this.setZoomOnObjects(50.033306, 8.570456, 52.362247,13.500672);
+        this.jumpToMapSection(3,0,0);
+//        this.jumpToMapSection(this.zoomOnSeamiles(108),50.033306,8.570456); // Frankfurt, 108 Seemeilen breiter Screen
+//        this.jumpToMapSection(1000,50.033306,8.570456); // Frankfurt, 1 Grad breiter Screen
+//        jumpToMapSection(60000,50.033306,8.570456); // Frankfurt, 1 Seemeile breiter Screen
+        this.setZoomOnObjects(50.033306, 8.570456, 52.362247,13.500672); // Strecke Frankfurt - Berlin
 
         this.drawGrit();
 
@@ -67,16 +73,16 @@ public class Map extends Canvas {
             // funktioniert, aber zu langsam
             // funktioniert, aber zu langsam
             if (factor > 0){
-                factor = 1;
+                factor = 0.5;
             } else {
-                factor = -1;
+                factor = -0.5;
             }
 
             if ((this.zoomFactor + factor) > 3.2 && (this.zoomFactor + factor) < 6000) {
                 this.zoomFactor = this.zoomFactor + factor;
 
-                this.offsetX = this.offsetX + (this.canvasMidX - this.px1)*2;
-                this.offsetY = this.offsetY + (this.canvasMidY - this.py1)*2;
+                this.offsetX = this.offsetX + (this.canvasMidX - this.px1)/2;
+                this.offsetY = this.offsetY + (this.canvasMidY - this.py1)/2;
 
                 this.context.clearRect(0, 0, 1000, 1000);
                 this.manageTestdrawing();
@@ -103,10 +109,7 @@ public class Map extends Canvas {
         });
 
         this.setOnMouseReleased( event -> {
-            System.out.println(this.getLeftUpperCornerX());
-            System.out.println(this.getLeftUpperCornerY());
-            System.out.println(this.getRightLowerCornerX());
-            System.out.println(this.getRightLowerCornerY());
+            this.getScreenCoordinates();
             System.out.println(this.getSeamiles(this.getLeftUpperCornerX(), this.getRightLowerCornerX()));
         });
 
@@ -350,6 +353,33 @@ public class Map extends Canvas {
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         this.context.drawImage(this.airport, lon, lat, measurements, measurements);
+    }
+
+    public void getScreenCoordinates() {
+        leftUpperCornerX = this.getLeftUpperCornerX();
+        leftUpperCornerY = this.getLeftUpperCornerY();
+        rightLowerCornerX = this.getRightLowerCornerX();
+        rightLowerCornerY = this.getRightLowerCornerY();
+        this.getGridArray(leftUpperCornerX, leftUpperCornerY, rightLowerCornerX, rightLowerCornerY);
+    }
+
+    public void getGridArray(double luX, double luY, double rlX, double rlY){
+        int rangeLeft = (int)(Math.floor(luX));
+        int rangeTop = (int)(Math.floor(luY));
+        int rangeRight = (int)(Math.floor(rlX));
+        int rangeBottom = (int)(Math.floor(rlY));
+
+        if (rangeLeft <= -180){rangeLeft = -180;}
+        if (rangeTop >= 90){rangeTop = 90;}
+        if (rangeRight >= 180){rangeRight = 180;}
+        if (rangeBottom <= -90){rangeBottom = -90;}
+
+        for (int i = rangeBottom; i < rangeTop; i++){
+            for (int j = rangeLeft; j < rangeRight; j++){
+                ArrayList<GeoCoordinate> ret = this.dataGrid.get(i, j);
+            }
+        }
+        System.out.println("Getting grids successfully finished.");
     }
 
 
