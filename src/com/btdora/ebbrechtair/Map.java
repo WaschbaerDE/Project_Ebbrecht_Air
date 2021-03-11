@@ -50,16 +50,9 @@ public class Map extends Canvas {
 //        jumpToMapSection(60000,50.033306,8.570456); // Frankfurt, 1 Seemeile breiter Screen
         this.setZoomOnObjects(50.033306, 8.570456, 52.362247,13.500672); // Strecke Frankfurt - Berlin
 
+        this.getScreenCoordinates();
+
         this.drawGrit();
-
-
-        Testdaten td1 = new Testdaten();
-
-        this.context.clearRect(0,0, 1000, 1000);
-        this.drawGrit();
-        td1.airportsTest();
-        drawstuff(td1.airportsArray);
-
         //this.manageTestdrawing();
 
         /**
@@ -83,8 +76,7 @@ public class Map extends Canvas {
                 this.offsetX = this.offsetX + (this.canvasMidX - this.px1)/2;
                 this.offsetY = this.offsetY + (this.canvasMidY - this.py1)/2;
 
-                this.context.clearRect(0, 0, 1000, 1000);
-                this.manageTestdrawing();
+                this.getScreenCoordinates();
             }
 //            this.drawGrit();
 
@@ -127,7 +119,7 @@ public class Map extends Canvas {
             this.px1 = this.px2;
             this.py1 = this.py2;
 
-            this.manageTestdrawing();
+            this.getScreenCoordinates();
         });
     }
 
@@ -363,9 +355,11 @@ public class Map extends Canvas {
     }
 
     public void getGridArray(double luX, double luY, double rlX, double rlY){
+        this.context.clearRect(0,0, 1000, 1000);
+
         int rangeLeft = (int)(Math.floor(luX));
-        int rangeTop = (int)(Math.floor(luY));
-        int rangeRight = (int)(Math.floor(rlX));
+        int rangeTop = (int)(Math.floor(luY))+1;
+        int rangeRight = (int)(Math.floor(rlX))+1;
         int rangeBottom = (int)(Math.floor(rlY));
 
         if (rangeLeft <= -180){rangeLeft = -180;}
@@ -376,6 +370,7 @@ public class Map extends Canvas {
         for (int i = rangeBottom; i < rangeTop; i++){
             for (int j = rangeLeft; j < rangeRight; j++){
                 ArrayList<GeoCoordinate> ret = this.dataGrid.get(i, j);
+                drawstuff(ret);
             }
         }
         System.out.println("Getting grids successfully finished.");
@@ -384,21 +379,21 @@ public class Map extends Canvas {
 
 
     public void drawairport(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(airport, lon, lat, measurements, measurements);
     }
 
     public void drawairportifr(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(airportifr, lon, lat, measurements, measurements);
     }
 
     public void drawairportvfr(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(airportvfr, lon, lat, measurements, measurements);
@@ -406,7 +401,7 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_dme(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_dme, lon, lat, measurements, measurements);
@@ -414,7 +409,7 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_ndb(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_ndb, lon, lat, measurements, measurements);
@@ -422,7 +417,7 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_vor(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_vor, lon, lat, measurements, measurements);
@@ -430,7 +425,7 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_vordme(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
@@ -438,7 +433,7 @@ public class Map extends Canvas {
 
 
     public void drawfix(double lat, double lon){
-        int measurements = 50;
+        int measurements = 10;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(fix, lon, lat, measurements, measurements);
