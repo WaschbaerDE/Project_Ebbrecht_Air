@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Map extends Canvas {
     private GraphicsContext context = this.getGraphicsContext2D();
 
-    String imagePath = "com/btdora/ebbrechtAir/resources/symbolsblack/";
+    String imagePath = "com/btdora/ebbrechtair/resources/symbolsblack/";
     Image airport = new Image(imagePath + "AIRPORT.png");
     Image navaids_dme = new Image(imagePath + "NAVAIDS_dme.png");
     Image fix = new Image(imagePath + "Fix.png");
@@ -409,7 +409,7 @@ public class Map extends Canvas {
 
 
     public void drawfix(double lat, double lon){
-        int measurements = 50;
+        int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(fix, lon, lat, measurements, measurements);

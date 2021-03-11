@@ -1,11 +1,12 @@
 package com.btdora.ebbrechtair;
-
+import javafx.scene.canvas.GraphicsContext;
 import com.btdora.ebbrechtair.classes.Airport;
 import com.btdora.ebbrechtair.util.Utilities;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.List;
@@ -25,6 +26,9 @@ public class Controller {
     @FXML
     private AnchorPane coordinateAnchorPane;
 
+
+    
+
     public void initializeProcess(javafx.event.ActionEvent actionEvent) throws InterruptedException {
         List<Airport> departureAirports = Utilities.getIcaoByName(depaTextfield.getText());
         List<Airport> destinationAirports = Utilities.getIcaoByName(destTextfield.getText());
@@ -37,6 +41,7 @@ public class Controller {
     }
 
     public void editRoute(javafx.event.ActionEvent actionEvent) throws InterruptedException {
+
         String routeString = routeTextArea.getText();
         String[] routeArray = routeString.split(" ");
 
