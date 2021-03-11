@@ -56,22 +56,23 @@ public class Utilities {
         List<Airport> inputzielListe = getIcaoByName(inputZiel);
 
         if (inputstartliste.size() == 1 && inputzielListe.size() == 1) {
-            
-            return"" ;//return der zwei flughäfen -> "EDDF EDDR"
+            System.out.println(inputstartliste);
+            System.out.println(inputzielListe);
+            return "" ;//return der zwei flughäfen -> "EDDF EDDR"
         }
 
         else if (inputstartliste.size() == 0 && inputzielListe.size() == 0) {
+            System.out.println("Kein Flughafen gefunden!");
             return "";//return der Fehlermeldung
         }
 
         else if(inputstartliste.size() > 1 && inputzielListe.size()  > 1) {
+            System.out.println("Wählen Sie einen der Flughäfen aus!");
             return "";//return -> Wählen Sie einen der Fluhäfen aus
         }
         else{
             System.out.println("Bitte erneut eingeben!");
             return "";
         }
-
-
     }
 }
