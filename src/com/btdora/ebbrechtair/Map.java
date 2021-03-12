@@ -38,6 +38,8 @@ public class Map extends Canvas {
     private double rightLowerCornerY;
     private DataGrid dataGrid;
 
+
+
     public Map() {
         super(1000, 1000);
 
@@ -393,6 +395,8 @@ public class Map extends Canvas {
 
     public void getGridArray(double luX, double luY, double rlX, double rlY) {
         this.context.clearRect(0, 0, 1000, 1000);
+        this.context.setFill(Color.WHITE);
+        this.context.fillRect(0,0, this.getWidth(), this.getHeight());
 
         int rangeLeft = (int) (Math.floor(luX));
         int rangeTop = (int) (Math.floor(luY)) + 1;
@@ -446,15 +450,16 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_dme(double lat, double lon) {
-        int measurements = 25;
+        int measurements = 60;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
-        context.drawImage(navaids_dme, lon, lat, measurements, measurements);
+        //der Kunde möchte das DME ausgeblendet haben, da kein Bedarf besteht
+       // context.drawImage(navaids_dme, lon, lat, measurements, measurements);
     }
 
 
     public void drawNavaids_ndb(double lat, double lon) {
-        int measurements = 25;
+        int measurements = 60;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_ndb, lon, lat, measurements, measurements);
@@ -462,7 +467,7 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_vor(double lat, double lon) {
-        int measurements = 25;
+        int measurements = 60;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_vor, lon, lat, measurements, measurements);
@@ -470,17 +475,19 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_vordme(double lat, double lon) {
-        int measurements = 25;
+        int measurements = 60;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
     }
 
-
     public void drawFix(double lat, double lon) {
-        int measurements = 10;
+        //Die Linien des Dreiecks wollen vom Kunden dicker gezeigt werden
+        int measurements = 17;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
+        context.setFill(Color.WHITE);
+        context.fillOval(lon-4, lat-2, 25, 25);
         context.drawImage(fix, lon, lat, measurements, measurements);
     }
 
@@ -491,8 +498,20 @@ public class Map extends Canvas {
                 double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
                 double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
 
+                if (geoCoordinates.get(i) instanceof Airway) {
+                    double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
+                    double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
+                    drawAirwayLines(lat, lon, lat2, lon2);
+                }
+            }
 
-                if (geoCoordinates.get(i) instanceof Airport) {
+            for (int i = 0; i < geoCoordinates.size(); i++) {
+                double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
+                double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
+
+                if (geoCoordinates.get(i) instanceof Fix) {
+                    this.drawFix(lat, lon);
+                } else if (geoCoordinates.get(i) instanceof Airport) {
                     //this.drawairport(lat, lon);
                     context.fillText(((Airport) geoCoordinates.get(i)).getIcaoCode(),lon+12, lat-5);
                     if (((Airport) geoCoordinates.get(i)).getifr() == 1) {
@@ -505,6 +524,8 @@ public class Map extends Canvas {
                 } else if (geoCoordinates.get(i) instanceof Fix) {
                     this.drawFix(lat, lon);
                 } else if (geoCoordinates.get(i) instanceof Navaid){
+
+                }else if (geoCoordinates.get(i) instanceof Navaid){
                     if (geoCoordinates.get(i) instanceof Ndb) {
                         drawNavaids_ndb(lat, lon);
                     } else if (geoCoordinates.get(i) instanceof Dme) {
@@ -516,10 +537,6 @@ public class Map extends Canvas {
                         context.fillText((((VorDme) geoCoordinates.get(i)).getNavaidID()),lon+12, lat+15);
                         drawNavaids_vordme(lat, lon);
                     }
-                } else {
-                    double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
-                    double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
-                    drawAirwayLines(lat, lon, lat2, lon2);
                 }
 
             }
