@@ -484,14 +484,16 @@ public class Map extends Canvas {
                     }
                 } else if (geoCoordinates.get(i) instanceof Fix) {
                     this.drawfix(lat, lon);
-                } else if (geoCoordinates.get(i) instanceof Ndb) {
-                    drawNavaids_ndb(lat, lon);
-                } else if (geoCoordinates.get(i) instanceof Dme) {
-                    drawNavaids_dme(lat, lon);
-                } else if (geoCoordinates.get(i) instanceof Vor) {
-                    drawNavaids_vor(lat, lon);
-                } else if (geoCoordinates.get(i) instanceof VorDme) {
-                    drawNavaids_vordme(lat, lon);
+                } else if (geoCoordinates.get(i) instanceof Navaid){
+                    if (geoCoordinates.get(i) instanceof Ndb) {
+                        drawNavaids_ndb(lat, lon);
+                    } else if (geoCoordinates.get(i) instanceof Dme) {
+                        drawNavaids_dme(lat, lon);
+                    } else if (geoCoordinates.get(i) instanceof Vor) {
+                        drawNavaids_vor(lat, lon);
+                    } else if (geoCoordinates.get(i) instanceof VorDme) {
+                            drawNavaids_vordme(lat, lon);
+                    }
                 } else {
                     double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
                     double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
