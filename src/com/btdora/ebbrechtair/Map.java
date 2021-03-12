@@ -44,16 +44,14 @@ public class Map extends Canvas {
 
         this.dataGrid = new DataGrid();
 
-        this.jumpToMapSection(3, 0, 0);
-        this.jumpToMapSection(this.zoomOnSeamiles(108),50.033306,8.570456); // Frankfurt, 108 Seemeilen breiter Screen
+//        this.jumpToMapSection(3, 0, 0);
+        this.jumpToMapSection(50, 50, 8);
+//        this.jumpToMapSection(this.zoomOnSeamiles(108),50.033306,8.570456); // Frankfurt, 108 Seemeilen breiter Screen
 //        this.jumpToMapSection(1000,50.033306,8.570456); // Frankfurt, 1 Grad breiter Screen
 //        jumpToMapSection(60000,50.033306,8.570456); // Frankfurt, 1 Seemeile breiter Screen
-        //this.setZoomOnObjects(50.033306, 8.570456, 52.362247, 13.500672); // Strecke Frankfurt - Berlin
+//        this.setZoomOnObjects(50.033306, 8.570456, 52.362247, 13.500672); // Strecke Frankfurt - Berlin
 
         this.getScreenCoordinates();
-
-        this.drawGrit();
-        //this.manageTestdrawing();
 
         /**
          * Scrolls on map towards mouse-position.
@@ -62,23 +60,80 @@ public class Map extends Canvas {
             px1 = event.getX();
             py1 = event.getY();
             double factor = event.getDeltaY();
+
             // funktioniert, aber zu langsam
-            // funktioniert, aber zu langsam
-            if (factor > 0) {
-                factor = 0.5;
+            if (factor > 0){
+                if (this.zoomFactor < 20){factor = 0.5;}
+                else if (this.zoomFactor < 40){factor = 1;}
+                else if (this.zoomFactor < 60){factor = 2;}
+                else if (this.zoomFactor < 80){factor = 3;}
+                else if (this.zoomFactor < 100){factor = 4;}
+                else if (this.zoomFactor < 120){factor = 5;}
+                else if (this.zoomFactor < 140){factor = 6;}
+                else if (this.zoomFactor < 160){factor = 7;}
+                else if (this.zoomFactor < 180){factor = 8;}
+                else if (this.zoomFactor < 200){factor = 9;}
+                else if (this.zoomFactor < 220){factor = 10;}
+                else {factor = 11;}
             } else {
-                factor = -0.5;
+                if (this.zoomFactor < 20){factor = -0.5;}
+                else if (this.zoomFactor < 40){factor = -1;}
+                else if (this.zoomFactor < 60){factor = -2;}
+                else if (this.zoomFactor < 80){factor = -3;}
+                else if (this.zoomFactor < 100){factor = -4;}
+                else if (this.zoomFactor < 120){factor = -5;}
+                else if (this.zoomFactor < 140){factor = -6;}
+                else if (this.zoomFactor < 160){factor = -7;}
+                else if (this.zoomFactor < 180){factor = -8;}
+                else if (this.zoomFactor < 200){factor = -9;}
+                else if (this.zoomFactor < 220){factor = -10;}
+                else {factor = -11;}
             }
 
-            if ((this.zoomFactor + factor) > 3.2 && (this.zoomFactor + factor) < 6000) {
+            if ((this.zoomFactor + factor) > 3.2 && (this.zoomFactor + factor) < 220) {
                 this.zoomFactor = this.zoomFactor + factor;
 
-                this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 2;
-                this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 2;
+                if (this.zoomFactor<20) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 5;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 5;
+                } else if (this.zoomFactor<40) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 2.5;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 2.5;
+                } else if (this.zoomFactor<60) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 1.25;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 1.25;
+                } else if (this.zoomFactor<80) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 1;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 1;
+                } else if (this.zoomFactor<100) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.825;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.825;
+                } else if (this.zoomFactor<120) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.75;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.75;
+                } else if (this.zoomFactor<140) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.625;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.625;
+                } else if (this.zoomFactor<160) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.575;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.575;
+                } else if (this.zoomFactor<180) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.55;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.55;
+                } else if (this.zoomFactor<200) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.525;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.525;
+                } else if (this.zoomFactor<220) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.5125;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.5125;
+                } else {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.5;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.5;
+                }
+                System.out.println(this.zoomFactor);
 
                 this.getScreenCoordinates();
             }
-//            this.drawGrit();
 
             // funktioniert noch nicht gut!
 //            if (factor > 0){
@@ -87,21 +142,24 @@ public class Map extends Canvas {
 //                factor = 0.85;
 //            }
 //            if (zoomFactor* factor > 3.2 || factor > 1) {
-//                if (zoomFactor* factor < 6000 || factor < 1) {
+//                if (zoomFactor* factor < 220 || factor < 1) {
 //                    this.zoomFactor = this.zoomFactor * factor;
 //                    System.out.println(this.zoomFactor);
-//                    this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) / (factor+2.5));
-//                    this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) / (factor+2.5));
+//                    this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) / (this.zoomFactor*factor/(this.zoomFactor+factor*10)));
+//                    this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) / (this.zoomFactor*factor/(this.zoomFactor+factor*10)));
 //                    this.context.clearRect(0, 0, 1000, 1000);
 //
-//                    this.manageTestdrawing();
+//                    this.getScreenCoordinates();
 //                }
 //            }
         });
 
         this.setOnMouseReleased(event -> {
             this.getScreenCoordinates();
-            System.out.println(this.getSeamiles(this.getLeftUpperCornerX(), this.getRightLowerCornerX()));
+            System.out.println("Left upper corner:  x = " + leftUpperCornerX + "  y = " + leftUpperCornerY);
+            System.out.println("Right upper corner:  x = " + rightLowerCornerX + "  y = " + leftUpperCornerY);
+            System.out.println("Right lower corner:  x = " + rightLowerCornerX + "  y = " + rightLowerCornerY);
+            System.out.println("Left lower corner:  x = " + leftUpperCornerX + "  y = " + rightLowerCornerY);
         });
 
         this.setOnMousePressed(event -> {
@@ -241,57 +299,18 @@ public class Map extends Canvas {
     }
 
     /**
-     * Draws testdata on map.
-     */
-    public void manageTestdrawing() {
-        Testdaten td1 = new Testdaten();
-        this.context.clearRect(0, 0, 1000, 1000);
-        this.drawGrit();
-        td1.airportsTest();
-        drawstuff(td1.airportsArray);
-        drawdegreelines();
-//        for (int i = 0; i < td1.airportsArray.size(); i++){
-//            double lat = zoomdragFactorLat(td1.airportsArray.get(i).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
-//            double lon = zoomdragFactorLon(td1.airportsArray.get(i).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
-//            this.setAirportLocation(lat, lon);
-//        }
-
-    }
-
-    /**
      * Provides coordinates for grit and draws cross on canvas.
      */
     private void drawGrit() {
         int gritMax = 20000;
         int gritMin = gritMax * -1;
-        int fieldMeasurements = 10;
-//        fieldMeasurements = fieldMeasurements + zoomFactor;
-
-//        for(int i = 0; i < gritMax*10; i = i + fieldMeasurements) {
-//            drawGritLines(i + offsetFactorX + gritMin, gritMin, i + offsetFactorX + gritMin, gritMax);
-//            drawGritLines(gritMin, i + offsetFactorY + gritMin, gritMax, i + offsetFactorY + gritMin);
-//        }
         this.context.setLineWidth(1);
         this.context.setStroke(Color.LIGHTSALMON);
         this.context.strokeLine(this.canvasMidX + this.offsetX, gritMin, this.canvasMidX + this.offsetX, gritMax);
         this.context.strokeLine(gritMin, this.canvasMidY + this.offsetY, gritMax, this.canvasMidY + this.offsetY);
-        this.context.setStroke(Color.BLACK);
+        this.context.setStroke(Color.RED);
         this.context.strokeLine(this.canvasMidX, this.canvasMidY - 5, this.canvasMidX, this.canvasMidY + 5);
         this.context.strokeLine(this.canvasMidX - 5, this.canvasMidY, this.canvasMidX + 5, this.canvasMidY);
-    }
-
-    /**
-     * Draws grit on canvas.
-     *
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     */
-    private void drawGritLines(double x1, double y1, double x2, double y2) {
-        this.context.setLineWidth(0.2);
-        this.context.setStroke(Color.BLACK);
-        this.context.strokeLine(x1, y1, x2, y2);
     }
 
     /**
@@ -397,9 +416,9 @@ public class Map extends Canvas {
                 ArrayList<GeoCoordinate> ret = this.dataGrid.get(i, j);
                 drawstuff(ret);
                 drawdegreelines();
+                drawGrit();
             }
         }
-        System.out.println("Getting grids successfully finished.");
     }
 
 
@@ -505,30 +524,48 @@ public class Map extends Canvas {
     }
 
     public void drawblacklines(double lat1, double lon1, double lat2, double lon2) {
-        this.context.setLineWidth(1);
+        this.context.setLineWidth(0.3);
         this.context.setStroke(Color.BLACK);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
     }
 
     public void drawdegreelines() {
 
-        for (int i = -90; i <= 90; i++) {
-            int d = 180;
-            double lat = this.zoomdragFactorLat(i, zoomFactor, offsetX, canvasMidX);
-            double lon = this.zoomdragFactorLon(d, zoomFactor, offsetY, canvasMidY);
-            double lat2 = this.zoomdragFactorLat(i, zoomFactor, offsetY, canvasMidY);
-            double lon2 = this.zoomdragFactorLon(-d, zoomFactor, offsetY, canvasMidY);
-            drawblacklines(lat, lon, lat2, lon2);
+        if (zoomFactor > 35) {
+            for (int i = -90; i <= 90; i++) {
+                int d = 180;
+                double lat = this.zoomdragFactorLat(i, zoomFactor, offsetX, canvasMidX);
+                double lon = this.zoomdragFactorLon(d, zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomdragFactorLat(i, zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomdragFactorLon(-d, zoomFactor, offsetY, canvasMidY);
+                drawblacklines(lat, lon, lat2, lon2);
+            }
+            for (int i = -180; i <= 180; i++) {
+                int d = 90;
+                double lat = this.zoomdragFactorLat(d, zoomFactor, offsetX, canvasMidX);
+                double lon = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomdragFactorLat(-d, zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+                drawblacklines(lat, lon, lat2, lon2);
+            }
+        } else {
+            for (int i = -90; i <= 90; i = i + 10) {
+                int d = 180;
+                double lat = this.zoomdragFactorLat(i, zoomFactor, offsetX, canvasMidX);
+                double lon = this.zoomdragFactorLon(d, zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomdragFactorLat(i, zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomdragFactorLon(-d, zoomFactor, offsetY, canvasMidY);
+                drawblacklines(lat, lon, lat2, lon2);
+            }
+            for (int i = -180; i <= 180; i = i + 10) {
+                int d = 90;
+                double lat = this.zoomdragFactorLat(d, zoomFactor, offsetX, canvasMidX);
+                double lon = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomdragFactorLat(-d, zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+                drawblacklines(lat, lon, lat2, lon2);
+            }
         }
-        for (int i = -180; i <= 180; i++) {
-            int d = 90;
-            double lat = this.zoomdragFactorLat(d, zoomFactor, offsetX, canvasMidX);
-            double lon = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
-            double lat2 = this.zoomdragFactorLat(-d, zoomFactor, offsetY, canvasMidY);
-            double lon2 = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
-            drawblacklines(lat, lon, lat2, lon2);
-        }
-
     }
 
 
