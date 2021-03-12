@@ -509,7 +509,7 @@ public class Map extends Canvas {
             for (int i = 0; i < geoCoordinates.size(); i++) {
                 double lat = this.zoomDragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
                 double lon = this.zoomDragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
-
+                context.setFill(Color.RED);
                 if (geoCoordinates.get(i) instanceof Fix) {
                     this.drawFix(lat, lon);
                 } else if (geoCoordinates.get(i) instanceof Airport) {
