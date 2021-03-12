@@ -1,5 +1,6 @@
 package com.btdora.ebbrechtair.classes;
 
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,20 +8,20 @@ import java.util.List;
 
 public class Schnittstelle {
 
-    public static Route routeFinder(String depAirport, String arrAirport) throws SQLException {
+    public static ArrayList<GeoCoordinate> routeFinder(String depAirport, String arrAirport) throws SQLException {
         DatabaseReader2 databaseReader2 = new DatabaseReader2();
         HashMap<String, DijkstraNode> waypoints = databaseReader2.getAllWaypoints();
         DijkstraNode comparator = new DijkstraNode(0, null);
         ArrayList<DijkstraNode> shortestPath = new ArrayList<>();
 
-        for (String startKey : Airport.departureAirport("EDDF")) {
+        for (String startKey : Airport.departureAirport(depAirport)) {
 
             if (waypoints.containsKey(startKey)) {
                 Dijkstra dijkstraNode = null;
                 dijkstraNode = new Dijkstra();
                 dijkstraNode.sidNode = waypoints.get(startKey);
 
-                for (String endKey : Airport.arrivalAirport("EDDH")) {
+                for (String endKey : Airport.arrivalAirport(arrAirport)) {
 
                     if (waypoints.containsKey(endKey)) {
 
@@ -45,9 +46,7 @@ public class Schnittstelle {
             }
         }
 
-//        String lastWaypoint = shortestPath.get(shortestPath.size()-1).getName();
-//
-//
+        String lastWaypoint = shortestPath.get(shortestPath.size()-1).getName();
         Double distance = shortestPath.get(shortestPath.size()-1).getDistance();
 //        Double actualDistance = distance + getSidDistance(shortestPath.get(0).getName()) +
 //                getStarDistance(shortestPath.get(shortestPath.size()-1).getName());
@@ -55,12 +54,14 @@ public class Schnittstelle {
 //        DijkstraNode secondAirport = databaseReader2.getAirportInfo(secondAirport);
 //        shortestPath.add(0, firstAirport);
 //        shortestPath.add(shortestPath.size()-1, secondAirport);
-        Route route = new Route(shortestPath, distance);
+
+        ArrayList<GeoCoordinate> arrayList = null;
         for (DijkstraNode d : shortestPath
              ) {
-            System.out.println(d.getName());
+            arrayList.add(new Fix(d.getLatitude(),d.getLongitude(),d.getName()));
         }
-        return route;
+        Route route = new Route(shortestPath, distance);
+        return arrayList;
 
     }
 }

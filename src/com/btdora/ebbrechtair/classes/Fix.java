@@ -14,11 +14,13 @@ public class Fix extends GeoCoordinate {
         this.areacode = areacode;
         this.departure = departure;
         this.arrival = arrival;
-
     }
 
-
-} 
+    public Fix(Double lat, Double lon, String fixID) {
+        super(lat, lon);
+        this.fixID = fixID;
+    }
+}
 
 
 

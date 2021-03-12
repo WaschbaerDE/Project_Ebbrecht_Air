@@ -1,6 +1,7 @@
 package com.btdora.ebbrechtair;
 
 import com.btdora.ebbrechtair.classes.Airport;
+import com.btdora.ebbrechtair.classes.GeoCoordinate;
 import com.btdora.ebbrechtair.classes.Route;
 import com.btdora.ebbrechtair.classes.Schnittstelle;
 import com.btdora.ebbrechtair.util.Utilities;
@@ -14,10 +15,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
-
+    private ArrayList<GeoCoordinate> arrayList;
     @FXML
     private TextField depaTextfield;
     @FXML
@@ -36,9 +38,9 @@ public class Controller {
     private AnchorPane coordinateAnchorPane;
 
     public void initializeProcess(javafx.event.ActionEvent actionEvent) throws InterruptedException, SQLException {
-    public void initializeProcess(javafx.event.ActionEvent actionEvent) throws InterruptedException {
         final String[] icaoStartAirport = new String[1];
         final String[] icaoEndAirport = new String[1];
+
         ObservableList<Airport> data = FXCollections.observableArrayList();
         ObservableList<Airport> data2 = FXCollections.observableArrayList();
         List<Airport> departureAirports = Utilities.getIcaoByName(this.depaTextfield.getText());
@@ -68,8 +70,8 @@ public class Controller {
 
 
 
-        Route route = Schnittstelle.routeFinder(this.depaTextfield.getText(),this.destTextfield.getText());
-        System.out.println(route.path);
+        //Route route = Schnittstelle.routeFinder(this.depaTextfield.getText(),this.destTextfield.getText());
+        //System.out.println(route.path);
         this.destlistView.onMouseClickedProperty().set((event) -> {
                 System.out.println(this.destlistView.getSelectionModel().getSelectedItem());// Paris wenn angeklicked
             icaoEndAirport[0] = this.destlistView.getSelectionModel().getSelectedItem().toString().substring(0,4);
@@ -82,7 +84,10 @@ public class Controller {
         /*
         * HIER PROZEDUR STARTEN
         * drawActiveRoute(ArrayList)
+        *
          */
+        Map map = new Map();
+        map.drawActiveRoute(Schnittstelle.routeFinder(icaoStartAirport[0],icaoEndAirport[0]));
     }
 
     public void editRoute(javafx.event.ActionEvent actionEvent) throws InterruptedException {

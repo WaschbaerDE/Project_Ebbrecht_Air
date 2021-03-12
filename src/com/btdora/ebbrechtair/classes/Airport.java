@@ -10,8 +10,6 @@ import java.util.Scanner;
 
 public class Airport extends GeoCoordinate {
     private String icaoCode;
-
-    private final String icaoCode;
     private String airportName;
     private int altitudeAirportInFeet;
     private int maxRunwayLength;
