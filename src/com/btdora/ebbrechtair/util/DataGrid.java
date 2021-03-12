@@ -19,11 +19,8 @@ public class DataGrid {
             }
         }
         this.initializeAirports();
-        this.initializeFixes();
-        this.initializeNavaidsNDB();
-        this.initializeNavaidsVOR();
-        this.initializeNavaidsVORDME();
-        this.initializeNavaidsDME();
+        this.initializeNavaids();
+        this.initializeAirway();
     }
 
     //Befüllung des Rasters mit Flughafen-Objekten
@@ -65,61 +62,28 @@ public class DataGrid {
     }
 
     //Befüllung des Rasters mit Navaids-Objekten
-    private void initializeNavaidsNDB() {
+    private void initializeNavaids() {
         SQLConnector sqlConnector = new SQLConnector();
 
         try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
-            String SQL = "Select * From db_navaid über WHERE radialCapability = 0 AND dmeCapability= 0";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
+            String SQL = "Select * From db_navaid";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
             ResultSet rs = stmt.executeQuery(SQL);
             while (rs.next()) {
                 int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
                 int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
-                this.gridArray.get(lat).get(lon).add(new Ndb(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    private void initializeNavaidsVOR() {
-        SQLConnector sqlConnector = new SQLConnector();
 
-        try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
-            String SQL = "Select * From db_navaid über WHERE radialCapability = 1 AND dmeCapability= 0";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
-            ResultSet rs = stmt.executeQuery(SQL);
-            while (rs.next()) {
-                int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
-                int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
-                this.gridArray.get(lat).get(lon).add(new Vor(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    private void initializeNavaidsDME() {
-        SQLConnector sqlConnector = new SQLConnector();
+                int radialCapability = rs.getInt("radialCapability");
+                int dmeCapability = rs.getInt("dmeCapability");
 
-        try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
-            String SQL = "Select * From db_navaid über WHERE radialCapability = 0 AND dmeCapability= 1";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
-            ResultSet rs = stmt.executeQuery(SQL);
-            while (rs.next()) {
-                int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
-                int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
-                this.gridArray.get(lat).get(lon).add(new Dme(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    private void initializeNavaidsVORDME() {
-        SQLConnector sqlConnector = new SQLConnector();
-
-        try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
-            String SQL = "Select * From db_navaid über WHERE radialCapability = 1 AND dmeCapability= 1";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
-            ResultSet rs = stmt.executeQuery(SQL);
-            while (rs.next()) {
-                int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
-                int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
-                this.gridArray.get(lat).get(lon).add(new VorDme(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
+                if(radialCapability == 0 && dmeCapability == 0) {
+                    this.gridArray.get(lat).get(lon).add(new Ndb(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
+                } else if(radialCapability == 0 && dmeCapability == 1) {
+                    this.gridArray.get(lat).get(lon).add(new Dme(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
+                } else if(radialCapability == 1 && dmeCapability == 0) {
+                    this.gridArray.get(lat).get(lon).add(new Vor(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
+                } else {
+                    this.gridArray.get(lat).get(lon).add(new VorDme(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -134,13 +98,14 @@ public class DataGrid {
             String SQL = "Select * from db_Airway";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
             ResultSet rs = stmt.executeQuery(SQL);
             while (rs.next()) {
+                //this.gridArray.get(lat).get(lon).add(new Fix(rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getString("Areacode"), rs.getString("Departure"), rs.getString("Arrival")));
                 int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
                 int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
                 int LatNext = (int) Math.floor(rs.getDouble("LatNext")) + 90;
                 int LonNext = (int) Math.floor(rs.getDouble("LonNext")) + 180;
                 this.gridArray.get(lat).get(lon).add(new Airway(rs.getString("AirwayID"), rs.getInt("AirwayPartition"), rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getString("IDOfNextFix"), rs.getDouble("LatNext"), rs.getDouble("LonNext"), rs.getInt("InBoundCourse"),rs.getInt("OutBoundCourse"),rs.getDouble("LegLength")));
                 this.gridArray.get(LatNext).get(LonNext).add(new Airway(rs.getString("AirwayID"), rs.getInt("AirwayPartition"), rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getString("IDOfNextFix"), rs.getDouble("LatNext"), rs.getDouble("LonNext"), rs.getInt("InBoundCourse"),rs.getInt("OutBoundCourse"),rs.getDouble("LegLength")));
-
+                this.gridArray.get(lat).get(lon).add(new Fix(rs.getString("FixID"), rs.getDouble("Lat"), rs.getDouble("Lon"), "", "", ""));
             }
         } catch (SQLException e) {
             e.printStackTrace();
