@@ -69,7 +69,7 @@ public class DataGrid {
         SQLConnector sqlConnector = new SQLConnector();
 
         try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
-            String SQL = "Select * From db_navaids über WHERE radialCapability = 0 AND dmeCapability= 0";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
+            String SQL = "Select * From db_navaid über WHERE radialCapability = 0 AND dmeCapability= 0";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
             ResultSet rs = stmt.executeQuery(SQL);
             while (rs.next()) {
                 int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
@@ -84,7 +84,7 @@ public class DataGrid {
         SQLConnector sqlConnector = new SQLConnector();
 
         try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
-            String SQL = "Select * From db_navaids über WHERE radialCapability = 1 AND dmeCapability= 0";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
+            String SQL = "Select * From db_navaid über WHERE radialCapability = 1 AND dmeCapability= 0";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
             ResultSet rs = stmt.executeQuery(SQL);
             while (rs.next()) {
                 int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
@@ -99,7 +99,7 @@ public class DataGrid {
         SQLConnector sqlConnector = new SQLConnector();
 
         try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
-            String SQL = "Select * From db_navaids über WHERE radialCapability = 0 AND dmeCapability= 1";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
+            String SQL = "Select * From db_navaid über WHERE radialCapability = 0 AND dmeCapability= 1";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
             ResultSet rs = stmt.executeQuery(SQL);
             while (rs.next()) {
                 int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
@@ -114,12 +114,12 @@ public class DataGrid {
         SQLConnector sqlConnector = new SQLConnector();
 
         try (Statement stmt = SQLConnector.getSQLConnection().createStatement()) {
-            String SQL = "Select * From db_navaids über WHERE radialCapability = 1 AND dmeCapability= 1";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
+            String SQL = "Select * From db_navaid über WHERE radialCapability = 1 AND dmeCapability= 1";        // SELECT-ABFRAGE Select * from db_Airport, db_Airway, db_Fix, db_Navaid, db_Runway
             ResultSet rs = stmt.executeQuery(SQL);
             while (rs.next()) {
                 int lat = (int) Math.floor(rs.getDouble("Lat")) + 90;
                 int lon = (int) Math.floor(rs.getDouble("Lon")) + 180;
-                this.gridArray.get(lat).get(lon).add(new Vor(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
+                this.gridArray.get(lat).get(lon).add(new VorDme(rs.getString("NavaidID"), rs.getString("NavaidName"), rs.getDouble("Frequency"), rs.getDouble("Lat"), rs.getDouble("Lon"), rs.getInt("Altitude"), rs.getString("AreaCode")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
