@@ -1,31 +1,12 @@
 package com.btdora.ebbrechtair;
 
-import javafx.scene.shape.Polygon;
-
 import com.btdora.ebbrechtair.classes.*;
 import com.btdora.ebbrechtair.util.DataGrid;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
-import javafx.scene.transform.Rotate;
 
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.stage.Stage;
-
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class Map extends Canvas {
@@ -310,7 +291,7 @@ public class Map extends Canvas {
         this.drawGrit();
         td1.airportsTest();
         drawGeoCoordinates(td1.airportsArray);
-        drawdegreelines();
+        drawDegreeLines();
 //        for (int i = 0; i < td1.airportsArray.size(); i++){
 //            double lat = zoomdragFactorLat(td1.airportsArray.get(i).getLat(), this.zoomFactor, this.offsetY, this.canvasMidY);
 //            double lon = zoomdragFactorLon(td1.airportsArray.get(i).getLon(), this.zoomFactor, this.offsetX, this.canvasMidX);
@@ -356,7 +337,7 @@ public class Map extends Canvas {
      * @param lat2
      * @param lon2
      */
-    public void drawairwayconnect(double lat1, double lon1, double lat2, double lon2) {
+    public void drawAirwayConnect(double lat1, double lon1, double lat2, double lon2) {
         this.context.setLineWidth(2);
         this.context.setStroke(Color.MAGENTA);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
@@ -371,7 +352,7 @@ public class Map extends Canvas {
      * @param canvasMidFactorY
      * @return double lat
      */
-    public double zoomdragFactorLat(double lat, double zoomFactor, double offsetY, double canvasMidFactorY) {
+    public double zoomDragFactorLat(double lat, double zoomFactor, double offsetY, double canvasMidFactorY) {
         lat = this.manipulateX(lat) + this.offsetY + this.canvasMidY;
         return lat;
     }
@@ -385,7 +366,7 @@ public class Map extends Canvas {
      * @param canvasMidFactorX
      * @return double lon
      */
-    public double zoomdragFactorLon(double lon, double zoomFactor, double offsetX, double canvasMidFactorX) {
+    public double zoomDragFactorLon(double lon, double zoomFactor, double offsetX, double canvasMidFactorX) {
         lon = this.manipulateY(lon) + this.offsetX + this.canvasMidX;
         return lon;
     }
@@ -438,28 +419,28 @@ public class Map extends Canvas {
             for (int j = rangeLeft; j < rangeRight; j++) {
                 ArrayList<GeoCoordinate> ret = this.dataGrid.get(i, j);
                 drawGeoCoordinates(ret);
-                drawdegreelines();
+                drawDegreeLines();
                 drawGrit();
             }
         }
     }
 
 
-    public void drawairport(double lat, double lon) {
+    public void drawAirport(double lat, double lon) {
         int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(airport, lon, lat, measurements, measurements);
     }
 
-    public void drawairportifr(double lat, double lon) {
+    public void drawAirportiFr(double lat, double lon) {
         int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(airportifr, lon, lat, measurements, measurements);
     }
 
-    public void drawairportvfr(double lat, double lon) {
+    public void drawAirportVfr(double lat, double lon) {
         int measurements = 25;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
@@ -515,19 +496,19 @@ public class Map extends Canvas {
         drawActiveRoute(test.getList());
         if (geoCoordinates.size() > 0) {
             for (int i = 0; i < geoCoordinates.size(); i++) {
-                double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
-                double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
+                double lat = this.zoomDragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
+                double lon = this.zoomDragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
 
                 if (geoCoordinates.get(i) instanceof Airway) {
-                    double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
-                    double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
+                    double lat2 = this.zoomDragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
+                    double lon2 = this.zoomDragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
                     drawAirwayLines(lat, lon, lat2, lon2);
                 }
             }
 
             for (int i = 0; i < geoCoordinates.size(); i++) {
-                double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
-                double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
+                double lat = this.zoomDragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
+                double lon = this.zoomDragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
 
                 if (geoCoordinates.get(i) instanceof Fix) {
                     this.drawFix(lat, lon);
@@ -535,11 +516,11 @@ public class Map extends Canvas {
                     //this.drawairport(lat, lon);
                     context.fillText(((Airport) geoCoordinates.get(i)).getIcaoCode(),lon+12, lat-5);
                     if (((Airport) geoCoordinates.get(i)).getifr() == 1) {
-                        drawairportifr(lat, lon);
+                        drawAirportiFr(lat, lon);
                     } else if ((((Airport) geoCoordinates.get(i)).getifr() == 0)) {
-                        drawairportvfr(lat, lon);
+                        drawAirportVfr(lat, lon);
                     } else {
-                        drawairport(lat, lon);
+                        drawAirport(lat, lon);
                     }
                 }else if (geoCoordinates.get(i) instanceof Navaid){
                     if (geoCoordinates.get(i) instanceof Ndb) {
@@ -559,47 +540,47 @@ public class Map extends Canvas {
         }
     }
 
-    public void drawblacklines(double lat1, double lon1, double lat2, double lon2) {
+    public void drawBlackLines(double lat1, double lon1, double lat2, double lon2) {
         this.context.setLineWidth(0.3);
         this.context.setStroke(Color.BLACK);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
     }
 
-    public void drawdegreelines() {
+    public void drawDegreeLines() {
 
         if (zoomFactor > 35) {
             for (int i = -90; i <= 90; i++) {
                 int d = 180;
-                double lat = this.zoomdragFactorLat(i, zoomFactor, offsetX, canvasMidX);
-                double lon = this.zoomdragFactorLon(d, zoomFactor, offsetY, canvasMidY);
-                double lat2 = this.zoomdragFactorLat(i, zoomFactor, offsetY, canvasMidY);
-                double lon2 = this.zoomdragFactorLon(-d, zoomFactor, offsetY, canvasMidY);
-                drawblacklines(lat, lon, lat2, lon2);
+                double lat = this.zoomDragFactorLat(i, zoomFactor, offsetX, canvasMidX);
+                double lon = this.zoomDragFactorLon(d, zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomDragFactorLat(i, zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomDragFactorLon(-d, zoomFactor, offsetY, canvasMidY);
+                drawBlackLines(lat, lon, lat2, lon2);
             }
             for (int i = -180; i <= 180; i++) {
                 int d = 90;
-                double lat = this.zoomdragFactorLat(d, zoomFactor, offsetX, canvasMidX);
-                double lon = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
-                double lat2 = this.zoomdragFactorLat(-d, zoomFactor, offsetY, canvasMidY);
-                double lon2 = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
-                drawblacklines(lat, lon, lat2, lon2);
+                double lat = this.zoomDragFactorLat(d, zoomFactor, offsetX, canvasMidX);
+                double lon = this.zoomDragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomDragFactorLat(-d, zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomDragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+                drawBlackLines(lat, lon, lat2, lon2);
             }
         } else {
             for (int i = -90; i <= 90; i = i + 10) {
                 int d = 180;
-                double lat = this.zoomdragFactorLat(i, zoomFactor, offsetX, canvasMidX);
-                double lon = this.zoomdragFactorLon(d, zoomFactor, offsetY, canvasMidY);
-                double lat2 = this.zoomdragFactorLat(i, zoomFactor, offsetY, canvasMidY);
-                double lon2 = this.zoomdragFactorLon(-d, zoomFactor, offsetY, canvasMidY);
-                drawblacklines(lat, lon, lat2, lon2);
+                double lat = this.zoomDragFactorLat(i, zoomFactor, offsetX, canvasMidX);
+                double lon = this.zoomDragFactorLon(d, zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomDragFactorLat(i, zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomDragFactorLon(-d, zoomFactor, offsetY, canvasMidY);
+                drawBlackLines(lat, lon, lat2, lon2);
             }
             for (int i = -180; i <= 180; i = i + 10) {
                 int d = 90;
-                double lat = this.zoomdragFactorLat(d, zoomFactor, offsetX, canvasMidX);
-                double lon = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
-                double lat2 = this.zoomdragFactorLat(-d, zoomFactor, offsetY, canvasMidY);
-                double lon2 = this.zoomdragFactorLon(i, zoomFactor, offsetY, canvasMidY);
-                drawblacklines(lat, lon, lat2, lon2);
+                double lat = this.zoomDragFactorLat(d, zoomFactor, offsetX, canvasMidX);
+                double lon = this.zoomDragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomDragFactorLat(-d, zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomDragFactorLon(i, zoomFactor, offsetY, canvasMidY);
+                drawBlackLines(lat, lon, lat2, lon2);
             }
         }
 
@@ -610,11 +591,11 @@ public class Map extends Canvas {
     public void drawActiveRoute(ArrayList<GeoCoordinate> airwaycoordinates) {
         if (airwaycoordinates.size() > 0) {
             for (int i = 0; i < airwaycoordinates.size()-1; i++) {
-                double lat = this.zoomdragFactorLat(airwaycoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
-                double lon = this.zoomdragFactorLon(airwaycoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
-                double lat2 = this.zoomdragFactorLat(airwaycoordinates.get(i+1).getLat(), zoomFactor, offsetY, canvasMidY);
-                double lon2 = this.zoomdragFactorLon(airwaycoordinates.get(i+1).getLon(), zoomFactor, offsetY, canvasMidY);
-                    drawairwayconnect(lat, lon, lat2, lon2);
+                double lat = this.zoomDragFactorLat(airwaycoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
+                double lon = this.zoomDragFactorLon(airwaycoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
+                double lat2 = this.zoomDragFactorLat(airwaycoordinates.get(i+1).getLat(), zoomFactor, offsetY, canvasMidY);
+                double lon2 = this.zoomDragFactorLon(airwaycoordinates.get(i+1).getLon(), zoomFactor, offsetY, canvasMidY);
+                    drawAirwayConnect(lat, lon, lat2, lon2);
                 }
 
             }
