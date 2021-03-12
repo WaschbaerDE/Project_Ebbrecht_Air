@@ -6,7 +6,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Utilities = Überprüfung der Eingabe von Start- und Ziel-Flughäfen
 public class Utilities {
+    
+    //Checkt ob der eingegebene String ein ICAO-Code ist
     public static List<Airport> getIcaoByName(String input) {
         List<Airport> list = new ArrayList<Airport>();
         SQLConnector createSQLConnector = new SQLConnector();
@@ -26,6 +29,7 @@ public class Utilities {
         return list;
     }
 
+    //Checkt ob der eingegebene String ein Flughafen ist
     public static List<Airport> getAirportByName(String input) {
         List<Airport> list = new ArrayList<Airport>();
         SQLConnector createSQLConnector = new SQLConnector();
