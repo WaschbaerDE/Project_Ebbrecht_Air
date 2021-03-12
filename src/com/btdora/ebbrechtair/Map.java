@@ -420,7 +420,6 @@ public class Map extends Canvas {
                 drawGrit();
             }
         }
-        System.out.println("Getting grids successfully finished.");
     }
 
 
@@ -495,6 +494,7 @@ public class Map extends Canvas {
 
                 if (geoCoordinates.get(i) instanceof Airport) {
                     //this.drawairport(lat, lon);
+                    context.fillText(((Airport) geoCoordinates.get(i)).getIcaoCode(),lon+10, lat);
                     if (((Airport) geoCoordinates.get(i)).getifr() == 1) {
                         drawairportifr(lat, lon);
                     } else if ((((Airport) geoCoordinates.get(i)).getifr() == 0)) {

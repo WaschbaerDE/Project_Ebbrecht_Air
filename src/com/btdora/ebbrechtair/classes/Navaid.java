@@ -8,7 +8,12 @@ public abstract class Navaid extends GeoCoordinate {
     private boolean dmeCapability;
     private int altitude;
     private String areaCode;
-    
+
+
+    public Navaid(Double lat, Double lon, String navaidID) {
+        super(lat, lon);
+        this.navaidID = navaidID;
+    }
 
     public Navaid(String navaidID, String navaidName, Double frequency, int radialCapability, int dmeCapability, double lat, double lan, int altitude, String areaCode) {
         super(lat, lan);

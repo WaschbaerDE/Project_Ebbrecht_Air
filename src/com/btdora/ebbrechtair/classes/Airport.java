@@ -1,6 +1,7 @@
 package com.btdora.ebbrechtair.classes;
 
 public class Airport extends GeoCoordinate {
+
     private final String icaoCode;
     private String airportName;
     private int altitudeAirportInFeet;
@@ -34,4 +35,13 @@ public class Airport extends GeoCoordinate {
     public void setifr(int ifr) {
         this.ifr = ifr;
     }
+
+    public String getIcaoCode() {
+        return icaoCode;
+    }
+
+    public String getAirportName() {
+        return airportName;
+    }
+
 }
