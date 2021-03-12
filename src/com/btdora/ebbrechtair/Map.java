@@ -62,95 +62,84 @@ public class Map extends Canvas {
             double factor = event.getDeltaY();
 
             if (factor > 0){
-                if (this.zoomFactor < 20){factor = 0.5;}
-                else if (this.zoomFactor < 40){factor = 1;}
-                else if (this.zoomFactor < 60){factor = 2;}
-                else if (this.zoomFactor < 80){factor = 3;}
-                else if (this.zoomFactor < 100){factor = 4;}
-                else if (this.zoomFactor < 120){factor = 5;}
-                else if (this.zoomFactor < 140){factor = 6;}
-                else if (this.zoomFactor < 160){factor = 7;}
-                else if (this.zoomFactor < 180){factor = 8;}
-                else if (this.zoomFactor < 200){factor = 9;}
-                else if (this.zoomFactor < 220){factor = 10;}
+                if (this.zoomFactor < 25){factor = 0.5;}
+                else if (this.zoomFactor < 50){factor = 1;}
+                else if (this.zoomFactor < 75){factor = 2;}
+                else if (this.zoomFactor < 100){factor = 3;}
+                else if (this.zoomFactor < 125){factor = 4;}
+                else if (this.zoomFactor < 150){factor = 5;}
+                else if (this.zoomFactor < 175){factor = 6;}
+                else if (this.zoomFactor < 200){factor = 7;}
+                else if (this.zoomFactor < 225){factor = 8;}
+                else if (this.zoomFactor < 250){factor = 9;}
+                else if (this.zoomFactor < 275){factor = 10;}
                 else {factor = 11;}
             } else {
-                if (this.zoomFactor < 20){factor = -0.5;}
-                else if (this.zoomFactor < 40){factor = -1;}
-                else if (this.zoomFactor < 60){factor = -2;}
-                else if (this.zoomFactor < 80){factor = -3;}
-                else if (this.zoomFactor < 100){factor = -4;}
-                else if (this.zoomFactor < 120){factor = -5;}
-                else if (this.zoomFactor < 140){factor = -6;}
-                else if (this.zoomFactor < 160){factor = -7;}
-                else if (this.zoomFactor < 180){factor = -8;}
-                else if (this.zoomFactor < 200){factor = -9;}
-                else if (this.zoomFactor < 220){factor = -10;}
+                if (this.zoomFactor < 25){factor = -0.5;}
+                else if (this.zoomFactor < 50){factor = -1;}
+                else if (this.zoomFactor < 75){factor = -2;}
+                else if (this.zoomFactor < 100){factor = -3;}
+                else if (this.zoomFactor < 125){factor = -4;}
+                else if (this.zoomFactor < 150){factor = -5;}
+                else if (this.zoomFactor < 175){factor = -6;}
+                else if (this.zoomFactor < 200){factor = -7;}
+                else if (this.zoomFactor < 225){factor = -8;}
+                else if (this.zoomFactor < 250){factor = -9;}
+                else if (this.zoomFactor < 275){factor = -10;}
                 else {factor = -11;}
             }
 
-            if ((this.zoomFactor + factor) > 3.2 && (this.zoomFactor + factor) < 220) {
+            if ((this.zoomFactor + factor) > 3.2 && (this.zoomFactor + factor) < 280) {
                 this.zoomFactor = this.zoomFactor + factor;
 
-                if (this.zoomFactor<20) {
+                if (this.zoomFactor<=25) {
                     this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 5;
                     this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 5;
-                } else if (this.zoomFactor<40) {
+                    System.out.println(factor * 5);
+                } else if (this.zoomFactor<=50) {
                     this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 2.5;
                     this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 2.5;
-                } else if (this.zoomFactor<60) {
+                    System.out.println(factor * 2.5);
+                } else if (this.zoomFactor<=75) {
                     this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 1.25;
                     this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 1.25;
-                } else if (this.zoomFactor<80) {
-                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 1;
-                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 1;
-                } else if (this.zoomFactor<100) {
-                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.825;
-                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.825;
-                } else if (this.zoomFactor<120) {
-                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.75;
-                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.75;
-                } else if (this.zoomFactor<140) {
+                    System.out.println(factor * 1.25);
+                } else if (this.zoomFactor<=100) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.833333333333333;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.833333333333333;
+                    System.out.println(factor * 0.833333333333333);
+                } else if (this.zoomFactor<=125) {
                     this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.625;
                     this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.625;
-                } else if (this.zoomFactor<160) {
-                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.575;
-                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.575;
-                } else if (this.zoomFactor<180) {
-                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.55;
-                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.55;
-                } else if (this.zoomFactor<200) {
-                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.525;
-                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.525;
-                } else if (this.zoomFactor<220) {
-                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.5125;
-                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.5125;
-                } else {
+                    System.out.println(factor * 0.625);
+                } else if (this.zoomFactor<=150) {
                     this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.5;
                     this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.5;
+                    System.out.println(factor * 0.5);
+                } else if (this.zoomFactor<=175) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.4166666666666667;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.4166666666666667;
+                    System.out.println(factor * 0.4166666666666667);
+                } else if (this.zoomFactor<=200) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.3571428571428571;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.3571428571428571;
+                } else if (this.zoomFactor<225) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.3125;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.3125;
+                } else if (this.zoomFactor<250) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.277777777777777;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.277777777777777;
+                } else if (this.zoomFactor<275) {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.25;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.25;
+                } else {
+                    this.offsetX = this.offsetX + (this.canvasMidX - this.px1) / 0.0227272727272727;
+                    this.offsetY = this.offsetY + (this.canvasMidY - this.py1) / 0.0227272727272727;
                 }
                 System.out.println(this.zoomFactor);
 
                 this.getScreenCoordinates();
             }
-
-            // funktioniert noch nicht gut!
-//            if (factor > 0){
-//                factor = 1.15;
-//            } else {
-//                factor = 0.85;
-//            }
-//            if (zoomFactor* factor > 3.2 || factor > 1) {
-//                if (zoomFactor* factor < 220 || factor < 1) {
-//                    this.zoomFactor = this.zoomFactor * factor;
-//                    System.out.println(this.zoomFactor);
-//                    this.offsetX = this.offsetX + ((this.canvasMidX - this.px1) / (this.zoomFactor*factor/(this.zoomFactor+factor*10)));
-//                    this.offsetY = this.offsetY + ((this.canvasMidY - this.py1) / (this.zoomFactor*factor/(this.zoomFactor+factor*10)));
-//                    this.context.clearRect(0, 0, 1000, 1000);
-//
-//                    this.getScreenCoordinates();
-//                }
-//            }
         });
 
         this.setOnMouseReleased(event -> {
