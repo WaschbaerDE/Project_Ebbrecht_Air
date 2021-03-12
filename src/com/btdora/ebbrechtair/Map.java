@@ -8,7 +8,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Map extends Canvas {
@@ -426,15 +425,16 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_dme(double lat, double lon) {
-        int measurements = 25;
+        int measurements = 60;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
-        context.drawImage(navaids_dme, lon, lat, measurements, measurements);
+        //der Kunde möchte das DME ausgeblendet haben, da kein Bedarf besteht
+       // context.drawImage(navaids_dme, lon, lat, measurements, measurements);
     }
 
 
     public void drawNavaids_ndb(double lat, double lon) {
-        int measurements = 25;
+        int measurements = 60;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_ndb, lon, lat, measurements, measurements);
@@ -442,7 +442,7 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_vor(double lat, double lon) {
-        int measurements = 25;
+        int measurements = 60;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_vor, lon, lat, measurements, measurements);
@@ -450,24 +450,37 @@ public class Map extends Canvas {
 
 
     public void drawNavaids_vordme(double lat, double lon) {
-        int measurements = 25;
+        int measurements = 60;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
         context.drawImage(navaids_vordme, lon, lat, measurements, measurements);
     }
 
-
     public void drawfix(double lat, double lon) {
-        int measurements = 10;
+        //Die Linien des Dreiecks wollen vom Kunden dicker gezeigt werden
+        int measurements = 17;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
+        context.fillOval(lon-4, lat-2, 25, 25);
+        context.setFill(Color.WHITE);
         context.drawImage(fix, lon, lat, measurements, measurements);
     }
 
 
     public void drawstuff(ArrayList<GeoCoordinate> geoCoordinates) {
         if (geoCoordinates.size() > 0) {
-            int counter = 0;
+            int counter = 0;for (int i = 0; i < geoCoordinates.size(); i++) {
+                double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
+                double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
+
+
+                if (geoCoordinates.get(i) instanceof Airway) {
+                    double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
+                    double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
+                    drawAirwayLines(lat, lon, lat2, lon2);
+                }
+
+            }
             for (int i = 0; i < geoCoordinates.size(); i++) {
                 double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
                 double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
@@ -494,10 +507,6 @@ public class Map extends Canvas {
                     } else if (geoCoordinates.get(i) instanceof VorDme) {
                             drawNavaids_vordme(lat, lon);
                     }
-                } else {
-                    double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
-                    double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
-                    drawAirwayLines(lat, lon, lat2, lon2);
                 }
 
             }
