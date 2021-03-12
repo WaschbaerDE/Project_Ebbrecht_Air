@@ -1,6 +1,8 @@
 package com.btdora.ebbrechtair;
 
 import com.btdora.ebbrechtair.classes.Airport;
+import com.btdora.ebbrechtair.classes.Route;
+import com.btdora.ebbrechtair.classes.Schnittstelle;
 import com.btdora.ebbrechtair.util.Utilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Controller {
@@ -32,7 +35,7 @@ public class Controller {
     @FXML
     private AnchorPane coordinateAnchorPane;
 
-    public void initializeProcess(javafx.event.ActionEvent actionEvent) throws InterruptedException {
+    public void initializeProcess(javafx.event.ActionEvent actionEvent) throws InterruptedException, SQLException {
         ObservableList<Airport> data = FXCollections.observableArrayList();
         ObservableList<Airport> data2 = FXCollections.observableArrayList();
         List<Airport> departureAirports = Utilities.getIcaoByName(this.depaTextfield.getText());
@@ -57,10 +60,23 @@ public class Controller {
         }
 
 
+//        for (String s : Airport.departureAirport(this.depaTextfield.getText())){
+//            System.out.println(s);
+//        }
+//
+//        System.out.println("HuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuenHuen");
+//        for (String s : Airport.arrivalAirport(this.destTextfield.getText())){
+//            System.out.println(s);
+//        }
+//
 
+        Route route = Schnittstelle.routeFinder(this.depaTextfield.getText(),this.destTextfield.getText());
+        System.out.println(route.path);
         this.destlistView.onMouseClickedProperty().set((event) -> {
             System.out.println(this.destlistView.getSelectionModel().getSelectedItem());
         });
+
+
 
         this.destlistView.setItems(data);
 
