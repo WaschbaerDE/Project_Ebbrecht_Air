@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -13,7 +14,7 @@ public class Main extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("resources/ebbrechtAirwaysGUI.fxml"));
             primaryStage.setTitle("Ebbrecht-Air");
-            primaryStage.setScene(new Scene(root, 1243, 1000));
+            primaryStage.setScene(new Scene(root, 1243, 1000,true, SceneAntialiasing.BALANCED));
             primaryStage.show();
         } catch (Exception e){
             e.printStackTrace();
