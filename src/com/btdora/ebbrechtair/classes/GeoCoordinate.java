@@ -21,4 +21,12 @@ public abstract class GeoCoordinate {
     public Double getLon() {
         return Lon;
     }
+
+    public void setLat(Double lat) {
+        Lat = lat;
+    }
+
+    public void setLon(Double lon) {
+        Lon = lon;
+    }
 }

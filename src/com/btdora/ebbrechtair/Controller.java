@@ -1,6 +1,8 @@
 package com.btdora.ebbrechtair;
 
 import com.btdora.ebbrechtair.classes.Airport;
+import com.btdora.ebbrechtair.classes.Route;
+import com.btdora.ebbrechtair.classes.Schnittstelle;
 import com.btdora.ebbrechtair.util.Utilities;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Controller {
@@ -32,6 +35,7 @@ public class Controller {
     @FXML
     private AnchorPane coordinateAnchorPane;
 
+    public void initializeProcess(javafx.event.ActionEvent actionEvent) throws InterruptedException, SQLException {
     public void initializeProcess(javafx.event.ActionEvent actionEvent) throws InterruptedException {
         final String[] icaoStartAirport = new String[1];
         final String[] icaoEndAirport = new String[1];
@@ -64,10 +68,14 @@ public class Controller {
 
 
 
+        Route route = Schnittstelle.routeFinder(this.depaTextfield.getText(),this.destTextfield.getText());
+        System.out.println(route.path);
         this.destlistView.onMouseClickedProperty().set((event) -> {
                 System.out.println(this.destlistView.getSelectionModel().getSelectedItem());// Paris wenn angeklicked
             icaoEndAirport[0] = this.destlistView.getSelectionModel().getSelectedItem().toString().substring(0,4);
         });
+
+
 
         this.destlistView.setItems(data);
 
