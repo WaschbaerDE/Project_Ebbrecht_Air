@@ -494,7 +494,7 @@ public class Map extends Canvas {
 
                 if (geoCoordinates.get(i) instanceof Airport) {
                     //this.drawairport(lat, lon);
-                    context.fillText(((Airport) geoCoordinates.get(i)).getIcaoCode(),lon+10, lat);
+                    context.fillText(((Airport) geoCoordinates.get(i)).getIcaoCode(),lon+12, lat-5);
                     if (((Airport) geoCoordinates.get(i)).getifr() == 1) {
                         drawairportifr(lat, lon);
                     } else if ((((Airport) geoCoordinates.get(i)).getifr() == 0)) {
@@ -508,11 +508,13 @@ public class Map extends Canvas {
                     if (geoCoordinates.get(i) instanceof Ndb) {
                         drawNavaids_ndb(lat, lon);
                     } else if (geoCoordinates.get(i) instanceof Dme) {
+                        context.fillText((((Dme) geoCoordinates.get(i)).getNavaidID()), lon+12, lat+15);
                         drawNavaids_dme(lat, lon);
                     } else if (geoCoordinates.get(i) instanceof Vor) {
                         drawNavaids_vor(lat, lon);
                     } else if (geoCoordinates.get(i) instanceof VorDme) {
-                            drawNavaids_vordme(lat, lon);
+                        context.fillText((((VorDme) geoCoordinates.get(i)).getNavaidID()),lon+12, lat+15);
+                        drawNavaids_vordme(lat, lon);
                     }
                 } else {
                     double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
