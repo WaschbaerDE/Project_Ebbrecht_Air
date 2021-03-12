@@ -1,6 +1,7 @@
 package com.btdora.ebbrechtair;
 
 import com.btdora.ebbrechtair.classes.*;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 
@@ -39,9 +40,10 @@ public class Testdaten {
         Fix test1 = new Fix("era",56.033306,7.970456,"erasafasf","fas","fsa"  );
         Fix test2 = new Fix("era",50.033306,8.570456,"erasafasf","fas","fsa"  );
 
-        Navaid rid = new VorDme("RID", "RIED", 112.2, 50, 8, 456, "ED");
-        Navaid ris = new Vor("RID", "RIED", 112.2, 51, 8, 456, "ED");
-        Navaid riy = new Dme("RID", "RIED", 112.2, 52, 8.8, 456, "ED");
+        Navaid rid = new VorDme("KLS", "PULKOVO ST PETERSBURG", 112.2, 50, 8, 456, "ED");
+        Navaid ris = new Vor("RIeDer", "RIEDERWS", 112.2, 51, 8, 456, "ED");
+        Navaid riy = new Ndb("RIDber", "RIEDERBERGE", 112.2, 52, 8.8, 456, "ED");
+        Navaid rix = new Dme("RIDger", "RIEDERBERGELOH", 112.2, 52, 8.8, 456, "ED");
 
 
         airportsArray.add(0,test1);
@@ -49,7 +51,8 @@ public class Testdaten {
         airportsArray.add(2,rid);
         airportsArray.add(3,ris);
         airportsArray.add(4,riy);
-        airportsArray.add(5,sao);
+        airportsArray.add(5,rix);
+        airportsArray.add(6,sao);
     }
 
 }

@@ -6,6 +6,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+import jdk.nashorn.internal.runtime.NumberToString;
 
 import java.util.ArrayList;
 
@@ -415,12 +418,136 @@ public class Map extends Canvas {
         context.drawImage(fix, lon, lat, measurements, measurements);
     }
 
+    public void drawNavaidLabel(double lat, double lon, Navaid navaid) {
+        //Rechteck
+        context.setLineWidth(1);
+        context.setFill(Color.WHITE);
+        context.fillRoundRect(lat, lon,125,60, 40,60);
+        context.strokeRoundRect(lat, lon,125,60, 40,60);
+        //Textbox
+        context.setFill(Color.BLACK);
+        context.setFont(Font.font("Arial",12));
+        context.setTextAlign(TextAlignment.CENTER);
+        context.fillText(navaid.getNavaidName(), lat + 62.5, lon + 17);
+        context.setTextAlign(TextAlignment.LEFT);
+        context.fillText(navaid.getNavaidID(),lat+49, lon+36);
+        context.fillText(NumberToString.stringFor(navaid.getFrequency()), lat+10, lon+36);
+        context.setFont(Font.font("Arial", 9));
+        context.fillText(NumberToString.stringFor(navaid.getLat()), lat+30, lon+53);
+        context.fillText(NumberToString.stringFor(navaid.getLon()), lat+85, lon+53);
+    }
+
+    /*public void drawNavaidLabel(double lat, double lon, Dme dme) {
+        //Rechteck
+        context.setLineWidth(1);
+        context.strokeRoundRect(lat, lon,125,60, 40,60);
+        //Textbox
+        context.setFont(Font.font("Arial",12));
+        char[] arr = dme.getNavaidName().toCharArray();
+        //for(char j = 0; j < arr.length; j++) {
+            if (arr.length < 5) {
+                context.fillText(dme.getNavaidName(), lat + 45, lon + 17);
+            }else if (arr.length < 6) {
+                context.fillText(dme.getNavaidName(), lat + 41, lon + 17);
+            }else if (arr.length < 9) {
+                context.fillText(dme.getNavaidName(), lat + 32, lon + 17);
+            }else if (arr.length < 10 ) {
+                context.fillText(dme.getNavaidName(), lat + 27, lon + 17);
+            }else if (arr.length < 12 ) {
+                context.fillText(dme.getNavaidName(), lat + 20, lon + 17);
+            }else if (arr.length < 13 ) {
+                context.fillText(dme.getNavaidName(), lat + 15, lon + 17);
+            }else if (arr.length < 15 ) {
+                context.fillText(dme.getNavaidName(), lat + 10, lon + 17);
+            }else if (arr.length < 16 ) {
+                context.fillText(dme.getNavaidName(), lat + 5, lon + 17);
+            }else if (arr.length >= 16 ) {
+                context.fillText(dme.getNavaidName(), lat + 5, lon + 17);
+            }
+        //}
+        context.fillText((dme.getNavaidName()), lat+25, lon+17);
+        context.fillText(dme.getNavaidID(),lat+49, lon+36);
+        context.fillText(NumberToString.stringFor(dme.getFrequency()), lat+10, lon+36);
+        context.setFont(Font.font("Arial", 9));
+        context.fillText(NumberToString.stringFor(dme.getLat()), lat+30, lon+53);
+        context.fillText(NumberToString.stringFor(dme.getLon()), lat+85, lon+53);
+    }
+    public void drawNavaidLabel(double lat, double lon, Vor vor) {
+        //Rechteck
+        context.setLineWidth(1);
+        context.strokeRoundRect(lat, lon,125,60, 40,60);
+        //Textbox
+        context.setFont(Font.font("Arial",12));
+        char[] arr = vor.getNavaidName().toCharArray();
+        for(char j = 0; j < arr.length; j++) {
+            if (arr.length < 5) {
+                context.fillText(vor.getNavaidName(), lat + 45, lon + 17);
+            }else if (arr.length < 6) {
+                context.fillText(vor.getNavaidName(), lat + 41, lon + 17);
+            }else if (arr.length < 9) {
+                context.fillText(vor.getNavaidName(), lat + 32, lon + 17);
+            }else if (arr.length < 10 ) {
+                context.fillText(vor.getNavaidName(), lat + 27, lon + 17);
+            }else if (arr.length < 12 ) {
+                context.fillText(vor.getNavaidName(), lat + 20, lon + 17);
+            }else if (arr.length < 13 ) {
+                context.fillText(vor.getNavaidName(), lat + 15, lon + 17);
+            }else if (arr.length < 15 ) {
+                context.fillText(vor.getNavaidName(), lat + 10, lon + 17);
+            }else if (arr.length < 16 ) {
+                context.fillText(vor.getNavaidName(), lat + 5, lon + 17);
+            }else if (arr.length >= 16 ) {
+                context.fillText(vor.getNavaidName(), lat + 5, lon + 17);
+            }
+        }
+        context.fillText((vor.getNavaidName()), lat+25, lon+17);
+        context.fillText(vor.getNavaidID(),lat+49, lon+36);
+        context.fillText(NumberToString.stringFor(vor.getFrequency()), lat+10, lon+36);
+        context.setFont(Font.font("Arial", 9));
+        context.fillText(NumberToString.stringFor(vor.getLat()), lat+30, lon+53);
+        context.fillText(NumberToString.stringFor(vor.getLon()), lat+85, lon+53);
+    }
+    public void drawNavaidLabel(double lat, double lon, VorDme vordme) {
+        //Rechteck
+        context.setLineWidth(1);
+        context.strokeRoundRect(lat, lon,125,60, 40,60);
+        //Textbox
+        context.setFont(Font.font("Arial",12));
+        char[] arr = vordme.getNavaidName().toCharArray();
+        for(char j = 0; j < arr.length; j++) {
+            if (arr.length < 5) {
+                context.fillText(vordme.getNavaidName(), lat + 45, lon + 17);
+            }else if (arr.length < 6) {
+                context.fillText(vordme.getNavaidName(), lat + 41, lon + 17);
+            }else if (arr.length < 9) {
+                context.fillText(vordme.getNavaidName(), lat + 32, lon + 17);
+            }else if (arr.length < 10 ) {
+                context.fillText(vordme.getNavaidName(), lat + 27, lon + 17);
+            }else if (arr.length < 12 ) {
+                context.fillText(vordme.getNavaidName(), lat + 20, lon + 17);
+            }else if (arr.length < 13 ) {
+                context.fillText(vordme.getNavaidName(), lat + 15, lon + 17);
+            }else if (arr.length < 15 ) {
+                context.fillText(vordme.getNavaidName(), lat + 10, lon + 17);
+            }else if (arr.length < 16 ) {
+                context.fillText(vordme.getNavaidName(), lat + 5, lon + 17);
+            }else if (arr.length >= 16 ) {
+                context.fillText(vordme.getNavaidName(), lat + 5, lon + 17);
+            }
+        }
+        context.fillText((vordme.getNavaidName()), lat+25, lon+17);
+        context.fillText(vordme.getNavaidID(),lat+49, lon+36);
+        context.fillText(NumberToString.stringFor(vordme.getFrequency()), lat+10, lon+36);
+        context.setFont(Font.font("Arial", 9));
+        context.fillText(NumberToString.stringFor(vordme.getLat()), lat+30, lon+53);
+        context.fillText(NumberToString.stringFor(vordme.getLon()), lat+85, lon+53);
+    }*/
+
     public void drawstuff(ArrayList<GeoCoordinate> geoCoordinates) {
         if (geoCoordinates.size() > 0) {
             for (int i = 0; i < geoCoordinates.size(); i++) {
                 double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
                 double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
-
                 if (geoCoordinates.get(i) instanceof Airport) {
                     this.drawairport(lat, lon);
                     if (((Airport) geoCoordinates.get(i)).getifr() == 1) {
@@ -434,15 +561,22 @@ public class Map extends Canvas {
                 else if (geoCoordinates.get(i) instanceof Fix) {
                     this.drawfix(lat, lon);
                 } else if (geoCoordinates.get(i) instanceof Ndb) {
-                    drawNavaids_ndb(lat,lon);
+                    Ndb ndb = (Ndb) geoCoordinates.get(i);
+                    drawNavaidLabel(lon+20, lat+20, ndb);
+                    drawNavaids_ndb(lat, lon);
                 } else if (geoCoordinates.get(i) instanceof Dme){
+                    Dme dme = (Dme) geoCoordinates.get(i);
+                    drawNavaidLabel(lon+20, lat+20, dme);
                     drawNavaids_dme(lat,lon);
                 } else if (geoCoordinates.get(i) instanceof Vor){
+                    Vor vor = (Vor) geoCoordinates.get(i);
+                    drawNavaidLabel(lon+20, lat+20, vor);
                     drawNavaids_vor(lat,lon);
                 } else if (geoCoordinates.get(i) instanceof VorDme){
+                    VorDme vordme = (VorDme) geoCoordinates.get(i);
+                    drawNavaidLabel(lon+20, lat+20, vordme);
                     drawNavaids_vordme(lat,lon);
                 }
-
             }
         }
     }
