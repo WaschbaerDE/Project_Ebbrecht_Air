@@ -24,6 +24,11 @@ public class Airway extends GeoCoordinate{
         LegLength = legLength;
     }
 
+
+    public String getAtsID() {
+        return AtsID;
+    }
+
     public Double getLonNext() {
         return LonNext;
     }

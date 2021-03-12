@@ -1,5 +1,6 @@
 package com.btdora.ebbrechtair;
 
+import javafx.scene.shape.Polygon;
 
 import com.btdora.ebbrechtair.classes.*;
 import com.btdora.ebbrechtair.util.DataGrid;
@@ -7,7 +8,24 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
+import javafx.scene.transform.Rotate;
 
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Map extends Canvas {
@@ -325,7 +343,7 @@ public class Map extends Canvas {
      * @param lon2
      */
     public void drawAirwayLines(double lat1, double lon1, double lat2, double lon2) {
-        this.context.setLineWidth(1);
+        this.context.setLineWidth(2);
         this.context.setStroke(Color.BLUE);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
     }
@@ -339,7 +357,7 @@ public class Map extends Canvas {
      * @param lon2
      */
     public void drawairwayconnect(double lat1, double lon1, double lat2, double lon2) {
-        this.context.setLineWidth(1);
+        this.context.setLineWidth(2);
         this.context.setStroke(Color.MAGENTA);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
     }
@@ -493,6 +511,8 @@ public class Map extends Canvas {
 
 
     public void drawGeoCoordinates(ArrayList<GeoCoordinate> geoCoordinates) {
+        TestRoute test = new TestRoute();
+        drawActiveRoute(test.getList());
         if (geoCoordinates.size() > 0) {
             for (int i = 0; i < geoCoordinates.size(); i++) {
                 double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
@@ -584,6 +604,8 @@ public class Map extends Canvas {
         }
 
     }
+
+
 
     public void drawActiveRoute(ArrayList<GeoCoordinate> airwaycoordinates) {
         if (airwaycoordinates.size() > 0) {
