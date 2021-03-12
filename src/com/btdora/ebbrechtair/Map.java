@@ -43,8 +43,8 @@ public class Map extends Canvas {
 
         this.dataGrid = new DataGrid();
 
-        this.jumpToMapSection(3, 0, 0);
-        this.jumpToMapSection(this.zoomOnSeamiles(108),50.033306,8.570456); // Frankfurt, 108 Seemeilen breiter Screen
+        //this.jumpToMapSection(3, 0, 0);
+        this.jumpToMapSection(this.zoomOnSeamiles(200),50.033306,8.570456); // Frankfurt, 108 Seemeilen breiter Screen
 //        this.jumpToMapSection(1000,50.033306,8.570456); // Frankfurt, 1 Grad breiter Screen
 //        jumpToMapSection(60000,50.033306,8.570456); // Frankfurt, 1 Seemeile breiter Screen
         //this.setZoomOnObjects(50.033306, 8.570456, 52.362247, 13.500672); // Strecke Frankfurt - Berlin
@@ -372,6 +372,8 @@ public class Map extends Canvas {
 
     public void getGridArray(double luX, double luY, double rlX, double rlY) {
         this.context.clearRect(0, 0, 1000, 1000);
+        this.context.setFill(Color.WHITE);
+        this.context.fillRect(0,0, this.getWidth(), this.getHeight());
 
         int rangeLeft = (int) (Math.floor(luX));
         int rangeTop = (int) (Math.floor(luY)) + 1;
@@ -394,8 +396,8 @@ public class Map extends Canvas {
         for (int i = rangeBottom; i < rangeTop; i++) {
             for (int j = rangeLeft; j < rangeRight; j++) {
                 ArrayList<GeoCoordinate> ret = this.dataGrid.get(i, j);
-                drawstuff(ret);
-                drawdegreelines();
+                this.drawstuff(ret);
+                this.drawdegreelines();
             }
         }
         System.out.println("Getting grids successfully finished.");
@@ -461,32 +463,33 @@ public class Map extends Canvas {
         int measurements = 17;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
-        context.fillOval(lon-4, lat-2, 25, 25);
         context.setFill(Color.WHITE);
+        context.fillOval(lon-4, lat-2, 25, 25);
         context.drawImage(fix, lon, lat, measurements, measurements);
     }
 
 
     public void drawstuff(ArrayList<GeoCoordinate> geoCoordinates) {
         if (geoCoordinates.size() > 0) {
-            int counter = 0;for (int i = 0; i < geoCoordinates.size(); i++) {
+            int counter = 0;
+            for (int i = 0; i < geoCoordinates.size(); i++) {
                 double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
                 double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
-
 
                 if (geoCoordinates.get(i) instanceof Airway) {
                     double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
                     double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
                     drawAirwayLines(lat, lon, lat2, lon2);
                 }
-
             }
+
             for (int i = 0; i < geoCoordinates.size(); i++) {
                 double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
                 double lon = this.zoomdragFactorLon(geoCoordinates.get(i).getLon(), zoomFactor, offsetY, canvasMidY);
 
-
-                if (geoCoordinates.get(i) instanceof Airport) {
+                if (geoCoordinates.get(i) instanceof Fix) {
+                    this.drawfix(lat, lon);
+                } else if (geoCoordinates.get(i) instanceof Airport) {
                     //this.drawairport(lat, lon);
                     if (((Airport) geoCoordinates.get(i)).getifr() == 1) {
                         drawairportifr(lat, lon);
@@ -495,9 +498,8 @@ public class Map extends Canvas {
                     } else {
                         drawairport(lat, lon);
                     }
-                } else if (geoCoordinates.get(i) instanceof Fix) {
-                    this.drawfix(lat, lon);
-                } else if (geoCoordinates.get(i) instanceof Navaid){
+
+                }else if (geoCoordinates.get(i) instanceof Navaid){
                     if (geoCoordinates.get(i) instanceof Ndb) {
                         drawNavaids_ndb(lat, lon);
                     } else if (geoCoordinates.get(i) instanceof Dme) {
