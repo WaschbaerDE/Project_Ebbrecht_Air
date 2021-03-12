@@ -504,8 +504,8 @@ public class Map extends Canvas {
         int measurements = 17;
         lat = lat - measurements / 2;
         lon = lon - measurements / 2;
-        context.setFill(Color.WHITE);
-        context.fillOval(lon-4, lat-2, 25, 25);
+//        context.setFill(Color.WHITE);
+//        context.fillOval(lon-4, lat-2, 25, 25);
         context.drawImage(fix, lon, lat, measurements, measurements);
     }
 
