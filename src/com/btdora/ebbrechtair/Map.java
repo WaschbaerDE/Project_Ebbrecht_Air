@@ -6,6 +6,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 
 import java.util.ArrayList;
 
@@ -503,6 +506,23 @@ public class Map extends Canvas {
                     double lat2 = this.zoomDragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
                     double lon2 = this.zoomDragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
                     drawAirwayLines(lat, lon, lat2, lon2);
+                    double angle = Math.toDegrees(Math.atan2(lon2 - lon,  lat2 - lat));
+
+                    double xtext= (lat2 -lat)/2 + lat;
+                    double ytext= (lon2 -lon)/2 +lon;
+
+
+                    String airawyname= (((Airway) geoCoordinates.get(i)).getAtsID());
+
+
+                    Rotate rotate = new Rotate();
+                    rotate.setAngle(angle);
+
+                    Text text1 = new Text(xtext,ytext,airawyname);
+                    text1.setRotate(Math.PI/2);
+                    text1.setFont(new Font(20));
+                    context.setFill(Color.BLACK);
+                    context.fillText(text1.getText(), ytext,xtext);
                 }
             }
 
