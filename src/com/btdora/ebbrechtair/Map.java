@@ -38,6 +38,8 @@ public class Map extends Canvas {
     private double rightLowerCornerY;
     private DataGrid dataGrid;
 
+
+
     public Map() {
         super(1000, 1000);
 
