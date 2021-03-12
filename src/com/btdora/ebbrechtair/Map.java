@@ -521,10 +521,6 @@ public class Map extends Canvas {
                     } else {
                         drawairport(lat, lon);
                     }
-                } else if (geoCoordinates.get(i) instanceof Fix) {
-                    this.drawFix(lat, lon);
-                } else if (geoCoordinates.get(i) instanceof Navaid){
-
                 }else if (geoCoordinates.get(i) instanceof Navaid){
                     if (geoCoordinates.get(i) instanceof Ndb) {
                         drawNavaids_ndb(lat, lon);
