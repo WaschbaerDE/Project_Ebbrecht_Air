@@ -61,7 +61,6 @@ public class Map extends Canvas {
             py1 = event.getY();
             double factor = event.getDeltaY();
 
-            // funktioniert, aber zu langsam
             if (factor > 0){
                 if (this.zoomFactor < 20){factor = 0.5;}
                 else if (this.zoomFactor < 40){factor = 1;}
@@ -156,10 +155,6 @@ public class Map extends Canvas {
 
         this.setOnMouseReleased(event -> {
             this.getScreenCoordinates();
-            System.out.println("Left upper corner:  x = " + leftUpperCornerX + "  y = " + leftUpperCornerY);
-            System.out.println("Right upper corner:  x = " + rightLowerCornerX + "  y = " + leftUpperCornerY);
-            System.out.println("Right lower corner:  x = " + rightLowerCornerX + "  y = " + rightLowerCornerY);
-            System.out.println("Left lower corner:  x = " + leftUpperCornerX + "  y = " + rightLowerCornerY);
         });
 
         this.setOnMousePressed(event -> {
@@ -518,7 +513,6 @@ public class Map extends Canvas {
                     double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
                     drawAirwayLines(lat, lon, lat2, lon2);
                 }
-
             }
         }
     }
