@@ -1,5 +1,6 @@
 package com.btdora.ebbrechtair;
 
+import javafx.scene.shape.Polygon;
 
 import com.btdora.ebbrechtair.classes.*;
 import com.btdora.ebbrechtair.util.DataGrid;
@@ -7,7 +8,24 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
+import javafx.scene.transform.Rotate;
 
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Map extends Canvas {
@@ -270,7 +288,7 @@ public class Map extends Canvas {
 //            drawGritLines(i + offsetFactorX + gritMin, gritMin, i + offsetFactorX + gritMin, gritMax);
 //            drawGritLines(gritMin, i + offsetFactorY + gritMin, gritMax, i + offsetFactorY + gritMin);
 //        }
-        this.context.setLineWidth(1);
+        this.context.setLineWidth(2);
         this.context.setStroke(Color.LIGHTSALMON);
         this.context.strokeLine(this.canvasMidX + this.offsetX, gritMin, this.canvasMidX + this.offsetX, gritMax);
         this.context.strokeLine(gritMin, this.canvasMidY + this.offsetY, gritMax, this.canvasMidY + this.offsetY);
@@ -302,7 +320,7 @@ public class Map extends Canvas {
      * @param lon2
      */
     public void drawAirwayLines(double lat1, double lon1, double lat2, double lon2) {
-        this.context.setLineWidth(1);
+        this.context.setLineWidth(2);
         this.context.setStroke(Color.BLUE);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
     }
@@ -316,7 +334,7 @@ public class Map extends Canvas {
      * @param lon2
      */
     public void drawairwayconnect(double lat1, double lon1, double lat2, double lon2) {
-        this.context.setLineWidth(1);
+        this.context.setLineWidth(2);
         this.context.setStroke(Color.MAGENTA);
         this.context.strokeLine(lon1, lat1, lon2, lat2);
     }
@@ -465,6 +483,8 @@ public class Map extends Canvas {
 
 
     public void drawGeoCoordinates(ArrayList<GeoCoordinate> geoCoordinates) {
+        TestRoute test = new TestRoute();
+        drawActiveRoute(test.getList());
         if (geoCoordinates.size() > 0) {
             for (int i = 0; i < geoCoordinates.size(); i++) {
                 double lat = this.zoomdragFactorLat(geoCoordinates.get(i).getLat(), zoomFactor, offsetY, canvasMidY);
@@ -496,6 +516,44 @@ public class Map extends Canvas {
                     double lat2 = this.zoomdragFactorLat(((Airway) geoCoordinates.get(i)).getLonNext(), zoomFactor, offsetX, canvasMidX);
                     double lon2 = this.zoomdragFactorLon(((Airway) geoCoordinates.get(i)).getLatNext(), zoomFactor, offsetY, canvasMidY);
                     drawAirwayLines(lat, lon, lat2, lon2);
+
+                    double angle = Math.toDegrees(Math.atan2(lon2 - lon,  lat2 - lat));
+
+                    double xtext= (lat2 -lat)/2 + lat;
+                    double ytext= (lon2 -lon)/2 +lon;
+
+
+                    String airawyname= (((Airway) geoCoordinates.get(i)).getAtsID());
+                    int red = 30;
+                    int green = 40;
+                    int blue = 50;
+
+
+                    Rotate rotate = new Rotate();
+                    rotate.setAngle(angle);
+
+                    Text text1 = new Text(xtext,ytext,airawyname);
+                    text1.setRotate(Math.PI/2);
+
+
+                    text1.setFont(new Font(20));
+
+                    context.fillText(text1.getText(), ytext,xtext);
+
+
+
+
+
+
+                   // text.rotateProperty();
+                  //  text.getTransforms().add(new Rotate(angle,ytext,xtext));
+
+
+
+
+
+
+
                 }
 
             }
@@ -526,6 +584,8 @@ public class Map extends Canvas {
             drawBlackLines(lat, lon, lat2, lon2);
         }
     }
+
+
 
     public void drawActiveRoute(ArrayList<GeoCoordinate> airwaycoordinates) {
         if (airwaycoordinates.size() > 0) {
